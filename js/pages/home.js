@@ -24,6 +24,20 @@ function renderHome() {
     )
     .join('');
 
+  /* как устроен сайт: три шага для первого посещения */
+  const how = p.how
+    .map(
+      ([name, text], i) => `
+        <li class="how__step">
+          <span class="how__num" aria-hidden="true">${i + 1}</span>
+          <span>
+            <strong class="how__name">${esc(name)}</strong>
+            <span class="how__text">${esc(text)}</span>
+          </span>
+        </li>`
+    )
+    .join('');
+
   /* путь святынь: главные годы на пунктирной дороге */
   const path = p.path
     .map(
@@ -57,6 +71,11 @@ function renderHome() {
         ${kleyma}
       </nav>
       <p class="caption icon-board__caption">${esc(p.heroCap)}</p>
+
+      <section class="how" aria-labelledby="h-how">
+        <h2 class="eyebrow how__title" id="h-how">${esc(p.howH)}</h2>
+        <ol class="how__list">${how}</ol>
+      </section>
 
       <section class="home-section" aria-labelledby="h-path">
         <div class="home-section__head">

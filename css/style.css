@@ -937,6 +937,48 @@ a {
   margin-top: 10px;
 }
 
+/* «Как устроен сайт»: три шага, номера как станции маршрута */
+.how {
+  margin-top: 26px;
+  padding: 18px 20px 20px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+.how__title {
+  margin-bottom: 14px;
+}
+.how__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.how__step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.how__num {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--lapis);
+  display: grid;
+  place-items: center;
+  font: 600 15px var(--mono);
+  color: var(--lapis);
+}
+.how__name {
+  display: block;
+  margin-bottom: 4px;
+  font: 600 17px/1.3 var(--body);
+}
+.how__text {
+  color: var(--ink-2);
+  font-size: 15.5px;
+  line-height: 1.45;
+}
+
 /* «Путь святынь»: годы на пунктирной дороге */
 .milestones {
   position: relative;
@@ -2417,6 +2459,10 @@ a {
   }
 }
 @media (max-width: 900px) {
+  .how__list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
   .home-duo,
   .map-layout,
   .game-intro,
