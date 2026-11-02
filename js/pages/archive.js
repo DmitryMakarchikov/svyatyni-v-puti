@@ -10,7 +10,7 @@ let archiveQuery = '';
 function renderArchive() {
   const p = texts();
   $('#v-archive').innerHTML =
-    pageHead('archive', p.arLab, p.arH, p.arLead) +
+    pageHead('archive', p.arH, p.arLead) +
     `
     <div class="container">
       <div class="archive-tools">

@@ -34,9 +34,6 @@ function showRoute() {
   window.scrollTo(0, 0);
 }
 
-/* порядок разделов 1–7 для навигации «Назад / Дальше» */
-const SECTION_ORDER = ['chronicle', 'map', 'shrines', 'comic', 'game', 'archive', 'quiz'];
-
 /* заголовок раздела на текущем языке */
 function sectionTitle(name) {
   const p = texts();

@@ -9,7 +9,7 @@ let chronYear = 'all';
 function renderChronicle() {
   const p = texts();
   $('#v-chronicle').innerHTML =
-    pageHead('chronicle', p.chrLab, p.chrH, p.chrLead) +
+    pageHead('chronicle', p.chrH, p.chrLead) +
     `
     <div class="container">
       <div class="filters" id="yrs" role="group" aria-label="${esc(p.chrYears)}"></div>

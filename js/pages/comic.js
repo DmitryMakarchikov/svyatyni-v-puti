@@ -18,7 +18,7 @@ function renderComic() {
   `;
 
   $('#v-comic').innerHTML =
-    pageHead('comic', p.coLab, p.coH, p.coLead, readButton) +
+    pageHead('comic', p.coH, p.coLead, readButton) +
     `
     <div class="container">
       <ol class="comic" id="comic-grid"></ol>

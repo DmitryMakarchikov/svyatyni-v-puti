@@ -9,7 +9,7 @@ const quiz = { index: 0, score: 0, answered: false, done: false };
 function renderQuiz() {
   const p = texts();
   $('#v-quiz').innerHTML =
-    pageHead('quiz', p.qzLab, p.qzH, p.qzLead) +
+    pageHead('quiz', p.qzH, p.qzLead) +
     `
     <div class="container">
       <div class="quiz" id="quiz-box"></div>

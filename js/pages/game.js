@@ -114,7 +114,7 @@ function renderGame() {
 function renderGameIntro() {
   const g = gameTexts();
   $('#v-game').innerHTML =
-    pageHead('game', g.lab, g.title) +
+    pageHead('game', g.title) +
     `
     <div class="container">
       <div class="game-intro">

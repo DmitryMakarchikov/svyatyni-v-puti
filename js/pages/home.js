@@ -1,6 +1,7 @@
 'use strict';
 
-/* Главная: обложка, цифры, плитки разделов, вопрос дня, свеча памяти и «Было — стало» */
+/* Главная: заголовок, «икона с клеймами» (разделы вокруг иконы), путь святынь,
+   вопрос дня, свеча памяти и «Было — стало» */
 
 /* рисует главную страницу */
 function renderHome() {
@@ -8,63 +9,60 @@ function renderHome() {
   /* вопрос дня меняется раз в сутки */
   const day = QUIZ[Math.floor(Date.now() / 864e5) % QUIZ.length];
 
-  const stats = p.counters
+  /* клейма: разделы сайта по сторонам иконы, как сцены жития вокруг образа */
+  const kleyma = p.kleyma
     .map(
-      ([value, label]) => `
-        <li class="stats__item">
-          <strong class="stats__value">${esc(value)}</strong>
-          <span class="stats__label">${esc(label)}</span>
-        </li>`
+      ([route, img, title, text], i) => `
+        <a class="kleymo kleymo--${i + 1}" href="#${route}">
+          <img class="kleymo__img" src="${img}" alt="" loading="lazy">
+          <span class="kleymo__body">
+            <span class="kleymo__num" aria-hidden="true">${i + 1}</span>
+            <span class="kleymo__title">${esc(title)}</span>
+            <span class="kleymo__text">${esc(text)}</span>
+          </span>
+        </a>`
     )
     .join('');
 
-  const tiles = p.tiles
+  /* путь святынь: главные годы на пунктирной дороге */
+  const path = p.path
     .map(
-      ([route, img, title, text], i) => `
-        <li class="tiles__item">
-          <a class="tile" href="#${route}">
-            <img class="tile__img" src="${img}" alt="" loading="lazy">
-            <span class="tile__body">
-              <span class="eyebrow">${String(i + 1).padStart(2, '0')}</span>
-              <span class="tile__title">${esc(title)}</span>
-              <span class="tile__text">${esc(text)}</span>
-            </span>
-          </a>
+      ([year, text]) => `
+        <li class="milestones__item">
+          <span class="milestones__year">${esc(year)}</span>
+          <span class="milestones__text">${esc(text)}</span>
         </li>`
     )
     .join('');
 
   $('#v-home').innerHTML = `
     <div class="container">
-      <div class="hero">
-        <div>
-          <p class="eyebrow">${esc(p.homeLab)}</p>
-          <h1 class="hero__title" id="t-home">
-            ${esc(p.homeH1a)} <span class="hero__accent">${esc(p.homeH1b)}</span>
-          </h1>
-          <p class="lead hero__lead">${esc(p.homeLead)}</p>
-          <div class="actions">
-            <a class="button button--primary" href="#chronicle">
-              ${esc(p.homeGo)} <span class="button__arrow" aria-hidden="true">→</span>
-            </a>
-            <a class="button" href="#game">${esc(p.homePlay)}</a>
-          </div>
+      <header class="home-head">
+        <p class="eyebrow">${esc(p.homeLab)}</p>
+        <h1 class="home-head__title" id="t-home">${esc(p.homeTitle)}</h1>
+        <span class="ornament" aria-hidden="true"></span>
+        <p class="lead home-head__lead">${esc(p.homeLead)}</p>
+        <div class="actions home-head__actions">
+          <a class="button button--primary" href="#chronicle">
+            ${esc(p.homeGo)} <span class="button__arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="button" href="#game">${esc(p.homePlay)}</a>
         </div>
-        <figure class="hero__figure">
-          <div class="hero__frame">
-            <img class="hero__img" src="img/icon-augustow.jpg" alt="${esc(tr(DOCS['d-icon'].t))}" width="800" height="1006">
-          </div>
-          <figcaption class="caption hero__caption">${esc(p.heroCap)}</figcaption>
+      </header>
+
+      <nav class="icon-board" aria-label="${esc(p.kleymaLabel)}">
+        <figure class="icon-board__center">
+          <img class="icon-board__img" src="img/icon-augustow.jpg" alt="${esc(tr(DOCS['d-icon'].t))}" width="800" height="1006">
         </figure>
-      </div>
+        ${kleyma}
+      </nav>
+      <p class="caption icon-board__caption">${esc(p.heroCap)}</p>
 
-      <ul class="stats">${stats}</ul>
-
-      <section class="home-section" aria-labelledby="h-start">
+      <section class="home-section" aria-labelledby="h-path">
         <div class="home-section__head">
-          <h2 class="home-section__title" id="h-start">${esc(p.startH)}</h2>
+          <h2 class="home-section__title" id="h-path">${esc(p.pathH)}</h2>
         </div>
-        <ul class="tiles">${tiles}</ul>
+        <ol class="milestones">${path}</ol>
       </section>
 
       <div class="home-section">

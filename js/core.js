@@ -171,6 +171,8 @@ function addStamp(key) {
   progress.stamps[key] = 1;
   store.set('stamps', progress.stamps);
   paintPassport();
+  /* станция на маршруте в шапке сразу становится золотой */
+  $$(`.route__link[href="#${key}"]`).forEach((link) => link.parentNode.classList.add('route__stop--stamped'));
   showToast(ui().toast(countStamps()));
   playBell(659.25, 0.05);
 }
@@ -228,14 +230,36 @@ function openDoc(id) {
   `);
 }
 
-/* Шапка раздела: подпись, заголовок, вводный текст и кнопки (если нужны) */
-function pageHead(id, eyebrow, title, lead = '', extra = '') {
+/* порядок разделов 1–7: по нему строятся «станции» в шапке и кнопки «Назад / Дальше» */
+const SECTION_ORDER = ['chronicle', 'map', 'shrines', 'comic', 'game', 'archive', 'quiz'];
+
+/* Маршрут из 7 станций: где посетитель сейчас и где уже получена печать */
+function routeHtml(current) {
+  const stops = SECTION_ORDER.map((name, i) => {
+    const isCurrent = name === current;
+    let mods = '';
+    if (isCurrent) mods += ' route__stop--current';
+    if (progress.stamps[name]) mods += ' route__stop--stamped';
+    return `
+      <li class="route__stop${mods}">
+        <a class="route__link" href="#${name}" ${isCurrent ? 'aria-current="step"' : ''}>
+          <span class="route__num">${i + 1}</span>
+          <span class="route__name">${esc(ui().nav[name])}</span>
+        </a>
+      </li>`;
+  }).join('');
+  return `<ol class="route" aria-label="${esc(ui().pagerLabel)}">${stops}</ol>`;
+}
+
+/* Шапка раздела: маршрут, заголовок, орнамент, вводный текст и кнопки (если нужны) */
+function pageHead(id, title, lead = '', extra = '') {
   return `
     <div class="container">
       <header class="page-head">
-        <p class="eyebrow">${esc(eyebrow)}</p>
+        ${SECTION_ORDER.includes(id) ? routeHtml(id) : ''}
         <h2 class="page-head__title" id="t-${id}">${esc(title)}</h2>
-        ${lead ? `<p class="lead">${esc(lead)}</p>` : ''}
+        <span class="ornament" aria-hidden="true"></span>
+        ${lead ? `<p class="lead page-head__lead">${esc(lead)}</p>` : ''}
         ${extra}
       </header>
     </div>

@@ -19,7 +19,7 @@ function renderAbout() {
     .join('');
 
   $('#v-about').innerHTML =
-    pageHead('about', p.abLab, p.abH) +
+    pageHead('about', p.abH) +
     `
     <div class="container">
       <div class="about">${items}</div>

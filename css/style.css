@@ -1,5 +1,5 @@
 /* Стили сайта «Святыни в пути». Классы по БЭМ: блок__элемент--модификатор.
-   Цвета взяты с Августовской иконы: лазурь, золото, киноварь. Одна светлая палитра на всех страницах. */
+   Цвета взяты с Августовской иконы: лазурь, золото, киноварь. Главные мотивы — икона с клеймами и путь. */
 
 /* Переменные */
 :root {
@@ -18,6 +18,8 @@
   --night: #0e1726;
   --frost: #e8ebf1;
   --mist: #b4bed0;
+  /* золотой оклад иконы */
+  --oklad: linear-gradient(135deg, #c9a35a, #8e6a2c 45%, #d9bc7e 70%, #9c7634);
   /* цвета шкал в игре: силы, хлеб, надежда */
   --m-s: #8c6a2e;
   --m-b: #a0522d;
@@ -160,7 +162,7 @@ a {
   padding-block: 40px;
 }
 
-/* подпись над заголовком: «Раздел 1», «Вопрос дня» */
+/* подпись над заголовком */
 .eyebrow {
   font: 600 13px/1.35 var(--mono);
   letter-spacing: 0.1em;
@@ -183,30 +185,134 @@ a {
   align-items: center;
 }
 
-/* заголовок раздела: двойная линия снизу, как в газетной шапке */
-.page-head {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding-block: clamp(36px, 5vw, 64px) clamp(22px, 3vw, 32px);
-  margin-bottom: clamp(22px, 3vw, 34px);
-  border-bottom: 1px solid var(--line);
+/* золотая черта с ромбом посередине — как разделитель в старопечатной книге */
+.ornament {
   position: relative;
+  display: block;
+  width: min(320px, 70%);
+  height: 14px;
 }
-.page-head::after {
+.ornament::before {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -4px;
-  width: 100%;
-  height: 1px;
-  background: var(--line);
+  right: 0;
+  top: 50%;
+  border-top: 1.5px solid var(--gold);
+}
+.ornament::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: var(--paper);
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 0 0 5px var(--paper);
+}
+
+/* шапка раздела: маршрут, заголовок по центру, орнамент и вводный текст */
+.page-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding-block: clamp(26px, 4vw, 44px) clamp(24px, 3vw, 34px);
+  margin-bottom: clamp(16px, 2.5vw, 26px);
 }
 .page-head__title {
-  font: 400 clamp(38px, 5.4vw, 68px) / 1.02 var(--disp);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+  font: 400 clamp(40px, 5.6vw, 72px) / 1.05 var(--disp);
+  letter-spacing: 0.005em;
   text-wrap: balance;
+}
+.page-head__lead {
+  margin-inline: auto;
+  max-width: 40em;
+}
+.page-head .actions {
+  justify-content: center;
+}
+
+/* маршрут из 7 станций: пунктир, как дорога беженства на карте */
+.route {
+  display: flex;
+  width: min(780px, 100%);
+  margin-bottom: 6px;
+}
+.route__stop {
+  position: relative;
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+.route__stop + .route__stop::before {
+  content: '';
+  position: absolute;
+  top: 21px;
+  left: -50%;
+  right: 50%;
+  border-top: 2px dashed var(--cinnabar);
+  opacity: 0.7;
+}
+.route__link {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 4px;
+  min-width: 44px;
+  text-decoration: none;
+  color: var(--ink-2);
+}
+.route__num {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--lapis);
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  font: 600 14px var(--mono);
+  color: var(--lapis);
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+.route__name {
+  font: 600 12px/1.2 var(--mono);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.route__link:hover .route__num {
+  background: var(--card);
+}
+.route__link:hover .route__name {
+  color: var(--lapis);
+}
+/* пройденная станция (получена печать) — золотая */
+.route__stop--stamped .route__num {
+  border-color: var(--gold-d);
+  background: var(--gold-d);
+  color: #fff;
+}
+/* текущая станция — синяя с кольцом */
+.route__stop--current .route__num {
+  background: var(--lapis);
+  border-color: var(--lapis);
+  color: #fff;
+  box-shadow:
+    0 0 0 3px var(--paper),
+    0 0 0 5px var(--lapis);
+}
+.route__stop--current .route__name {
+  color: var(--lapis);
 }
 
 .button {
@@ -579,11 +685,9 @@ a {
   display: block;
 }
 .mobile-nav__link {
-  padding: 18px 2px;
+  padding: 16px 2px;
   border-bottom: 1px solid var(--line);
-  font: 400 27px/1.1 var(--disp);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font: 400 28px/1.15 var(--disp);
   color: var(--ink);
   text-decoration: none;
   display: flex;
@@ -615,70 +719,120 @@ a {
 }
 
 /* Главная */
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-  gap: clamp(28px, 5vw, 72px);
-  align-items: center;
-  padding-block: clamp(32px, 5vw, 64px);
-}
-.hero__title {
-  font: 400 clamp(56px, 8.6vw, 124px) / 0.92 var(--disp);
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  margin: 16px 0 22px;
-}
-.hero__accent {
-  color: var(--lapis);
-  display: block;
-}
-.hero__lead {
-  margin-bottom: 26px;
-}
-.hero__figure {
-  justify-self: center;
-  width: min(100%, 360px);
-}
-/* золотой оклад вокруг иконы */
-.hero__frame {
-  padding: 10px;
-  background: linear-gradient(135deg, #c9a35a, #8e6a2c 45%, #d9bc7e 70%, #9c7634);
-}
-.hero__img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 800 / 1006;
-  object-fit: cover;
-}
-.hero__caption {
-  margin-top: 12px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1.5px solid var(--ink);
-  border-bottom: 1px solid var(--line);
-}
-.stats__item {
-  padding: 22px 18px 20px;
+.home-head {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  border-left: 1px solid var(--line);
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  padding-block: clamp(30px, 5vw, 60px) clamp(26px, 3.5vw, 40px);
 }
-.stats__item:first-child {
-  border-left: 0;
-  padding-left: 0;
+.home-head__title {
+  font: 400 clamp(56px, 9vw, 120px) / 0.95 var(--disp);
+  text-wrap: balance;
 }
-.stats__value {
-  font: 400 clamp(38px, 4.2vw, 58px) / 1 var(--disp);
+.home-head__lead {
+  max-width: 40em;
+}
+.home-head__actions {
+  justify-content: center;
+}
+
+/* «Икона с клеймами»: в центре образ, по сторонам — разделы сайта, как сцены жития */
+.icon-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr) minmax(0, 1fr);
+  gap: 10px;
+  padding: 12px;
+  background: var(--oklad);
+}
+.icon-board__center {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  min-height: 100%;
+  background: #1b2a4a;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+.icon-board__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+.icon-board__caption {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.kleymo {
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+  outline: 1px solid rgba(255, 255, 255, 0.5);
+  outline-offset: -1px;
+  transition: background-color 0.15s;
+}
+.kleymo:hover {
+  background: #fff;
+}
+.kleymo--1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+.kleymo--2 {
+  grid-column: 1;
+  grid-row: 2;
+}
+.kleymo--3 {
+  grid-column: 1;
+  grid-row: 3;
+}
+.kleymo--4 {
+  grid-column: 3;
+  grid-row: 1;
+}
+.kleymo--5 {
+  grid-column: 3;
+  grid-row: 2;
+}
+.kleymo--6 {
+  grid-column: 3;
+  grid-row: 3;
+}
+.kleymo__img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.kleymo--6 .kleymo__img {
+  object-position: 50% 15%;
+}
+.kleymo__body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 10px;
+  align-items: baseline;
+  padding: 10px 12px 12px;
+}
+/* номер — киноварная буквица, как в старых книгах */
+.kleymo__num {
+  grid-row: span 2;
+  font: 400 34px/1 var(--disp);
+  color: var(--cinnabar);
+}
+.kleymo__title {
+  font: 400 24px/1.1 var(--disp);
+  transition: color 0.15s;
+}
+.kleymo:hover .kleymo__title {
   color: var(--lapis);
 }
-.stats__label {
+.kleymo__text {
+  font-size: 14.5px;
+  line-height: 1.35;
   color: var(--ink-2);
-  font-size: 15.5px;
-  line-height: 1.4;
 }
 
 .home-section {
@@ -690,65 +844,59 @@ a {
   justify-content: space-between;
   align-items: baseline;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--line);
 }
 .home-section__title {
-  font: 400 clamp(30px, 3vw, 42px) / 1.05 var(--disp);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  font: 400 clamp(32px, 3.4vw, 46px) / 1.05 var(--disp);
 }
 .home-section__caption {
   margin-top: 10px;
 }
 
-.tiles {
+/* «Путь святынь»: годы на пунктирной дороге */
+.milestones {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  gap: 0 24px;
 }
-.tiles__item {
-  display: flex;
-  min-width: 0;
+.milestones::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 77px;
+  border-top: 2px dashed var(--cinnabar);
+  opacity: 0.75;
 }
-.tile {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: var(--ink);
-  background: var(--card);
-  border: 1px solid var(--line);
-  transition: border-color 0.15s;
-}
-.tile:hover {
-  border-color: var(--lapis);
-}
-.tile__img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-.tile__body {
-  padding: 14px 16px 18px;
+.milestones__item {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 42px;
 }
-.tile__title {
-  font: 400 26px/1.05 var(--disp);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  transition: color 0.15s;
+.milestones__item::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  left: 1px;
+  top: 71px;
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+  background: var(--paper);
+  border: 2px solid var(--lapis);
 }
-.tile:hover .tile__title {
+.milestones__year {
+  font: 400 clamp(44px, 4.6vw, 60px) / 56px var(--disp);
   color: var(--lapis);
 }
-.tile__text {
-  color: var(--ink-2);
-  font-size: 15.5px;
+.milestones__text {
+  font-size: 16.5px;
   line-height: 1.45;
+  color: var(--ink-2);
 }
 
 .home-duo {
@@ -975,26 +1123,42 @@ a {
   height: 100%;
   pointer-events: none;
 }
+/* линии маршрута: толщина в пикселях не зависит от растяжения карты */
+.map__route polyline {
+  fill: none;
+  stroke: var(--cinnabar);
+  stroke-width: 3px;
+  stroke-dasharray: 10 7;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
 .map__pin {
   position: absolute;
-  width: 42px;
-  height: 42px;
-  margin: -21px 0 0 -21px;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
   border-radius: 50%;
   border: 2px solid #fff;
   background: var(--lapis);
   color: #fff;
-  font: 600 15px var(--mono);
+  font: 600 14px var(--mono);
   display: grid;
   place-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
   padding: 0;
+}
+/* невидимое поле вокруг точки: по ней легко попасть пальцем, а карта не закрыта */
+.map__pin::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
 }
 /* пульсирующее кольцо зовёт открыть ещё не просмотренные места */
 .map__pin::after {
   content: '';
   position: absolute;
-  inset: -7px;
+  inset: -6px;
   border-radius: 50%;
   border: 2px solid var(--lapis);
   opacity: 0;
@@ -1019,6 +1183,20 @@ a {
     transform: scale(1.7);
     opacity: 0;
   }
+}
+/* подпись рядом с точкой, если места нет на самой карте */
+.map__tag {
+  position: absolute;
+  transform: translate(22px, -50%);
+  padding: 3px 8px;
+  background: var(--card);
+  border: 1.5px solid var(--lapis);
+  color: var(--lapis);
+  font: 600 12.5px var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
 }
 .map__source {
   margin-top: 8px;
@@ -1047,7 +1225,7 @@ a {
   width: 26px;
   height: 0;
   border-radius: 0;
-  border-top: 2px dashed var(--cinnabar);
+  border-top: 3px dashed var(--cinnabar);
   background: none;
 }
 
@@ -1102,9 +1280,8 @@ a {
   display: grid;
   place-items: center;
   background: var(--paper-2);
-  font: 400 24px var(--disp);
-  text-transform: uppercase;
-  color: rgba(21, 23, 26, 0.4);
+  font: 400 26px/1.15 var(--disp);
+  color: rgba(21, 23, 26, 0.45);
   text-align: center;
   padding: 10px;
 }
@@ -1680,8 +1857,7 @@ a {
   width: 100%;
 }
 .game-end__title {
-  font: 400 clamp(42px, 6vw, 78px) / 0.98 var(--disp);
-  text-transform: uppercase;
+  font: 400 clamp(44px, 6vw, 80px) / 1 var(--disp);
   margin: 12px 0 16px;
 }
 .game-end__text {
@@ -1844,6 +2020,7 @@ a {
 /* Викторина */
 .quiz {
   max-width: 760px;
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1898,15 +2075,13 @@ a {
 }
 .about__item--wide {
   grid-column: 1 / -1;
-  border-top: 1.5px solid var(--ink);
+  border-top: 1.5px solid var(--gold);
   border-bottom: 1px solid var(--line);
   padding: 20px 0;
 }
 .about__item--wide .about__text {
   font: 400 clamp(26px, 2.8vw, 38px) / 1.2 var(--disp);
   color: var(--ink);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
 }
 
 /* Модальное окно (нативный <dialog>) */
@@ -2014,11 +2189,11 @@ a {
   color: rgba(21, 23, 26, 0.4);
 }
 .stamp--on .stamp__seal {
-  border: 1.5px solid var(--lapis);
-  background: var(--lapis);
+  border: 1.5px solid var(--gold-d);
+  background: var(--gold-d);
   color: #fff;
   box-shadow:
-    inset 0 0 0 4px var(--lapis),
+    inset 0 0 0 4px var(--gold-d),
     inset 0 0 0 5px rgba(255, 255, 255, 0.4);
 }
 .stamp__title {
@@ -2064,9 +2239,7 @@ a {
   color: var(--ink-2);
 }
 .pager__title {
-  font: 400 clamp(21px, 2.2vw, 29px) / 1.1 var(--disp);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  font: 400 clamp(22px, 2.3vw, 30px) / 1.1 var(--disp);
   color: var(--lapis);
   overflow-wrap: anywhere;
 }
@@ -2104,7 +2277,7 @@ a {
 
 /* Подвал */
 .site-footer {
-  border-top: 1.5px solid var(--ink);
+  border-top: 1.5px solid var(--gold);
   padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px));
   color: var(--ink);
   font: 600 14px/1.6 var(--mono);
@@ -2130,7 +2303,7 @@ a {
   text-decoration: underline;
 }
 
-/* Адаптив: 1180 — меню в «бургер», 900 — одна колонка, 560 — телефон */
+/* Адаптив: 1180 — меню в «бургер», 900 — одна колонка, 700 — маршрут без подписей, 560 — телефон */
 @media (max-width: 1180px) {
   .main-nav {
     display: none;
@@ -2145,7 +2318,6 @@ a {
   }
 }
 @media (max-width: 900px) {
-  .hero,
   .home-duo,
   .map-layout,
   .game-intro,
@@ -2154,22 +2326,51 @@ a {
   .modal__body {
     grid-template-columns: minmax(0, 1fr);
   }
-  .hero__figure {
-    order: -1;
-    width: min(100%, 280px);
-    justify-self: start;
-  }
-  .stats {
+  /* икона сверху, клейма — по два в ряд под ней */
+  .icon-board {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 10px;
+    gap: 8px;
   }
-  .stats__item:nth-child(3) {
-    border-left: 0;
-    padding-left: 0;
+  .icon-board__center {
+    grid-column: 1 / -1;
+    grid-row: auto;
   }
-  .stats__item:nth-child(n + 3) {
-    border-top: 1px solid var(--line);
+  .icon-board__img {
+    height: auto;
+    aspect-ratio: 800 / 1006;
   }
-  .tiles,
+  .kleymo--1,
+  .kleymo--2,
+  .kleymo--3,
+  .kleymo--4,
+  .kleymo--5,
+  .kleymo--6 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .milestones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 34px 24px;
+  }
+  .milestones::before {
+    display: none;
+  }
+  .milestones__item {
+    gap: 30px;
+  }
+  .milestones__item::before {
+    top: 66px;
+  }
+  .milestones__item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 72px;
+    border-top: 2px dashed var(--cinnabar);
+    opacity: 0.75;
+  }
   .shrines {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -2215,14 +2416,31 @@ a {
     grid-area: body;
     padding-right: 0;
   }
-  .event__img,
+  /* пустая рамка без картинки на телефоне не нужна */
   .event__noimg {
+    display: none;
+  }
+  .event__img {
     grid-area: img;
     width: min(100%, 320px);
     margin-top: 6px;
   }
   .modal__img {
     max-height: 40svh;
+  }
+}
+@media (max-width: 700px) {
+  /* на узком экране у станций остаются только номера; название раздела — в заголовке */
+  .route__name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .route__stop + .route__stop::before {
+    top: 21px;
   }
 }
 @media (max-width: 560px) {
@@ -2290,16 +2508,61 @@ a {
   .lang-switch__code {
     display: none;
   }
-  .tiles {
+  .route__num {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+  }
+  .route__link {
+    min-width: 38px;
+    padding: 4px 2px;
+  }
+  .route__stop + .route__stop::before {
+    top: 19px;
+  }
+  .kleymo__img {
+    aspect-ratio: 4 / 3;
+  }
+  .kleymo__body {
+    padding: 8px 10px 10px;
+    column-gap: 8px;
+  }
+  .kleymo__num {
+    font-size: 26px;
+  }
+  .kleymo__title {
+    font-size: 19px;
+  }
+  .kleymo__text {
+    font-size: 13px;
+  }
+  .milestones {
     grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-left: 30px;
   }
-  .tile {
-    flex-direction: row;
+  .milestones__item {
+    gap: 4px;
+    padding-bottom: 22px;
   }
-  .tile__img {
-    width: 120px;
-    aspect-ratio: 1;
-    flex: 0 0 auto;
+  .milestones__item::before {
+    left: -29px;
+    top: 15px;
+  }
+  .milestones__item::after {
+    left: -24px;
+    right: auto;
+    top: 30px;
+    bottom: -14px;
+    border-top: 0;
+    border-left: 2px dashed var(--cinnabar);
+  }
+  .milestones__item:last-child::after {
+    display: none;
+  }
+  .milestones__year {
+    font-size: 40px;
+    line-height: 44px;
   }
   .shrines,
   .docs {
@@ -2310,7 +2573,7 @@ a {
     overflow: hidden;
   }
   .shrine__placeholder {
-    font-size: 16px;
+    font-size: 18px;
     overflow-wrap: anywhere;
   }
   .shrine .status {
@@ -2341,12 +2604,6 @@ a {
   .stamps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .stats__item {
-    padding: 16px 12px 14px;
-  }
-  .stats__item:nth-child(2n + 1) {
-    padding-left: 0;
-  }
   .choice {
     font-size: 12px;
     padding: 6px 10px;
@@ -2368,7 +2625,7 @@ a {
     padding: 12px;
   }
   .pager__title {
-    font-size: 19px;
+    font-size: 20px;
   }
   .pager__num {
     display: none;

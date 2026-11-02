@@ -11,7 +11,7 @@ function renderMap() {
   const map = DOCS['d-map'];
 
   $('#v-map').innerHTML =
-    pageHead('map', p.mapLab, p.mapH, p.mapLead) +
+    pageHead('map', p.mapH, p.mapLead) +
     `
     <div class="container">
       <div class="map-layout">
@@ -19,8 +19,9 @@ function renderMap() {
           <div class="map" id="mapbox">
             <img class="map__img" src="${map.img}" alt="${esc(tr(map.t))}" width="1700" height="1820">
             <svg class="map__route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M48 23 C 60 30, 72 38, 95 45" fill="none" stroke="#8E1F1A" stroke-width=".55" stroke-dasharray="1.6 1.1" />
-              <path d="M37 35 C 52 44, 70 46, 95 47.5" fill="none" stroke="#8E1F1A" stroke-width=".55" stroke-dasharray="1.6 1.1" />
+              <!-- пути беженства 1915 года: Гродно → Скидель → Лида и Белосток → Волковыск → Слоним → на Барановичи -->
+              <polyline points="47.8,21.9 57,25.4 80.7,16.3" />
+              <polyline points="31.8,39.3 60.2,40.1 79.2,43.6 97,43" />
             </svg>
           </div>
           <div class="map-legend">
@@ -46,6 +47,15 @@ function renderMap() {
     pin.setAttribute('aria-pressed', String(i === mapSelected));
     pin.addEventListener('click', () => selectPlace(i));
     box.append(pin);
+
+    /* подпись для места, которого нет на самой карте */
+    if (place.label) {
+      const tag = createEl('span', 'map__tag', tr(place.label));
+      tag.setAttribute('aria-hidden', 'true');
+      tag.style.left = place.x + '%';
+      tag.style.top = place.y + '%';
+      box.append(tag);
+    }
   });
 
   paintPlace();
@@ -76,7 +86,6 @@ function paintPlace() {
 
   if (mapSelected < 0) {
     box.innerHTML = `
-      <p class="eyebrow">${esc(p.mapLab)}</p>
       <h3 class="place__title">${esc(p.mapPick)}</h3>
       <p class="place__text">${esc(p.mapPickP)}</p>
     `;

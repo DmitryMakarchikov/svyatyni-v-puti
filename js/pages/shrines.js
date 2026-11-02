@@ -6,7 +6,7 @@
 function renderShrines() {
   const p = texts();
   $('#v-shrines').innerHTML =
-    pageHead('shrines', p.shLab, p.shH, p.shLead) +
+    pageHead('shrines', p.shH, p.shLead) +
     `
     <div class="container">
       <ul class="shrines" id="shr"></ul>
