@@ -186,6 +186,11 @@ $$('.lang-switch__btn').forEach((button) =>
   })
 );
 
+/* офлайн-режим: сервис-воркер работает только по http(s); открытому с диска сайту он не нужен */
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  navigator.serviceWorker.register('sw.js');
+}
+
 addEventListener('hashchange', showRoute);
 translateStatic();
 showRoute();

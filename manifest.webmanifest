@@ -1,0 +1,15 @@
+{
+  "name": "Святыни в пути",
+  "short_name": "Святыни",
+  "description": "Судьбы христиан и святынь Гродненщины в годы Первой мировой войны: хроника, карта, сказание, игра и архив.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#EEEDE8",
+  "theme_color": "#EEEDE8",
+  "icons": [
+    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

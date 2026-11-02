@@ -77,11 +77,34 @@ function renderHome() {
         <ol class="how__list">${how}</ol>
       </section>
 
+      <section class="home-section" aria-labelledby="h-brief">
+        <div class="home-section__head">
+          <h2 class="home-section__title" id="h-brief">${esc(p.briefH)}</h2>
+        </div>
+        <div class="brief">${p.brief.map((text) => `<p class="brief__text">${esc(text)}</p>`).join('')}</div>
+      </section>
+
       <section class="home-section" aria-labelledby="h-path">
         <div class="home-section__head">
           <h2 class="home-section__title" id="h-path">${esc(p.pathH)}</h2>
         </div>
         <ol class="milestones">${path}</ol>
+      </section>
+
+      <section class="home-section" aria-labelledby="h-quote">
+        <div class="home-section__head">
+          <h2 class="home-section__title" id="h-quote">${esc(p.quoteH)}</h2>
+        </div>
+        <div class="quote">
+          <img class="quote__img" src="${thumb(DOCS['d-gev'].img)}" alt="${esc(tr(DOCS['d-gev'].t))}" loading="lazy">
+          <div class="quote__body">
+            <figure class="quote__figure">
+              <blockquote class="quote__text">«${esc(p.quote)}»</blockquote>
+              <figcaption class="caption">${esc(p.quoteSrc)}${p.quoteNote ? ' ' + esc(p.quoteNote) : ''}</figcaption>
+            </figure>
+            <button class="button button--small" type="button" id="quote-doc">${esc(p.quoteBtn)}</button>
+          </div>
+        </div>
       </section>
 
       <div class="home-section">
@@ -133,6 +156,9 @@ function renderHome() {
       if (picked === day.a) playBell(659.25, 0.04);
     })
   );
+
+  /* цитата ведёт к полному документу в архиве */
+  $('#quote-doc').addEventListener('click', () => openDoc('d-gev'));
 
   /* свеча: счётчик хранится только на этом устройстве */
   $('#candle-btn').addEventListener('click', () => {

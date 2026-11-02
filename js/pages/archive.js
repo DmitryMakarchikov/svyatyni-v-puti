@@ -24,6 +24,20 @@ function renderArchive() {
         </label>
       </div>
       <ul class="docs" id="docs"></ul>
+
+      <section class="glossary" aria-labelledby="h-gloss">
+        <h3 class="glossary__title" id="h-gloss">${esc(p.glossH)}</h3>
+        <p class="glossary__lead">${esc(p.glossLead)}</p>
+        <div class="glossary__list">
+          ${GLOSSARY.map(
+            ([term, text]) => `
+              <details class="term">
+                <summary class="term__name">${esc(tr(term))}</summary>
+                <p class="term__text">${esc(tr(text))}</p>
+              </details>`
+          ).join('')}
+        </div>
+      </section>
     </div>
   `;
 

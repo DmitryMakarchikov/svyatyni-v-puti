@@ -7,8 +7,11 @@ function renderAbout() {
   const p = texts();
   const items = ABOUT[lang]
     .map(([mod, title, body]) => {
+      /* выводы — пронумерованный список, остальные списки — с маркерами */
+      const tag = mod === 'numbered' ? 'ol' : 'ul';
+      const listMod = mod === 'numbered' ? ' about__list--numbered' : '';
       const content = Array.isArray(body)
-        ? `<ul class="about__list">${body.map((line) => `<li>${esc(line)}</li>`).join('')}</ul>`
+        ? `<${tag} class="about__list${listMod}">${body.map((line) => `<li>${esc(line)}</li>`).join('')}</${tag}>`
         : `<p class="about__text">${esc(body)}</p>`;
       return `
         <section class="about__item${mod ? ' about__item--' + mod : ''}">

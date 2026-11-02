@@ -121,7 +121,9 @@ html {
 }
 body {
   margin: 0;
-  background: var(--paper);
+  /* фон — бумага с лёгким зерном, как у старой книги */
+  background: var(--paper)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E");
   color: var(--ink);
   font: 400 17px/1.62 var(--body);
   -webkit-font-smoothing: antialiased;
@@ -1034,6 +1036,60 @@ a {
   color: var(--ink-2);
 }
 
+/* «Коротко о главном»: две газетные колонки и киноварная буквица */
+.brief {
+  columns: 2 320px;
+  column-gap: 44px;
+  column-rule: 1px solid var(--line);
+}
+.brief__text {
+  margin-bottom: 14px;
+  break-inside: avoid;
+  font-size: 17.5px;
+  line-height: 1.7;
+}
+.brief__text:first-child::first-letter {
+  float: left;
+  margin: 8px 10px 0 0;
+  font: 400 72px/0.78 var(--disp);
+  color: var(--cinnabar);
+}
+
+/* «Голос эпохи»: цитата из первоисточника рядом со сканом страницы */
+.quote {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+  padding: 22px;
+  border-top: 3px double var(--gold);
+  border-bottom: 3px double var(--gold);
+  background: var(--card);
+}
+.quote__img {
+  width: 100%;
+  border: 1px solid var(--line);
+  box-shadow: 4px 4px 0 var(--paper-2);
+  transform: rotate(-1.5deg);
+}
+.quote__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+.quote__figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.quote__text {
+  margin: 0;
+  font: 400 clamp(26px, 3vw, 38px) / 1.25 var(--disp);
+  color: var(--ink);
+}
+
 .home-duo {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
@@ -1267,6 +1323,15 @@ a {
   stroke-linejoin: round;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
+}
+/* пунктир движется вдоль маршрута — показывает направление беженства */
+.map__route polyline {
+  animation: route-flow 1.6s linear infinite;
+}
+@keyframes route-flow {
+  to {
+    stroke-dashoffset: -17;
+  }
 }
 .map__pin {
   position: absolute;
@@ -2169,6 +2234,60 @@ a {
   grid-column: 1 / -1;
 }
 
+/* Словарь эпохи: раскрывающиеся карточки */
+.glossary {
+  margin-top: clamp(36px, 5vw, 56px);
+  padding-top: 22px;
+  border-top: 3px double var(--gold);
+}
+.glossary__title {
+  font: 400 clamp(30px, 3.2vw, 42px) / 1.1 var(--disp);
+}
+.glossary__lead {
+  margin: 6px 0 18px;
+  color: var(--ink-2);
+}
+.glossary__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  align-items: start;
+}
+.term {
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+.term__name {
+  min-height: 48px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font: 400 23px/1.15 var(--disp);
+  cursor: pointer;
+  list-style: none;
+}
+.term__name::-webkit-details-marker {
+  display: none;
+}
+.term__name::after {
+  content: '+';
+  flex: 0 0 auto;
+  font: 600 18px var(--mono);
+  color: var(--lapis);
+}
+.term[open] .term__name::after {
+  content: '−';
+}
+.term[open] .term__name {
+  color: var(--lapis);
+}
+.term__text {
+  padding: 0 16px 14px;
+  color: var(--ink-2);
+}
+
 /* Викторина */
 .quiz {
   max-width: 760px;
@@ -2234,6 +2353,23 @@ a {
 .about__item--wide .about__text {
   font: 400 clamp(26px, 2.8vw, 38px) / 1.2 var(--disp);
   color: var(--ink);
+}
+/* выводы: на всю ширину, номера киноварью */
+.about__item--numbered {
+  grid-column: 1 / -1;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-top: 3px double var(--gold);
+  background: var(--card);
+}
+.about__list--numbered {
+  list-style: decimal;
+  padding-left: 24px;
+  gap: 10px;
+}
+.about__list--numbered li::marker {
+  color: var(--cinnabar);
+  font: 400 1.25em var(--disp);
 }
 
 /* Модальное окно (нативный <dialog>) */
@@ -2470,6 +2606,15 @@ a {
   }
 }
 @media (max-width: 900px) {
+  .quote {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .quote__img {
+    width: min(220px, 70%);
+  }
+  .glossary__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .how__list {
     grid-template-columns: minmax(0, 1fr);
     gap: 14px;
