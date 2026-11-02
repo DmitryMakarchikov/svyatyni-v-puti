@@ -29,8 +29,17 @@
       as="font"
       type="font/woff2"
       crossorigin />
-    <!-- главная картинка первого экрана грузится сразу -->
-    <link rel="preload" href="img/icon-augustow.jpg" as="image" fetchpriority="high" />
+    <!-- икону с главной грузим заранее, только если посетитель открыл главную -->
+    <script>
+      if (!location.hash || location.hash === '#home') {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = 'img/icon-augustow.jpg';
+        link.fetchPriority = 'high';
+        document.head.append(link);
+      }
+    </script>
     <link rel="stylesheet" href="css/style.css" />
 
     <!-- порядок важен: данные → общие функции → разделы → запуск -->
