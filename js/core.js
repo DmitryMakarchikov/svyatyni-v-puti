@@ -248,6 +248,7 @@ function routeHtml(current) {
         <a class="route__link" href="#${name}" ${isCurrent ? 'aria-current="step"' : ''}>
           <span class="route__num">${i + 1}</span>
           <span class="route__name">${esc(ui().nav[name])}</span>
+          ${progress.stamps[name] ? `<span class="visually-hidden">${esc(ui().stampDone)}</span>` : ''}
         </a>
       </li>`;
   }).join('');
