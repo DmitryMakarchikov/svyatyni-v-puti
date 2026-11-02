@@ -13,8 +13,6 @@ function renderShrines() {
     </div>
   `;
 
-  const periods = ['before', 'war', 'now'].map((key) => esc(tr(SH_LABELS[key]))).join(' · ');
-
   SHRINES.forEach((shrine, i) => {
     const picture = shrine.img
       ? `<img class="shrine__img" src="${shrine.img}" alt="" loading="lazy" style="object-position: ${shrine.pos}">`
@@ -27,7 +25,7 @@ function renderShrines() {
       <span class="shrine__body">
         <span class="status status--${shrine.st}">${esc(tr(shrine.s))}</span>
         <span class="shrine__title">${esc(tr(shrine.t))}</span>
-        <span class="caption shrine__meta">${periods}</span>
+        <span class="more">${esc(ui().readDossier)} <span aria-hidden="true">→</span></span>
       </span>
     `;
     button.addEventListener('click', () => openShrine(shrine, i));

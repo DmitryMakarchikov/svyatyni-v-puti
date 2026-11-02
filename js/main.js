@@ -141,7 +141,7 @@ $('.skip-link').addEventListener('click', (e) => {
   $('#main').focus();
 });
 
-/* Клавиатура: стрелки листают комикс и делают выбор в игре, Esc закрывает меню */
+/* Клавиатура: стрелки листают сказание и делают выбор в игре, Esc закрывает меню */
 document.addEventListener('keydown', (e) => {
   if (viewer.open) {
     if (e.key === 'ArrowRight') stepViewer(1);

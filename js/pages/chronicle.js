@@ -45,6 +45,7 @@ function paintTimeline() {
       <span class="event__body">
         <span class="event__title">${esc(tr(event.t))}</span>
         <span class="event__text">${esc(tr(event.x))}</span>
+        <span class="more">${esc(ui().more)} <span aria-hidden="true">→</span></span>
       </span>
       ${picture}
     `;

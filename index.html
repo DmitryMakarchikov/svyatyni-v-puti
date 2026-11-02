@@ -6,7 +6,7 @@
     <title>Святыни в пути</title>
     <meta
       name="description"
-      content="Интерактивный проект о судьбах христиан и святынь Гродненщины в годы Первой мировой войны: хроника, карта 1913 года, досье икон, комикс и игра «Дорога 1915». XV Коложские чтения." />
+      content="Интерактивный проект о судьбах христиан и святынь Гродненщины в годы Первой мировой войны: хроника, карта 1913 года, досье икон, сказание в картинах и игра «Дорога 1915». XV Коложские чтения." />
     <meta name="author" content="Дмитрий Скутов" />
     <meta name="theme-color" content="#EEEDE8" />
 
@@ -15,7 +15,7 @@
     <meta property="og:title" content="Святыни в пути" />
     <meta
       property="og:description"
-      content="Хроника, карта, комикс и игра о Гродненщине 1914–1918 годов. К 110-летию прославления Августовской иконы Божией Матери." />
+      content="Хроника, карта, сказание в картинах и игра о Гродненщине 1914–1918 годов. К 110-летию прославления Августовской иконы Божией Матери." />
     <meta
       property="og:image"
       content="https://dmitrymakarchikov.github.io/svyatyni-v-puti/img/icon-augustow.jpg" />
@@ -25,7 +25,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Forum&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+      href="https://fonts.googleapis.com/css2?family=Forum&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
     <link rel="stylesheet" href="css/style.css" />
 
     <!-- порядок важен: данные → общие функции → разделы → запуск -->
@@ -67,7 +67,7 @@
             <li><a class="main-nav__link" href="#chronicle" data-i="nav.chronicle">Хроника</a></li>
             <li><a class="main-nav__link" href="#map" data-i="nav.map">Карта</a></li>
             <li><a class="main-nav__link" href="#shrines" data-i="nav.shrines">Святыни</a></li>
-            <li><a class="main-nav__link" href="#comic" data-i="nav.comic">Комикс</a></li>
+            <li><a class="main-nav__link" href="#comic" data-i="nav.comic">Сказание</a></li>
             <li><a class="main-nav__link" href="#game" data-i="nav.game">Игра</a></li>
             <li><a class="main-nav__link" href="#archive" data-i="nav.archive">Архив</a></li>
           </ul>
@@ -86,7 +86,7 @@
               <circle cx="12" cy="12" r="5.5" />
               <path d="M9.6 12.2l1.7 1.7 3.2-3.4" />
             </svg>
-            <span class="visually-hidden" data-i="passport">Путевой лист</span>
+            <span class="passport-btn__label" data-i="stampsShort">Печати</span>
             <span class="passport-btn__count" id="pass-n">0/6</span>
           </button>
 
@@ -103,6 +103,7 @@
                 <rect y="6.67" width="30" height="6.67" fill="#0039A6" />
                 <rect y="13.33" width="30" height="6.67" fill="#D52B1E" />
               </svg>
+              <span class="lang-switch__code">РУС</span>
             </button>
             <button
               class="lang-switch__btn"
@@ -122,6 +123,7 @@
                   <path d="M2.3 14.2l1.3 1.6-1.3 1.6L1 15.8z" />
                 </g>
               </svg>
+              <span class="lang-switch__code">БЕЛ</span>
             </button>
           </div>
 
@@ -154,7 +156,7 @@
         <li><a class="mobile-nav__link" href="#chronicle" data-i="nav.chronicle">Хроника</a></li>
         <li><a class="mobile-nav__link" href="#map" data-i="nav.map">Карта</a></li>
         <li><a class="mobile-nav__link" href="#shrines" data-i="nav.shrines">Святыни</a></li>
-        <li><a class="mobile-nav__link" href="#comic" data-i="nav.comic">Комикс</a></li>
+        <li><a class="mobile-nav__link" href="#comic" data-i="nav.comic">Сказание</a></li>
         <li><a class="mobile-nav__link" href="#game" data-i="nav.game">Игра</a></li>
         <li><a class="mobile-nav__link" href="#archive" data-i="nav.archive">Архив</a></li>
         <li><a class="mobile-nav__link" href="#quiz" data-i="nav.quiz">Викторина</a></li>
@@ -168,8 +170,8 @@
       <section class="page" id="v-chronicle" aria-labelledby="t-chronicle"></section>
       <section class="page" id="v-map" aria-labelledby="t-map"></section>
       <section class="page" id="v-shrines" aria-labelledby="t-shrines"></section>
-      <section class="page page--dark" id="v-comic" aria-labelledby="t-comic"></section>
-      <section class="page page--dark" id="v-game" aria-labelledby="t-game"></section>
+      <section class="page" id="v-comic" aria-labelledby="t-comic"></section>
+      <section class="page" id="v-game" aria-labelledby="t-game"></section>
       <section class="page" id="v-archive" aria-labelledby="t-archive"></section>
       <section class="page" id="v-quiz" aria-labelledby="t-quiz"></section>
       <section class="page" id="v-about" aria-labelledby="t-about"></section>
@@ -182,7 +184,7 @@
 
     <footer class="site-footer">
       <div class="container site-footer__inner">
-        <p data-i="foot1">XV Коложские чтения · Гродно · 10–11 декабря 2026</p>
+        <p data-i="foot1">XV Коложские чтения · Гродно</p>
         <a class="site-footer__link" href="#about" data-i="footAbout">О проекте и источники</a>
       </div>
     </footer>
@@ -193,8 +195,8 @@
       <div class="modal__body" id="modal-body"></div>
     </dialog>
 
-    <!-- просмотр комикса по кадрам -->
-    <dialog class="viewer" id="viewer" aria-label="Комикс" data-i-label="comic">
+    <!-- просмотр сказания по картинам -->
+    <dialog class="viewer" id="viewer" aria-label="Сказание" data-i-label="comic">
       <div class="viewer__stage" id="vp"></div>
       <div class="viewer__bar">
         <button class="button button--small" type="button" id="v-prev" aria-label="Назад" data-i-label="prev">

@@ -4,14 +4,13 @@
    Фазы: intro → card (выбор) → res (итог хода) → … → end. Если шкала упала до нуля,
    вставляется фаза rescue: герою помогают незнакомые люди, проиграть нельзя. */
 
-/* шкалы: максимум, ключи, цвета и значки */
+/* шкалы: максимум, ключи и значки (цвет задаётся в CSS через meter--s/b/n) */
 const METER_MAX = 10;
 const METER_KEYS = ['s', 'b', 'n'];
-const METER_COLORS = { s: 'var(--m-s)', b: 'var(--m-b)', n: 'var(--m-n)' };
 const METER_ICONS = {
-  s: '<svg class="meter__icon" viewBox="0 0 24 24" fill="none" stroke="#C9A45C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4" r="2"/><path d="M11 21l2-6 3 3v3M9 12l2-4 4 2 2 3M7 21l3-7"/></svg>',
-  b: '<svg class="meter__icon" viewBox="0 0 24 24" fill="none" stroke="#C07A3E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12c0-4 3.6-6 8-6s8 2 8 6v6H4z"/><path d="M8 9l1 3M12 8v4M16 9l-1 3"/></svg>',
-  n: '<svg class="meter__icon" viewBox="0 0 24 24" fill="none" stroke="#EBD9A6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 2 5 0 6-2-1-2-3 0-6z"/><rect x="9" y="10" width="6" height="11"/></svg>'
+  s: '<svg class="meter__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4" r="2"/><path d="M11 21l2-6 3 3v3M9 12l2-4 4 2 2 3M7 21l3-7"/></svg>',
+  b: '<svg class="meter__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12c0-4 3.6-6 8-6s8 2 8 6v6H4z"/><path d="M8 9l1 3M12 8v4M16 9l-1 3"/></svg>',
+  n: '<svg class="meter__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2c2 3 2 5 0 6-2-1-2-3 0-6z"/><rect x="9" y="10" width="6" height="11"/></svg>'
 };
 /* документы, которые можно найти в игре, и максимум милосердия за партию */
 const GAME_DOCS = [...new Set(CARDS.map((card) => card.doc).filter(Boolean))];
@@ -44,12 +43,12 @@ function renderGame() {
   const g = gameTexts();
   const meters = METER_KEYS.map(
     (key) => `
-      <div class="meter" data-k="${key}" role="meter" aria-valuemin="0" aria-valuemax="${METER_MAX}" aria-valuenow="${game[key]}" aria-label="${esc(g.meters[key])}">
+      <div class="meter meter--${key}" data-k="${key}" role="meter" aria-valuemin="0" aria-valuemax="${METER_MAX}" aria-valuenow="${game[key]}" aria-label="${esc(g.meters[key])}">
         <span class="meter__dot"></span>
         ${METER_ICONS[key]}
         <span>${esc(g.meters[key])}</span>
         <span class="meter__bar">
-          <span class="meter__fill" style="background: ${METER_COLORS[key]}; width: ${(game[key] / METER_MAX) * 100}%"></span>
+          <span class="meter__fill" style="width: ${(game[key] / METER_MAX) * 100}%"></span>
         </span>
       </div>`
   ).join('');
