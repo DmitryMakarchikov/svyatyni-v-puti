@@ -21,11 +21,16 @@
       content="https://dmitrymakarchikov.github.io/svyatyni-v-puti/img/icon-augustow.jpg" />
 
     <link rel="icon" href="img/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- шрифты свои (папка fonts); заранее грузим два главных, чтобы текст не «прыгал» -->
+    <link rel="preload" href="fonts/forum-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Forum&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+      rel="preload"
+      href="fonts/literata-400-700-cyrillic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin />
+    <!-- главная картинка первого экрана грузится сразу -->
+    <link rel="preload" href="img/icon-augustow.jpg" as="image" fetchpriority="high" />
     <link rel="stylesheet" href="css/style.css" />
 
     <!-- порядок важен: данные → общие функции → разделы → запуск -->
@@ -96,7 +101,7 @@
               type="button"
               data-lang="ru"
               aria-pressed="true"
-              aria-label="Русский"
+              aria-label="РУС — русский язык"
               title="Русский">
               <svg class="lang-switch__flag" viewBox="0 0 30 20" aria-hidden="true">
                 <rect width="30" height="20" fill="#fff" />
@@ -110,7 +115,7 @@
               type="button"
               data-lang="be"
               aria-pressed="false"
-              aria-label="Беларуская"
+              aria-label="БЕЛ — беларуская мова"
               title="Беларуская">
               <svg class="lang-switch__flag" viewBox="0 0 30 20" aria-hidden="true">
                 <rect width="30" height="20" fill="#C8313E" />
@@ -196,7 +201,8 @@
     </dialog>
 
     <!-- просмотр сказания по картинам -->
-    <dialog class="viewer" id="viewer" aria-label="Сказание" data-i-label="comic">
+    <dialog class="viewer" id="viewer" aria-labelledby="viewer-title">
+      <h2 class="visually-hidden" id="viewer-title" data-i="comic">Сказание</h2>
       <div class="viewer__stage" id="vp"></div>
       <div class="viewer__bar">
         <button class="button button--small" type="button" id="v-prev" aria-label="Назад" data-i-label="prev">

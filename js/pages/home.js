@@ -14,7 +14,7 @@ function renderHome() {
     .map(
       ([route, img, title, text], i) => `
         <a class="kleymo kleymo--${i + 1}" href="#${route}">
-          <img class="kleymo__img" src="${img}" alt="" loading="lazy">
+          <img class="kleymo__img" src="${thumb(img)}" alt="" loading="lazy">
           <span class="kleymo__body">
             <span class="kleymo__num" aria-hidden="true">${i + 1}</span>
             <span class="kleymo__title">${esc(title)}</span>
@@ -52,7 +52,7 @@ function renderHome() {
 
       <nav class="icon-board" aria-label="${esc(p.kleymaLabel)}">
         <figure class="icon-board__center">
-          <img class="icon-board__img" src="img/icon-augustow.jpg" alt="${esc(tr(DOCS['d-icon'].t))}" width="800" height="1006">
+          <img class="icon-board__img" src="img/icon-augustow.jpg" fetchpriority="high" alt="${esc(tr(DOCS['d-icon'].t))}" width="800" height="1006">
         </figure>
         ${kleyma}
       </nav>

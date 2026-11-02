@@ -71,7 +71,7 @@ function paintDocs() {
     const button = createEl('button', 'doc');
     button.type = 'button';
     button.innerHTML = `
-      <span class="doc__frame"><img class="doc__img" src="${doc.img}" alt="" loading="lazy"></span>
+      <span class="doc__frame"><img class="doc__img" src="${thumb(doc.img)}" alt="" loading="lazy"></span>
       <span class="eyebrow doc__type">${esc(tr(doc.cap))}</span>
       <span class="doc__title">${esc(tr(doc.t))}</span>
       ${badge}

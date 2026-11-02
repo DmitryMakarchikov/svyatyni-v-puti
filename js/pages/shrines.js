@@ -15,7 +15,7 @@ function renderShrines() {
 
   SHRINES.forEach((shrine, i) => {
     const picture = shrine.img
-      ? `<img class="shrine__img" src="${shrine.img}" alt="" loading="lazy" style="object-position: ${shrine.pos}">`
+      ? `<img class="shrine__img" src="${thumb(shrine.img)}" alt="" loading="lazy" style="object-position: ${shrine.pos}">`
       : `<span class="shrine__placeholder" aria-hidden="true">${esc(tr(shrine.t))}</span>`;
 
     const button = createEl('button', 'shrine');

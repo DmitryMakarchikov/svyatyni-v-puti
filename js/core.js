@@ -39,6 +39,9 @@ const gameTexts = () => GTXT[lang];
 const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' };
 const esc = (value) => String(value).replace(/[&<>"]/g, (c) => ESC[c]);
 
+/* уменьшенная копия картинки для списков и карточек (папка img/thumbs) */
+const thumb = (src) => src.replace('img/', 'img/thumbs/');
+
 /* создаёт элемент с классом и текстом */
 function createEl(tag, className, text) {
   const node = document.createElement(tag);
@@ -248,7 +251,7 @@ function routeHtml(current) {
         </a>
       </li>`;
   }).join('');
-  return `<ol class="route" aria-label="${esc(ui().pagerLabel)}">${stops}</ol>`;
+  return `<nav class="route" aria-label="${esc(ui().routeLabel)}"><ol class="route__list">${stops}</ol></nav>`;
 }
 
 /* Шапка раздела: маршрут, заголовок, орнамент, вводный текст и кнопки (если нужны) */

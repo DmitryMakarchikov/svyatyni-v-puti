@@ -303,7 +303,7 @@ function drawResult(result, quiet = false) {
   const found = doc
     ? `
       <button class="found-doc" type="button" id="g-doc">
-        <img class="found-doc__img" src="${doc.img}" alt="">
+        <img class="found-doc__img" src="${thumb(doc.img)}" alt="">
         <span>
           <span class="eyebrow">${esc(g.newDoc)}</span>
           <span class="found-doc__title">${esc(tr(doc.t))}</span>

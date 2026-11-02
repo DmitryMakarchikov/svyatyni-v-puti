@@ -96,7 +96,7 @@ function paintPlace() {
   const doc = place.doc ? DOCS[place.doc] : null;
 
   box.innerHTML = `
-    ${doc ? `<img class="place__img" src="${doc.img}" alt="${esc(tr(doc.t))}">` : ''}
+    ${doc ? `<img class="place__img" src="${thumb(doc.img)}" alt="${esc(tr(doc.t))}">` : ''}
     <p class="eyebrow">${place.n} / ${PLACES.length}</p>
     <h3 class="place__title">${esc(tr(place.t))}</h3>
     <p class="place__text">${esc(tr(place.text))}</p>
