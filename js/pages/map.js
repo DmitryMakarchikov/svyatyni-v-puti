@@ -50,12 +50,21 @@ function renderMap() {
 
     /* подпись для места, которого нет на самой карте */
     if (place.label) {
-      const tag = createEl('span', 'map__tag', tr(place.label));
+      const tag = createEl('span', 'map__tag' + (place.labelLeft ? ' map__tag--left' : ''), tr(place.label));
       tag.setAttribute('aria-hidden', 'true');
       tag.style.left = place.x + '%';
       tag.style.top = place.y + '%';
       box.append(tag);
     }
+  });
+
+  /* куда вели дороги беженства дальше на восток */
+  ROUTE_ENDS.forEach((end) => {
+    const tag = createEl('span', 'map__tag map__tag--route', tr(end.t));
+    tag.setAttribute('aria-hidden', 'true');
+    tag.style.left = end.x + '%';
+    tag.style.top = end.y + '%';
+    box.append(tag);
   });
 
   paintPlace();

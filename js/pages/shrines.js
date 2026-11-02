@@ -53,7 +53,7 @@ function openShrine(shrine, i) {
 
   openModal(
     `
-    ${shrine.img ? `<img class="modal__img" src="${shrine.img}" alt="${esc(tr(shrine.t))}">` : ''}
+    ${shrine.img ? `<img class="modal__img" src="${shrine.img}" alt="${esc(tr(shrine.alt || shrine.t))}">` : ''}
     <div>
       <span class="status status--${shrine.st}">${esc(tr(shrine.s))}</span>
       <h3 class="modal__title" id="m-title">${esc(tr(shrine.t))}</h3>
