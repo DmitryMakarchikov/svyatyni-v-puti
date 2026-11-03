@@ -51,12 +51,14 @@
           imageSizes: '(max-width: 900px) calc(100vw - 40px), 700px'
         },
         comic: {
-          imageSrcset: 'img/thumbs/scheme-1914.jpg 560w, img/scheme-1914.jpg 1200w',
+          imageSrcset:
+            'img/thumbs/scheme-1914.jpg 560w, img/scheme-1914-720.jpg 720w, img/scheme-1914.jpg 1200w',
           imageSizes:
             '(max-width: 900px) calc(100vw - 40px), (max-width: 1220px) calc((100vw - 110px) / 6 * 4 + 42px), 782px'
         },
         game: {
-          imageSrcset: 'img/thumbs/kolozha-1915.jpg 560w, img/kolozha-1915.jpg 1300w',
+          imageSrcset:
+            'img/thumbs/kolozha-1915.jpg 560w, img/kolozha-1915-720.jpg 720w, img/kolozha-1915.jpg 1300w',
           imageSizes: '(max-width: 900px) calc(100vw - 40px), 574px'
         }
       }[location.hash.slice(1).split('/')[0] || 'home'];

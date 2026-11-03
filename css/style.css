@@ -184,6 +184,7 @@ a {
 }
 /* пока JS рисует раздел, main уже занимает экран — подвал не прыгает вниз */
 .site-main {
+  min-height: calc(100vh - var(--hdr));
   min-height: calc(100svh - var(--hdr));
 }
 .site-main:focus {
@@ -2388,6 +2389,7 @@ a {
   color: var(--ink-2);
 }
 .modal__img--portrait {
+  max-height: 70vh;
   max-height: 70svh;
   background: var(--paper-2);
 }
@@ -2603,6 +2605,7 @@ a {
   position: relative;
   width: min(900px, 100%);
   aspect-ratio: 4 / 3;
+  max-height: calc(100vh - 120px);
   max-height: calc(100svh - 120px);
   background: #000;
   border: 2px solid #000;
@@ -3305,6 +3308,7 @@ a {
 }
 /* страница письма в окне: во всю высоту, без обрезки */
 .modal__img--page {
+  max-height: 86vh;
   max-height: 86svh;
 }
 
@@ -3699,6 +3703,7 @@ a {
   margin: auto;
   width: min(880px, calc(100% - var(--gl) - var(--gr)));
   max-width: none;
+  max-height: calc(100vh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   max-height: calc(100svh - 32px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
   padding: 0;
   border: 1px solid rgba(21, 23, 26, 0.07);
@@ -3729,6 +3734,7 @@ a {
 .modal__img {
   width: 100%;
   height: auto;
+  max-height: 64vh;
   max-height: 64svh;
   object-fit: contain;
   background: var(--paper-2);
@@ -4054,6 +4060,7 @@ a {
     max-width: 420px;
   }
   .modal__img {
+    max-height: 40vh;
     max-height: 40svh;
   }
 }
@@ -4067,6 +4074,7 @@ a {
   }
   .viewer__img {
     height: auto;
+    max-height: calc(100vh - 280px);
     max-height: calc(100svh - 280px);
   }
   .viewer__caption {
@@ -4075,6 +4083,7 @@ a {
     box-shadow: none;
   }
   .viewer__stage--text {
+    min-height: 50vh;
     min-height: 50svh;
   }
   /* на узком экране у станций остаются только номера; название раздела — в заголовке */

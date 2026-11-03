@@ -3,6 +3,9 @@
 /* Главная: первый экран-история на «ночном небе», плитки разделов,
    путь святынь, голос 1915 года, вопрос дня, свеча памяти и «Было — стало» */
 
+/* ширина «Было — стало»: во всю ширину контейнера */
+const CMP_SIZES = '(max-width: 1220px) calc(100vw - 40px), 1180px';
+
 /* рисует главную страницу */
 function renderHome() {
   const p = texts();
@@ -130,8 +133,8 @@ function renderHome() {
           <h2 class="home-section__title" id="h-compare">${esc(p.cmpH)}</h2>
         </div>
         <div class="compare" id="cmp" style="--p: 50%">
-          <img class="compare__img" src="img/kolozha-today.jpg" alt="${esc(tr(DOCS['d-kolozha-today'].t))}" loading="lazy" decoding="async">
-          <img class="compare__img compare__img--top" src="img/kolozha-1915.jpg" alt="${esc(tr(DOCS['d-kolozha'].t))}" loading="lazy" decoding="async">
+          <img class="compare__img" ${imgAttrs('img/kolozha-today.jpg', CMP_SIZES)} alt="${esc(tr(DOCS['d-kolozha-today'].t))}" loading="lazy" decoding="async">
+          <img class="compare__img compare__img--top" ${imgAttrs('img/kolozha-1915.jpg', CMP_SIZES)} alt="${esc(tr(DOCS['d-kolozha'].t))}" loading="lazy" decoding="async">
           <span class="compare__tag compare__tag--left">${esc(p.cmpL)}</span>
           <span class="compare__tag compare__tag--right">${esc(p.cmpR)}</span>
           <span class="compare__line" aria-hidden="true"></span>

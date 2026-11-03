@@ -42,10 +42,12 @@ const esc = (value) => String(value).replace(/[&<>"]/g, (c) => ESC[c]);
 /* уменьшенная копия картинки для списков и карточек (папка img/thumbs) */
 const thumb = (src) => src.replace('img/', 'img/thumbs/');
 
-/* srcset снимка: лёгкая и полная версии (пусто, если лёгкой нет) */
+/* srcset снимка: лёгкая, средняя (если есть) и полная версии; пусто, если лёгкой нет */
 function srcsetOf(img) {
   const w = IMG_W[img.slice(4, -4)];
-  return w ? `${thumb(img)} ${w[0]}w, ${img} ${w[1]}w` : '';
+  if (!w) return '';
+  const mid = w.length > 2 ? `, ${img.replace('.jpg', '-720.jpg')} 720w` : '';
+  return `${thumb(img)} ${w[0]}w${mid}, ${img} ${w[w.length - 1]}w`;
 }
 
 /* src, srcset и sizes для <img>: браузер возьмёт версию по ширине экрана */
