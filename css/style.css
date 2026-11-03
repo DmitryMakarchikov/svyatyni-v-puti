@@ -1876,6 +1876,10 @@ a {
 .band--night .caption {
   color: var(--mist);
 }
+/* подпись внутри светлой карточки на тёмной полосе — тёмная */
+.band--night .tile .caption {
+  color: var(--ink-2);
+}
 
 /* перепись 1897 года */
 .census {
