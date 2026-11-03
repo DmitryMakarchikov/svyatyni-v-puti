@@ -13,7 +13,15 @@ function renderArchive() {
     pageHead('archive', p.arH, p.arLead) +
     `
     <div class="container">
-      <div class="archive-tools">
+      <nav class="chapters" aria-label="${esc(p.arH)}">
+        ${p.arNav
+          .map(
+            (name, i) =>
+              `<button class="chapters__link" type="button" data-go="${['a-docs', 'letter', 'glossary', 'family'][i]}"><span class="chapters__num">0${i + 1}</span>${esc(name)}</button>`
+          )
+          .join('')}
+      </nav>
+      <div class="archive-tools" id="a-docs">
         <div class="filters" id="atypes" role="group" aria-label="${esc(p.arTypes)}"></div>
         <label class="search">
           <svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -27,7 +35,7 @@ function renderArchive() {
 
       ${letterHtml()}
 
-      <section class="glossary" aria-labelledby="h-gloss">
+      <section class="glossary" id="glossary" aria-labelledby="h-gloss">
         <h3 class="glossary__title" id="h-gloss">${esc(p.glossH)}</h3>
         <p class="glossary__lead">${esc(p.glossLead)}</p>
         <div class="glossary__list">
@@ -57,6 +65,11 @@ function renderArchive() {
     archiveQuery = search.value;
     paintDocs();
   });
+
+  /* оглавление: прокрутка к блоку */
+  $$('#v-archive .chapters__link').forEach((link) =>
+    link.addEventListener('click', () => $('#' + link.dataset.go).scrollIntoView({ block: 'start' }))
+  );
 
   paintDocs();
   bindLetter();
@@ -91,7 +104,7 @@ function paintDocs() {
     const button = createEl('button', 'doc');
     button.type = 'button';
     button.innerHTML = `
-      <span class="doc__frame"><img class="doc__img" src="${thumb(doc.img)}" alt="" loading="lazy"></span>
+      <span class="doc__frame"><img class="doc__img" src="${thumb(doc.img)}" alt="" loading="lazy" decoding="async"></span>
       <span class="eyebrow doc__type">${esc(tr(doc.cap))}</span>
       <span class="doc__title">${esc(tr(doc.t))}</span>
       ${badge}

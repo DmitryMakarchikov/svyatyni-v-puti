@@ -33,6 +33,24 @@ function renderMap() {
         <aside class="card place" id="place" aria-live="polite"></aside>
       </div>
 
+      <section class="places" aria-labelledby="h-places">
+        <h3 class="map-quiz__title" id="h-places">${esc(p.mapListH)}</h3>
+        <ul class="places__list">
+          ${PLACES.map((place, i) => {
+            const far = place.km > 0 ? p.mapKm(place.km) : place.km === 0 ? p.mapHere : p.mapEast;
+            return `
+              <li>
+                <button class="places__item" type="button" data-place="${i}">
+                  <span class="places__num" aria-hidden="true">${place.n}</span>
+                  <span class="places__name">${esc(tr(place.t))}</span>
+                  <span class="places__brief">${esc(tr(place.brief))}</span>
+                  <span class="places__km">${esc(far)}</span>
+                </button>
+              </li>`;
+          }).join('')}
+        </ul>
+      </section>
+
       <section class="map-quiz" aria-labelledby="h-mapquiz">
         <h3 class="map-quiz__title" id="h-mapquiz">${esc(p.mapQuizH)}</h3>
         <div class="map-quiz__list">
@@ -95,6 +113,14 @@ function renderMap() {
     tag.style.top = end.y + '%';
     box.append(tag);
   });
+
+  /* список мест: выбор точки и переход к карте */
+  $$('.places__item').forEach((item) =>
+    item.addEventListener('click', () => {
+      selectPlace(Number(item.dataset.place));
+      if (innerWidth >= 900) $('#mapbox').scrollIntoView({ block: 'start' });
+    })
+  );
 
   paintPlace();
 }

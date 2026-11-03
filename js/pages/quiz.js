@@ -1,9 +1,20 @@
 'use strict';
 
-/* Викторина: 10 вопросов, за 7 правильных ответов — печать */
+/* Викторина: каждый раз 10 случайных вопросов из банка, за 7 правильных ответов — печать */
 
-/* номер вопроса, счёт и состояние */
-const quiz = { index: 0, score: 0, answered: false, done: false };
+const QUIZ_SIZE = 10;
+/* номер вопроса, счёт, состояние и набор вопросов этой попытки */
+const quiz = { index: 0, score: 0, answered: false, done: false, set: [] };
+
+/* новая попытка: перемешиваем банк (Фишер — Йетс) и берём первые 10 */
+function newQuizSet() {
+  const ids = QUIZ.map((_, i) => i);
+  for (let i = ids.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [ids[i], ids[j]] = [ids[j], ids[i]];
+  }
+  Object.assign(quiz, { index: 0, score: 0, answered: false, done: false, set: ids.slice(0, QUIZ_SIZE) });
+}
 
 /* рисует раздел викторины */
 function renderQuiz() {
@@ -15,6 +26,7 @@ function renderQuiz() {
       <div class="quiz" id="quiz-box"></div>
     </div>
   `;
+  if (!quiz.set.length) newQuizSet();
   paintQuiz();
 }
 
@@ -38,14 +50,14 @@ function paintQuiz() {
       </div>
     `;
     $('#qz-again').addEventListener('click', () => {
-      Object.assign(quiz, { index: 0, score: 0, answered: false, done: false });
+      newQuizSet();
       paintQuiz();
     });
     return;
   }
 
-  const question = QUIZ[quiz.index];
-  const isLast = quiz.index === QUIZ.length - 1;
+  const question = QUIZ[quiz.set[quiz.index]];
+  const isLast = quiz.index === QUIZ_SIZE - 1;
 
   box.innerHTML = `
     <div class="quiz__top">
@@ -53,7 +65,7 @@ function paintQuiz() {
       <span>${esc(p.qzPts(quiz.score))}</span>
     </div>
     <div class="quiz__progress">
-      <span class="quiz__progress-fill" style="width: ${(quiz.index / QUIZ.length) * 100}%"></span>
+      <span class="quiz__progress-fill" style="width: ${(quiz.index / QUIZ_SIZE) * 100}%"></span>
     </div>
     <h3 class="quiz__question">${esc(tr(question.q))}</h3>
     <div class="options">${optionsHtml(tr(question.o))}</div>

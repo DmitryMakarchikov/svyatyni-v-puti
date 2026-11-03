@@ -19,7 +19,7 @@ function renderHome() {
     .map(
       ([route, img, title, text]) => `
         <a class="bento__tile bento__tile--${route}" href="#${route}">
-          <img class="bento__img" src="${thumb(img)}" alt="" loading="lazy">
+          <img class="bento__img" src="${thumb(img)}" alt="" loading="lazy" decoding="async">
           <span class="bento__body">
             ${progress.stamps[route] ? `<span class="bento__stamp">${esc(ui().stampsShort)} ✓</span>` : ''}
             <span class="bento__title">${esc(title)}</span>
@@ -92,7 +92,7 @@ function renderHome() {
           <h2 class="home-section__title" id="h-quote">${esc(p.quoteH)}</h2>
         </div>
         <div class="quote">
-          <img class="quote__img" src="${thumb(DOCS['d-gev'].img)}" alt="${esc(tr(DOCS['d-gev'].t))}" loading="lazy">
+          <img class="quote__img" src="${thumb(DOCS['d-gev'].img)}" alt="${esc(tr(DOCS['d-gev'].t))}" loading="lazy" decoding="async">
           <div class="quote__body">
             <figure class="quote__figure">
               <blockquote class="quote__text">«${esc(p.quote)}»</blockquote>
@@ -130,8 +130,8 @@ function renderHome() {
           <h2 class="home-section__title" id="h-compare">${esc(p.cmpH)}</h2>
         </div>
         <div class="compare" id="cmp" style="--p: 50%">
-          <img class="compare__img" src="img/kolozha-today.jpg" alt="${esc(tr(DOCS['d-kolozha-today'].t))}" loading="lazy">
-          <img class="compare__img compare__img--top" src="img/kolozha-1915.jpg" alt="${esc(tr(DOCS['d-kolozha'].t))}" loading="lazy">
+          <img class="compare__img" src="img/kolozha-today.jpg" alt="${esc(tr(DOCS['d-kolozha-today'].t))}" loading="lazy" decoding="async">
+          <img class="compare__img compare__img--top" src="img/kolozha-1915.jpg" alt="${esc(tr(DOCS['d-kolozha'].t))}" loading="lazy" decoding="async">
           <span class="compare__tag compare__tag--left">${esc(p.cmpL)}</span>
           <span class="compare__tag compare__tag--right">${esc(p.cmpR)}</span>
           <span class="compare__line" aria-hidden="true"></span>

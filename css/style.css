@@ -74,12 +74,12 @@
 
 /* Переменные */
 :root {
-  --paper: #eeede8;
-  --paper-2: #e2e0d8;
-  --card: #faf9f6;
+  --paper: #f2ece0;
+  --paper-2: #e8dfcd;
+  --card: #fffcf6;
   --ink: #15171a;
   --ink-2: #3f434a;
-  --line: rgba(21, 23, 26, 0.16);
+  --line: rgba(60, 44, 20, 0.16);
   --lapis: #1e3a6b;
   --lapis-d: #142a50;
   --gold: #a9823d;
@@ -94,9 +94,9 @@
   /* карточки с объёмом */
   --radius: 14px;
   --radius-s: 10px;
-  --white: #fffdf9;
-  --shadow: 0 1px 2px rgba(21, 23, 26, 0.05), 0 10px 28px rgba(21, 23, 26, 0.08);
-  --shadow-h: 0 2px 6px rgba(21, 23, 26, 0.08), 0 18px 42px rgba(21, 23, 26, 0.16);
+  --white: #fffdf8;
+  --shadow: 0 1px 2px rgba(21, 23, 26, 0.06), 0 6px 16px rgba(21, 23, 26, 0.07);
+  --shadow-h: 0 2px 4px rgba(21, 23, 26, 0.08), 0 12px 26px rgba(21, 23, 26, 0.14);
   --oklad: linear-gradient(135deg, #c9a35a, #8e6a2c 45%, #d9bc7e 70%, #9c7634);
   /* цвета шкал в игре: силы, хлеб, надежда */
   --m-s: #8c6a2e;
@@ -334,6 +334,73 @@ a {
 }
 .page-head .actions {
   justify-content: center;
+}
+
+/* полоса «ночного неба» под заголовком раздела */
+.page-band {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: clamp(22px, 3vw, 36px);
+  color: var(--frost);
+  background: radial-gradient(ellipse 50% 90% at 50% 0%, rgba(217, 188, 126, 0.2), transparent 70%),
+    linear-gradient(160deg, #1e3a6b 0%, #142a50 50%, #0e1726 100%);
+  border-bottom: 1px solid rgba(217, 188, 126, 0.35);
+}
+.page-band .page-head {
+  position: relative;
+  margin-bottom: 0;
+  padding-block: clamp(20px, 3vw, 34px) clamp(26px, 3.4vw, 40px);
+}
+.page-band .page-head__title {
+  color: #f3ebda;
+}
+.page-band .page-head__lead {
+  color: #c9d3e6;
+}
+/* маршрут на тёмном: золотые станции */
+.page-band .route__link {
+  color: var(--mist);
+}
+.page-band .route__num {
+  border-color: var(--gold-l);
+  background: rgba(14, 23, 38, 0.6);
+  color: var(--frost);
+}
+.page-band .route__stop + .route__stop::before {
+  border-top-color: var(--gold-l);
+  opacity: 0.55;
+}
+.page-band .route__link:hover .route__num {
+  background: rgba(217, 188, 126, 0.25);
+}
+.page-band .route__link:hover .route__name,
+.page-band .route__stop--current .route__name {
+  color: var(--gold-l);
+}
+.page-band .route__stop--current .route__num {
+  background: var(--gold-l);
+  border-color: var(--gold-l);
+  color: var(--night);
+  box-shadow:
+    0 0 0 3px #142a50,
+    0 0 0 5px var(--gold-l);
+}
+.page-band .route__stop--stamped .route__num::after {
+  border-color: #142a50;
+}
+/* главная кнопка на тёмной полосе — золотая */
+.page-band .button--primary {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--night);
+  box-shadow:
+    inset 0 0 0 3px var(--gold),
+    inset 0 0 0 4px rgba(255, 255, 255, 0.45);
+}
+.page-band .button--primary:hover {
+  background: var(--gold-l);
+  border-color: var(--gold-l);
+  color: var(--night);
 }
 
 /* маршрут из 7 станций: пунктир, как дорога беженства на карте */
@@ -609,8 +676,8 @@ a {
   position: sticky;
   top: env(safe-area-inset-top, 0px);
   z-index: 50;
-  background: rgba(238, 237, 232, 0.97);
-  border-bottom: 1px solid var(--line);
+  background: var(--night);
+  border-bottom: 1px solid rgba(217, 188, 126, 0.3);
 }
 .site-header__inner {
   height: var(--hdr);
@@ -635,7 +702,7 @@ a {
   align-items: center;
   gap: 11px;
   text-decoration: none;
-  color: var(--ink);
+  color: var(--frost);
   flex: 0 0 auto;
   min-height: 44px;
 }
@@ -643,6 +710,7 @@ a {
   width: 34px;
   height: 34px;
   flex: 0 0 auto;
+  color: var(--gold-l);
 }
 .logo__text {
   font: 400 22px/1 var(--disp);
@@ -666,16 +734,16 @@ a {
   display: block;
   padding: 22px 10px;
   font: 600 16px/1 var(--body);
-  color: var(--ink);
+  color: #dfe4ec;
   text-decoration: none;
   white-space: nowrap;
   transition: color 0.15s;
 }
 .main-nav__link:hover {
-  color: var(--lapis);
+  color: var(--gold-l);
 }
 .main-nav__link[aria-current='page'] {
-  color: var(--lapis);
+  color: var(--gold-l);
 }
 .main-nav__link[aria-current='page']::after {
   content: '';
@@ -684,44 +752,44 @@ a {
   right: 10px;
   bottom: 14px;
   height: 2px;
-  background: var(--lapis);
+  background: var(--gold-l);
 }
 
 /* «Путевой лист» — кнопка с числом собранных печатей */
 .passport-btn {
   min-height: 42px;
   padding: 0 12px;
-  border: 1.5px solid var(--line);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-s);
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.06);
   display: inline-flex;
   align-items: center;
   gap: 8px;
   font: 600 13px var(--mono);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--frost);
   transition: border-color 0.15s;
 }
 .passport-btn:hover {
-  border-color: var(--ink);
+  border-color: var(--gold-l);
 }
 .passport-btn__icon {
   width: 20px;
   height: 20px;
-  color: var(--lapis);
+  color: var(--gold-l);
   flex: 0 0 auto;
 }
 .passport-btn__count {
-  color: var(--lapis);
+  color: var(--gold-l);
 }
 
 /* языки: оба флага цветные, выбранный подчёркнут */
 .lang-switch {
   display: flex;
-  border: 1.5px solid var(--line);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-s);
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.06);
 }
 .lang-switch__btn {
   position: relative;
@@ -734,17 +802,17 @@ a {
   gap: 7px;
   font: 600 12.5px var(--mono);
   letter-spacing: 0.04em;
-  color: var(--ink-2);
+  color: var(--mist);
   transition: background-color 0.15s;
 }
 .lang-switch__btn + .lang-switch__btn {
   border-left: 1px solid var(--line);
 }
 .lang-switch__btn:hover {
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.08);
 }
 .lang-switch__btn[aria-pressed='true'] {
-  color: var(--ink);
+  color: var(--frost);
 }
 .lang-switch__btn[aria-pressed='true']::after {
   content: '';
@@ -753,7 +821,7 @@ a {
   right: 8px;
   bottom: 5px;
   height: 2px;
-  background: var(--lapis);
+  background: var(--gold-l);
 }
 .lang-switch__flag {
   width: 24px;
@@ -766,11 +834,12 @@ a {
   display: none;
   width: 44px;
   height: 44px;
-  border: 1.5px solid var(--line);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-s);
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.06);
   align-items: center;
   justify-content: center;
+  color: var(--frost);
 }
 .menu-btn__icon {
   width: 22px;
@@ -781,7 +850,7 @@ a {
   position: fixed;
   z-index: 55;
   inset: calc(var(--hdr) + env(safe-area-inset-top, 0px)) 0 0 0;
-  background: var(--paper);
+  background: var(--night);
   padding: 8px var(--gr) calc(24px + env(safe-area-inset-bottom, 0px)) var(--gl);
   display: none;
   overflow-y: auto;
@@ -791,9 +860,9 @@ a {
 }
 .mobile-nav__link {
   padding: 16px 2px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   font: 400 28px/1.15 var(--disp);
-  color: var(--ink);
+  color: var(--frost);
   text-decoration: none;
   display: flex;
   justify-content: space-between;
@@ -802,10 +871,10 @@ a {
 .mobile-nav__link::after {
   content: '→';
   font: 600 18px var(--mono);
-  color: var(--lapis);
+  color: var(--gold-l);
 }
 .mobile-nav__link[aria-current='page'] {
-  color: var(--lapis);
+  color: var(--gold-l);
 }
 
 /* Страницы (разделы одностраничного сайта) */
@@ -835,17 +904,20 @@ a {
     linear-gradient(160deg, #1e3a6b 0%, #142a50 48%, #0e1726 100%);
 }
 /* звёзды: несколько точек в повторяющейся плитке */
-.hero::before {
+.hero::before,
+.page-band::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(1.2px 1.2px at 30px 40px, rgba(255, 255, 255, 0.9), transparent 70%),
-    radial-gradient(1px 1px at 140px 90px, rgba(255, 255, 255, 0.7), transparent 70%),
-    radial-gradient(1.6px 1.6px at 210px 170px, rgba(255, 240, 200, 0.9), transparent 70%),
-    radial-gradient(1px 1px at 80px 210px, rgba(255, 255, 255, 0.6), transparent 70%),
-    radial-gradient(1.3px 1.3px at 250px 30px, rgba(255, 255, 255, 0.8), transparent 70%);
-  background-size: 280px 240px;
-  opacity: 0.6;
+  background-image: radial-gradient(2.2px 2.2px at 30px 40px, rgba(255, 255, 255, 0.95), transparent 70%),
+    radial-gradient(1.6px 1.6px at 140px 90px, rgba(255, 255, 255, 0.85), transparent 70%),
+    radial-gradient(2.8px 2.8px at 210px 170px, rgba(255, 236, 190, 0.95), transparent 70%),
+    radial-gradient(1.6px 1.6px at 80px 210px, rgba(255, 255, 255, 0.8), transparent 70%),
+    radial-gradient(2.2px 2.2px at 250px 30px, rgba(255, 255, 255, 0.9), transparent 70%),
+    radial-gradient(1.4px 1.4px at 180px 20px, rgba(255, 255, 255, 0.75), transparent 70%),
+    radial-gradient(1.8px 1.8px at 20px 150px, rgba(255, 240, 210, 0.85), transparent 70%);
+  background-size: 270px 230px;
+  opacity: 0.9;
   pointer-events: none;
 }
 .hero__inner {
@@ -1030,10 +1102,6 @@ a {
     transform 0.18s,
     box-shadow 0.18s;
 }
-.bento__tile:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-h);
-}
 .bento__tile:focus-visible {
   outline: 3px solid var(--gold);
   outline-offset: 3px;
@@ -1053,9 +1121,6 @@ a {
   height: 100%;
   object-fit: cover;
   transition: transform 0.6s ease;
-}
-.bento__tile:hover .bento__img {
-  transform: scale(1.06);
 }
 .bento__tile--shrines .bento__img {
   object-position: 50% 25%;
@@ -1368,10 +1433,6 @@ a {
     transform 0.18s,
     box-shadow 0.18s;
 }
-.event:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-h);
-}
 .event__date {
   display: flex;
   align-items: baseline;
@@ -1597,11 +1658,14 @@ a {
 
 /* Святыни */
 .shrines {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* семь карточек: неполный последний ряд — по центру */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 18px;
 }
 .shrines__item {
+  flex: 0 1 calc((100% - 3 * 18px) / 4);
   display: flex;
   min-width: 0;
 }
@@ -1787,11 +1851,51 @@ a {
     box-shadow 0.18s,
     border-color 0.18s;
 }
-.shrine:hover,
-.doc:hover,
-.pager__link:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-h);
+
+/* наведение мышью: подъём карточек и приближение снимков (на сенсорных экранах выключено) */
+@media (hover: hover) and (pointer: fine) {
+  .bento__tile:hover .bento__img {
+    transform: scale(1.06);
+  }
+  .tile:hover .tile__img {
+    transform: scale(1.05);
+  }
+  .person:hover .person__img {
+    transform: scale(1.04);
+  }
+  .bento__tile:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-h);
+  }
+  .shrine:hover,
+  .doc:hover,
+  .pager__link:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-h);
+  }
+  .person:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-h);
+  }
+  .event:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-h);
+  }
+  .chapters__link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-h);
+  }
+}
+
+/* длинные блоки рисуются, когда до них долистали: меньше работы для слабых устройств */
+.chapter,
+.home-section,
+.letter,
+.glossary,
+.family,
+.map-quiz {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }
 
 /* Судьбы христиан Гродненщины */
@@ -1818,10 +1922,6 @@ a {
   transition:
     transform 0.15s,
     box-shadow 0.15s;
-}
-.chapters__link:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-h);
 }
 .chapters__num {
   width: 30px;
@@ -1982,7 +2082,7 @@ a {
   overflow: hidden;
   background: var(--white);
   color: var(--ink);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 .tile__media {
   position: relative;
@@ -1994,9 +2094,6 @@ a {
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
-}
-.tile:hover .tile__img {
-  transform: scale(1.05);
 }
 .tile__date {
   position: absolute;
@@ -2238,10 +2335,6 @@ a {
     transform 0.18s,
     box-shadow 0.18s;
 }
-.person:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-h);
-}
 .person__media {
   position: relative;
   display: block;
@@ -2254,11 +2347,7 @@ a {
   height: 100%;
   object-fit: cover;
   object-position: 50% 18%;
-  filter: sepia(0.25);
   transition: transform 0.5s ease;
-}
-.person:hover .person__img {
-  transform: scale(1.04);
 }
 .person__img--empty {
   display: grid;
@@ -2310,6 +2399,66 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+/* список мест под картой: номер, название, что здесь и расстояние от Гродно */
+.places {
+  margin-top: clamp(30px, 4vw, 48px);
+}
+.places__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.places__item {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  column-gap: 12px;
+  row-gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid rgba(21, 23, 26, 0.07);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+  text-align: left;
+  color: var(--ink);
+}
+.places__num {
+  grid-row: span 3;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--lapis);
+  color: #fff;
+  font: 600 14px var(--mono);
+}
+.places__name {
+  font: 600 16.5px/1.3 var(--body);
+}
+.places__brief {
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+.places__km {
+  justify-self: start;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  font: 600 12.5px var(--mono);
+  color: var(--gold-d);
+}
+/* строка судьбы на карточке святыни */
+.shrine__brief {
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--ink-2);
 }
 
 /* Сказание: картины-кадры на бумаге, как лист старинной книги */
@@ -3264,10 +3413,6 @@ a {
   display: grid;
   gap: 10px;
 }
-.family__note {
-  max-width: 760px;
-  margin-top: 16px;
-}
 
 /* поле формы: подпись над вводом */
 .field {
@@ -3746,11 +3891,12 @@ a {
 
 /* Подвал */
 .site-footer {
-  border-top: 1.5px solid var(--gold);
+  border-top: 2px solid var(--gold);
   padding-block: 22px calc(22px + env(safe-area-inset-bottom, 0px));
-  color: var(--ink);
+  color: var(--mist);
   font: 600 14px/1.6 var(--mono);
   letter-spacing: 0.02em;
+  background: var(--night);
 }
 .site-footer__inner {
   display: flex;
@@ -3761,7 +3907,7 @@ a {
 }
 .site-footer__link {
   display: inline-block;
-  color: var(--lapis);
+  color: var(--gold-l);
   font-weight: 600;
   text-decoration: none;
   padding: 10px 0;
@@ -3785,6 +3931,9 @@ a {
   }
 }
 @media (max-width: 900px) {
+  .places__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .sec__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3869,8 +4018,8 @@ a {
     border-top: 2px dashed var(--cinnabar);
     opacity: 0.75;
   }
-  .shrines {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .shrines__item {
+    flex-basis: calc((100% - 18px) / 2);
   }
   .comic {
     grid-template-columns: minmax(0, 1fr);
@@ -3942,6 +4091,9 @@ a {
   }
 }
 @media (max-width: 560px) {
+  .places__list {
+    grid-template-columns: minmax(0, 1fr);
+  }
   /* номер главы — над заголовком */
   .chapter__head {
     grid-template-columns: minmax(0, 1fr);

@@ -54,7 +54,7 @@ function renderFates() {
     return `
       <li class="tile">
         <div class="tile__media">
-          <img class="tile__img" src="${thumb(item.img)}" alt="" loading="lazy">
+          <img class="tile__img" src="${thumb(item.img)}" alt="" loading="lazy" decoding="async">
           <span class="tile__date">${esc(tr(item.d))}</span>
         </div>
         <div class="tile__body">
@@ -96,7 +96,7 @@ function renderFates() {
       return `
         <li class="sobor__card">
           <button class="sobor__who" type="button" data-person="${id}">
-            <img class="sobor__face" src="${person.img}" alt="" loading="lazy">
+            <img class="sobor__face" src="${person.img}" alt="" loading="lazy" decoding="async">
             <span class="sobor__name">${esc(tr(person.n))}</span>
             <span class="sobor__years">${esc(person.y)}</span>
           </button>
@@ -148,7 +148,7 @@ function renderFates() {
         ${chapterHead(4, p.fSoborH)}
         <div class="sobor">
           <figure class="sobor__photo">
-            <img class="sobor__img" src="${thumb(SOBOR.img)}" alt="${esc(tr(SOBOR.cap))}" loading="lazy">
+            <img class="sobor__img" src="${thumb(SOBOR.img)}" alt="${esc(tr(SOBOR.cap))}" loading="lazy" decoding="async">
             <figcaption class="caption">${esc(tr(SOBOR.cap))}</figcaption>
           </figure>
           <div class="sobor__side">
@@ -224,7 +224,7 @@ function paintPeople() {
 
   shown.forEach((person) => {
     const face = person.img
-      ? `<img class="person__img" src="${person.img}" alt="" loading="lazy">`
+      ? `<img class="person__img" src="${person.img}" alt="" loading="lazy" decoding="async">`
       : `<span class="person__img person__img--empty" aria-hidden="true">${esc(tr(person.n).split(' ').pop()[0])}</span>`;
     const button = createEl('button', 'person');
     button.type = 'button';

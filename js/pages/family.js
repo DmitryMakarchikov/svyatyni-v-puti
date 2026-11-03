@@ -140,7 +140,6 @@ function renderFamily(box) {
           <ul class="family__list" id="f-list"></ul>
         </div>
       </div>
-      <p class="caption family__note">${esc(p.famNote)}</p>
     </section>
   `;
 

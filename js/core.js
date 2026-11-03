@@ -273,14 +273,16 @@ function routeHtml(current) {
 /* Шапка раздела: маршрут, заголовок, орнамент, вводный текст и кнопки (если нужны) */
 function pageHead(id, title, lead = '', extra = '') {
   return `
-    <div class="container">
-      <header class="page-head">
-        ${SECTION_ORDER.includes(id) ? routeHtml(id) : ''}
-        <h2 class="page-head__title" id="t-${id}">${esc(title)}</h2>
-        <span class="ornament" aria-hidden="true"></span>
-        ${lead ? `<p class="lead page-head__lead">${esc(lead)}</p>` : ''}
-        ${extra}
-      </header>
+    <div class="page-band">
+      <div class="container">
+        <header class="page-head">
+          ${SECTION_ORDER.includes(id) ? routeHtml(id) : ''}
+          <h2 class="page-head__title" id="t-${id}">${esc(title)}</h2>
+          <span class="ornament ornament--dark" aria-hidden="true"></span>
+          ${lead ? `<p class="lead page-head__lead">${esc(lead)}</p>` : ''}
+          ${extra}
+        </header>
+      </div>
     </div>
   `;
 }

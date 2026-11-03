@@ -38,6 +38,7 @@ function renderShrines() {
       <span class="shrine__body">
         <span class="status status--${shrine.st}">${esc(tr(shrine.s))}</span>
         <span class="shrine__title">${esc(tr(shrine.t))}</span>
+        <span class="shrine__brief">${esc(tr(shrine.brief))}</span>
         <span class="more">${esc(ui().readDossier)} <span aria-hidden="true">→</span></span>
       </span>
     `;
