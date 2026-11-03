@@ -1,13 +1,18 @@
 'use strict';
 
-/* Главная: заголовок, «икона с клеймами» (разделы вокруг иконы), путь святынь,
-   вопрос дня, свеча памяти и «Было — стало» */
+/* Главная: первый экран-история на «ночном небе», икона с клеймами (разделы сайта),
+   путь святынь, голос эпохи, вопрос дня, свеча памяти и «Было — стало» */
 
 /* рисует главную страницу */
 function renderHome() {
   const p = texts();
   /* вопрос дня меняется раз в сутки */
   const day = QUIZ[Math.floor(Date.now() / 864e5) % QUIZ.length];
+
+  /* печати на первом экране: золотые — уже полученные */
+  const seals = STAMP_KEYS.map(
+    (key, i) => `<span class="seals__dot${progress.stamps[key] ? ' seals__dot--on' : ''}">${i + 1}</span>`
+  ).join('');
 
   /* клейма: разделы сайта по сторонам иконы, как сцены жития вокруг образа */
   const kleyma = p.kleyma
@@ -24,64 +29,61 @@ function renderHome() {
     )
     .join('');
 
-  /* как устроен сайт: три шага для первого посещения */
-  const how = p.how
+  /* путь святынь: год, событие и пояснение на пунктирной дороге */
+  const path = p.path
     .map(
-      ([name, text], i) => `
-        <li class="how__step">
-          <span class="how__num" aria-hidden="true">${i + 1}</span>
-          <span>
-            <strong class="how__name">${esc(name)}</strong>
-            <span class="how__text">${esc(text)}</span>
+      ([year, title, text]) => `
+        <li class="milestones__item">
+          <span class="milestones__year">${esc(year)}</span>
+          <span class="milestones__body">
+            <strong class="milestones__name">${esc(title)}</strong>
+            <span class="milestones__text">${esc(text)}</span>
           </span>
         </li>`
     )
     .join('');
 
-  /* путь святынь: главные годы на пунктирной дороге */
-  const path = p.path
-    .map(
-      ([year, text]) => `
-        <li class="milestones__item">
-          <span class="milestones__year">${esc(year)}</span>
-          <span class="milestones__text">${esc(text)}</span>
-        </li>`
-    )
-    .join('');
-
   $('#v-home').innerHTML = `
+    <header class="hero">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <p class="hero__eyebrow">${esc(p.homeLab)}</p>
+          <h1 class="hero__title" id="t-home">${esc(p.homeTitle)}</h1>
+          <span class="ornament ornament--dark" aria-hidden="true"></span>
+          <p class="hero__hook">${esc(p.homeHook)}</p>
+          <div class="actions">
+            <a class="button button--gold" href="#chronicle">
+              ${esc(p.homeGo)} <span class="button__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="button button--ghost" href="#game">${esc(p.homePlay)}</a>
+          </div>
+          <button class="seals" type="button" id="hero-seals">
+            <span class="seals__row" aria-hidden="true">${seals}</span>
+            <span class="seals__text">${esc(p.sealsText(countStamps()))}</span>
+          </button>
+        </div>
+        <div class="hero__collage" aria-hidden="true">
+          <img class="hero__doc hero__doc--postcard" src="img/thumbs/kolozha-1915.jpg" alt="">
+          <img class="hero__doc hero__doc--magazine" src="img/thumbs/niva-1914.jpg" alt="">
+          <img class="hero__doc hero__doc--poster" src="img/thumbs/poster-1915.jpg" alt="">
+          <span class="hero__stamp">${esc(p.stampPlace)}<b>1 (14) IX 1914</b></span>
+        </div>
+      </div>
+    </header>
+
     <div class="container">
-      <header class="home-head">
-        <p class="eyebrow">${esc(p.homeLab)}</p>
-        <h1 class="home-head__title" id="t-home">${esc(p.homeTitle)}</h1>
-        <span class="ornament" aria-hidden="true"></span>
-        <p class="lead home-head__lead">${esc(p.homeLead)}</p>
-        <div class="actions home-head__actions">
-          <a class="button button--primary" href="#chronicle">
-            ${esc(p.homeGo)} <span class="button__arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="button" href="#game">${esc(p.homePlay)}</a>
-        </div>
-      </header>
-
-      <nav class="icon-board" aria-label="${esc(p.kleymaLabel)}">
-        <figure class="icon-board__center">
-          <img class="icon-board__img" src="img/icon-augustow.jpg" fetchpriority="high" alt="${esc(tr(DOCS['d-icon'].t))}" width="800" height="1006">
-        </figure>
-        ${kleyma}
-      </nav>
-      <p class="caption icon-board__caption">${esc(p.heroCap)}</p>
-
-      <section class="how" aria-labelledby="h-how">
-        <h2 class="eyebrow how__title" id="h-how">${esc(p.howH)}</h2>
-        <ol class="how__list">${how}</ol>
-      </section>
-
-      <section class="home-section" aria-labelledby="h-brief">
+      <section class="home-section" aria-labelledby="h-kleyma">
         <div class="home-section__head">
-          <h2 class="home-section__title" id="h-brief">${esc(p.briefH)}</h2>
+          <h2 class="home-section__title" id="h-kleyma">${esc(p.kleymaH)}</h2>
+          <p class="caption">${esc(p.kleymaCap)}</p>
         </div>
-        <div class="brief">${p.brief.map((text) => `<p class="brief__text">${esc(text)}</p>`).join('')}</div>
+        <nav class="icon-board" aria-label="${esc(p.kleymaLabel)}">
+          <figure class="icon-board__center">
+            <img class="icon-board__img" src="img/icon-augustow.jpg" alt="${esc(tr(DOCS['d-icon'].t))}" width="800" height="1006" fetchpriority="high">
+          </figure>
+          ${kleyma}
+        </nav>
+        <p class="caption icon-board__caption">${esc(p.heroCap)}</p>
       </section>
 
       <section class="home-section" aria-labelledby="h-path">
@@ -146,6 +148,12 @@ function renderHome() {
     </div>
   `;
 
+  /* печати на первом экране открывают «Путевой лист» */
+  $('#hero-seals').addEventListener('click', () => $('#pass-btn').click());
+
+  /* цитата ведёт к полному документу в архиве */
+  $('#quote-doc').addEventListener('click', () => openDoc('d-gev'));
+
   /* вопрос дня: один ответ, затем пояснение */
   const dayBox = $('#dayq');
   $$('.option', dayBox).forEach((option) =>
@@ -156,9 +164,6 @@ function renderHome() {
       if (picked === day.a) playBell(659.25, 0.04);
     })
   );
-
-  /* цитата ведёт к полному документу в архиве */
-  $('#quote-doc').addEventListener('click', () => openDoc('d-gev'));
 
   /* свеча: счётчик хранится только на этом устройстве */
   $('#candle-btn').addEventListener('click', () => {

@@ -5,10 +5,23 @@
 /* рисует карточки икон */
 function renderShrines() {
   const p = texts();
+  /* инфографика: сколько святынь сохранилось, утрачено и с неясной судьбой */
+  const fates = ['ok', 'lost', 'unknown'].map((st) => [st, SHRINES.filter((s) => s.st === st).length]);
+  const fatesText = fates.map(([st, n]) => `${tr(SH_FATES[st])} — ${n}`).join(', ');
+
   $('#v-shrines').innerHTML =
     pageHead('shrines', p.shH, p.shLead) +
     `
     <div class="container">
+      <div class="fates" role="img" aria-label="${esc(tr(SH_FATES.title))}: ${esc(fatesText)}">
+        <p class="eyebrow">${esc(tr(SH_FATES.title))}</p>
+        <div class="fates__bar" aria-hidden="true">
+          ${SHRINES.map((s) => `<span class="fates__part fates__part--${s.st}">${esc(tr(s.t))}</span>`).join('')}
+        </div>
+        <ul class="fates__legend" aria-hidden="true">
+          ${fates.map(([st, n]) => `<li class="fates__item"><span class="fates__mark fates__mark--${st}"></span>${esc(tr(SH_FATES[st]))} — ${n}</li>`).join('')}
+        </ul>
+      </div>
       <ul class="shrines" id="shr"></ul>
     </div>
   `;

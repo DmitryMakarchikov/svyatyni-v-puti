@@ -21,11 +21,22 @@ function renderAbout() {
     })
     .join('');
 
+  /* ресурсы в интернете открываются в новой вкладке */
+  const links = LINKS.map(
+    ([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener">${esc(tr(label))}</a></li>`
+  ).join('');
+
   $('#v-about').innerHTML =
     pageHead('about', p.abH) +
     `
     <div class="container">
-      <div class="about">${items}</div>
+      <div class="about">
+        ${items}
+        <section class="about__item">
+          <h3 class="about__title">${esc(p.linksH)}</h3>
+          <ul class="about__list about__list--links">${links}</ul>
+        </section>
+      </div>
     </div>
   `;
 }

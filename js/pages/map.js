@@ -32,8 +32,37 @@ function renderMap() {
         </div>
         <aside class="card place" id="place" aria-live="polite"></aside>
       </div>
+
+      <section class="map-quiz" aria-labelledby="h-mapquiz">
+        <h3 class="map-quiz__title" id="h-mapquiz">${esc(p.mapQuizH)}</h3>
+        <div class="map-quiz__list">
+          ${p.mapQuiz
+            .map(
+              (item, i) => `
+                <div class="card map-quiz__item" data-i="${i}">
+                  <p class="map-quiz__question">${esc(item.q)}</p>
+                  <div class="options">${optionsHtml(item.o)}</div>
+                  <p class="explain" hidden>${esc(item.e)}</p>
+                </div>`
+            )
+            .join('')}
+        </div>
+      </section>
     </div>
   `;
+
+  /* вопросы к карте: один ответ на вопрос, затем пояснение */
+  $$('.map-quiz__item').forEach((box) => {
+    const item = p.mapQuiz[Number(box.dataset.i)];
+    $$('.option', box).forEach((option) =>
+      option.addEventListener('click', () => {
+        const picked = Number(option.dataset.k);
+        markAnswer(box, picked, item.a);
+        $('.explain', box).hidden = false;
+        if (picked === item.a) playBell(659.25, 0.04);
+      })
+    );
+  });
 
   /* точки ставятся в процентах, поэтому не съезжают при любом размере карты */
   const box = $('#mapbox');
