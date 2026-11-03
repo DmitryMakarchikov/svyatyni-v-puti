@@ -22,28 +22,29 @@
 
     <link rel="icon" href="img/favicon.svg" type="image/svg+xml" />
 
-    <!-- сайт можно установить как приложение (PWA) -->
-
-    <link rel="manifest" href="manifest.webmanifest" />
-
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
-    <!-- шрифты свои (папка fonts); заранее грузим два главных, чтобы текст не «прыгал» -->
-    <link rel="preload" href="fonts/forum-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin />
-    <link
-      rel="preload"
-      href="fonts/literata-400-700-cyrillic.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin />
-    <!-- икону с главной грузим заранее, только если посетитель открыл главную -->
     <script>
+      /* добавляет в <head> ссылку-подсказку браузеру */
+      const addLink = (attrs) => document.head.append(Object.assign(document.createElement('link'), attrs));
+
+      /* на сайте (http/https): приложение PWA и заранее два главных шрифта, чтобы текст не «прыгал».
+         Из папки (file://) браузер такие запросы блокирует, а шрифты и так грузятся из CSS */
+      if (location.protocol !== 'file:') {
+        addLink({ rel: 'manifest', href: 'manifest.webmanifest' });
+        ['forum-400-cyrillic', 'literata-400-700-cyrillic'].forEach((name) =>
+          addLink({
+            rel: 'preload',
+            as: 'font',
+            type: 'font/woff2',
+            crossOrigin: 'anonymous',
+            href: `fonts/${name}.woff2`
+          })
+        );
+      }
+
+      /* открытку с первого экрана грузим заранее, только если посетитель открыл главную */
       if (!location.hash || location.hash === '#home') {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'image';
-        link.href = 'img/icon-augustow.jpg';
-        link.fetchPriority = 'high';
-        document.head.append(link);
+        addLink({ rel: 'preload', as: 'image', href: 'img/thumbs/kolozha-1915.jpg', fetchPriority: 'high' });
       }
     </script>
     <link rel="stylesheet" href="css/style.css" />
@@ -58,6 +59,7 @@
     <script src="js/pages/comic.js" defer></script>
     <script src="js/pages/game.js" defer></script>
     <script src="js/pages/archive.js" defer></script>
+    <script src="js/pages/family.js" defer></script>
     <script src="js/pages/quiz.js" defer></script>
     <script src="js/pages/about.js" defer></script>
     <script src="js/main.js" defer></script>

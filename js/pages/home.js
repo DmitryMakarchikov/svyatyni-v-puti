@@ -1,7 +1,7 @@
 'use strict';
 
 /* Главная: первый экран-история на «ночном небе», икона с клеймами (разделы сайта),
-   путь святынь, голос эпохи, вопрос дня, свеча памяти и «Было — стало» */
+   путь святынь, голос 1915 года, вопрос дня, свеча памяти и «Было — стало» */
 
 /* рисует главную страницу */
 function renderHome() {
@@ -63,7 +63,7 @@ function renderHome() {
           </button>
         </div>
         <div class="hero__collage" aria-hidden="true">
-          <img class="hero__doc hero__doc--postcard" src="img/thumbs/kolozha-1915.jpg" alt="">
+          <img class="hero__doc hero__doc--postcard" src="img/thumbs/kolozha-1915.jpg" alt="" fetchpriority="high">
           <img class="hero__doc hero__doc--magazine" src="img/thumbs/niva-1914.jpg" alt="">
           <img class="hero__doc hero__doc--poster" src="img/thumbs/poster-1915.jpg" alt="">
           <span class="hero__stamp">${esc(p.stampPlace)}<b>1 (14) IX 1914</b></span>
@@ -79,7 +79,7 @@ function renderHome() {
         </div>
         <nav class="icon-board" aria-label="${esc(p.kleymaLabel)}">
           <figure class="icon-board__center">
-            <img class="icon-board__img" src="img/icon-augustow.jpg" alt="${esc(tr(DOCS['d-icon'].t))}" width="800" height="1006" fetchpriority="high">
+            <img class="icon-board__img" src="img/icon-augustow.jpg" alt="${esc(tr(DOCS['d-icon'].t))}" width="800" height="1006" loading="lazy">
           </figure>
           ${kleyma}
         </nav>
