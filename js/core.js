@@ -237,9 +237,9 @@ function openDoc(id) {
    а прокрутка — в следующем кадре, после отрисовки */
 let routeFocus = '';
 function goTo(name, block = '') {
-  routeFocus = block;
-  if (location.hash === '#' + name) showRoute();
-  else location.hash = '#' + name;
+  const hash = block ? `#${name}/${block}` : `#${name}`;
+  if (location.hash === hash) showRoute();
+  else location.hash = hash;
 }
 function focusBlock() {
   if (!routeFocus) return;

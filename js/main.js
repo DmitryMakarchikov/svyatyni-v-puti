@@ -20,8 +20,10 @@ let route = 'home';
 
 /* раздел из адреса; неизвестный адрес ведёт на главную */
 function readRoute() {
-  const hash = location.hash.slice(1);
-  return ROUTE_NAMES.includes(hash) ? hash : 'home';
+  /* адрес вида #fates/f-evac — раздел и блок, к которому прокрутить */
+  const [name, block] = location.hash.slice(1).split('/');
+  if (block && /^[a-z0-9-]+$/.test(block)) routeFocus = block;
+  return ROUTE_NAMES.includes(name) ? name : 'home';
 }
 
 /* Показывает нужный раздел и прячет остальные */
