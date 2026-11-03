@@ -3942,6 +3942,15 @@ a {
   }
 }
 @media (max-width: 560px) {
+  /* номер главы — над заголовком */
+  .chapter__head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .chapter__num {
+    grid-row: auto;
+    font-size: 48px;
+    margin-bottom: 4px;
+  }
   .sec__list {
     grid-template-columns: minmax(0, 1fr);
   }
