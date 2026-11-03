@@ -42,6 +42,18 @@ const esc = (value) => String(value).replace(/[&<>"]/g, (c) => ESC[c]);
 /* уменьшенная копия картинки для списков и карточек (папка img/thumbs) */
 const thumb = (src) => src.replace('img/', 'img/thumbs/');
 
+/* srcset снимка: лёгкая и полная версии (пусто, если лёгкой нет) */
+function srcsetOf(img) {
+  const w = IMG_W[img.slice(4, -4)];
+  return w ? `${thumb(img)} ${w[0]}w, ${img} ${w[1]}w` : '';
+}
+
+/* src, srcset и sizes для <img>: браузер возьмёт версию по ширине экрана */
+function imgAttrs(img, sizes) {
+  const set = srcsetOf(img);
+  return set ? `src="${thumb(img)}" srcset="${set}" sizes="${sizes}"` : `src="${img}"`;
+}
+
 /* создаёт элемент с классом и текстом */
 function createEl(tag, className, text) {
   const node = document.createElement(tag);

@@ -6,6 +6,12 @@ const viewer = $('#viewer');
 /* номер кадра, открытого в просмотре */
 let frameIndex = 0;
 
+/* ширина кадра на экране (6 колонок, промежуток 14px) — по ней выбирается размер снимка */
+function frameSizes(w) {
+  const wide = 185 * w + 14 * (w - 1);
+  return `(max-width: 900px) calc(100vw - 40px), (max-width: 1220px) calc((100vw - 110px) / 6 * ${w} + ${(w - 1) * 14}px), ${wide}px`;
+}
+
 /* рисует сетку кадров */
 function renderComic() {
   const p = texts();
@@ -38,7 +44,7 @@ function renderComic() {
       `;
     } else {
       button.innerHTML = `
-        <img class="frame__img" src="${frame.img}" alt="" loading="lazy" style="object-position: ${frame.pos}">
+        <img class="frame__img" ${imgAttrs(frame.img, frameSizes(frame.w))} alt="" ${i ? 'loading="lazy" decoding="async"' : 'fetchpriority="high"'} style="object-position: ${frame.pos}">
         <span class="frame__caption${frame.bot ? ' frame__caption--bottom' : ''}">${esc(tr(frame.cap))}</span>
         ${frame.bub ? `<span class="frame__bubble">${esc(tr(frame.bub))}</span>` : ''}
       `;

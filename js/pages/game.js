@@ -6,6 +6,8 @@
 
 /* шкалы: максимум, ключи и значки (цвет задаётся в CSS через meter--s/b/n) */
 const METER_MAX = 10;
+/* ширина снимка на карточке хода: карточка до 460px минус поля */
+const CARD_SIZES = '(max-width: 500px) calc(100vw - 66px), 434px';
 const METER_KEYS = ['s', 'b', 'n'];
 const METER_ICONS = {
   s: '<svg class="meter__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4" r="2"/><path d="M11 21l2-6 3 3v3M9 12l2-4 4 2 2 3M7 21l3-7"/></svg>',
@@ -128,7 +130,7 @@ function renderGameIntro() {
             <a class="button" href="#archive">${esc(g.toArchive)}</a>
           </div>
         </div>
-        <img class="game-intro__img" src="img/kolozha-1915.jpg" alt="" loading="lazy">
+        <img class="game-intro__img" ${imgAttrs('img/kolozha-1915.jpg', '(max-width: 900px) calc(100vw - 40px), 574px')} alt="" fetchpriority="high">
       </div>
     </div>
   `;
@@ -186,7 +188,7 @@ function showChange(key, value) {
 function postcardPhoto(card, alt = '') {
   return `
     <div class="postcard__photo">
-      <img class="postcard__img" src="${card.img}" alt="${esc(alt)}" draggable="false" style="object-position: ${card.pos}">
+      <img class="postcard__img" ${imgAttrs(card.img, CARD_SIZES)} alt="${esc(alt)}" draggable="false" style="object-position: ${card.pos}">
       <div class="postcard__hint"></div>
       <div class="postcard__stamp">${esc(tr(card.date))}</div>
     </div>
@@ -220,7 +222,7 @@ function drawCard() {
 
   /* заранее грузим картинку следующего хода, чтобы не было задержки */
   const next = CARDS[game.step + 1];
-  if (next) new Image().src = next.img;
+  if (next) Object.assign(new Image(), { sizes: CARD_SIZES, srcset: srcsetOf(next.img), src: next.img });
 
   showDots(null);
   if (!reducedMotion) box.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: 'ease-out' });

@@ -17,7 +17,7 @@ function renderMap() {
       <div class="map-layout">
         <div>
           <div class="map" id="mapbox">
-            <img class="map__img" src="${map.img}" srcset="img/map-1913-1000.jpg 1000w, ${map.img} 1700w" sizes="(max-width: 900px) 100vw, 700px" alt="${esc(tr(map.t))}" width="1700" height="1820" fetchpriority="high">
+            <img class="map__img" src="img/map-1913-1000.jpg" srcset="img/map-1913-720.jpg 720w, img/map-1913-1000.jpg 1000w, ${map.img} 1700w" sizes="(max-width: 900px) calc(100vw - 40px), 700px" alt="${esc(tr(map.t))}" width="1700" height="1820" fetchpriority="high">
             <svg class="map__route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
               <!-- пути беженства 1915 года: Гродно → Скидель → Лида и Белосток → Волковыск → Слоним → на Барановичи -->
               <polyline points="47.8,21.9 57,25.4 80.7,16.3" />

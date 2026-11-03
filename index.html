@@ -42,10 +42,26 @@
         );
       }
 
-      /* открытку с первого экрана грузим заранее, только если посетитель открыл главную */
-      if (!location.hash || location.hash === '#home') {
-        addLink({ rel: 'preload', as: 'image', href: 'img/thumbs/kolozha-1915.jpg', fetchPriority: 'high' });
-      }
+      /* главную картинку открытого раздела грузим заранее, ещё до скриптов.
+         srcset и sizes — те же, что у самой картинки, иначе браузер скачает её дважды */
+      const firstImage = {
+        home: { href: 'img/thumbs/kolozha-1915.jpg' },
+        map: {
+          imageSrcset: 'img/map-1913-720.jpg 720w, img/map-1913-1000.jpg 1000w, img/map-1913.jpg 1700w',
+          imageSizes: '(max-width: 900px) calc(100vw - 40px), 700px'
+        },
+        comic: {
+          imageSrcset: 'img/thumbs/scheme-1914.jpg 560w, img/scheme-1914.jpg 1200w',
+          imageSizes:
+            '(max-width: 900px) calc(100vw - 40px), (max-width: 1220px) calc((100vw - 110px) / 6 * 4 + 42px), 782px'
+        },
+        game: {
+          imageSrcset: 'img/thumbs/kolozha-1915.jpg 560w, img/kolozha-1915.jpg 1300w',
+          imageSizes: '(max-width: 900px) calc(100vw - 40px), 574px'
+        }
+      }[location.hash.slice(1).split('/')[0] || 'home'];
+      if (firstImage)
+        addLink(Object.assign({ rel: 'preload', as: 'image', fetchPriority: 'high' }, firstImage));
     </script>
     <link rel="stylesheet" href="css/style.css" />
 
