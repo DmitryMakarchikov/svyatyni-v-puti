@@ -151,8 +151,11 @@ function renderHome() {
   /* печати на первом экране открывают «Путевой лист» */
   $('#hero-seals').addEventListener('click', () => $('#pass-btn').click());
 
-  /* цитата ведёт к полному документу в архиве */
-  $('#quote-doc').addEventListener('click', () => openDoc('d-gev'));
+  /* цитата ведёт к разбору документа в архиве */
+  $('#quote-doc').addEventListener('click', () => {
+    archiveFocus = 'letter';
+    location.hash = '#archive';
+  });
 
   /* вопрос дня: один ответ, затем пояснение */
   const dayBox = $('#dayq');

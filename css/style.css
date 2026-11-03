@@ -2437,6 +2437,161 @@ a {
   grid-column: 1 / -1;
 }
 
+/* «Документ под лупой»: скан письма 1915 года, текст и справка */
+.letter {
+  margin-top: clamp(36px, 5vw, 56px);
+  padding-top: 22px;
+  border-top: 3px double var(--gold);
+  scroll-margin-top: calc(var(--hdr) + 12px);
+}
+.letter__title {
+  font: 400 clamp(30px, 3.2vw, 42px) / 1.1 var(--disp);
+}
+.letter__lead {
+  max-width: 760px;
+  margin: 6px 0 20px;
+  color: var(--ink-2);
+}
+.letter__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(18px, 3vw, 36px);
+  align-items: start;
+}
+.letter__scan .filters,
+.letter__body .filters {
+  margin-bottom: 14px;
+}
+/* скан лежит как лист на столе */
+.letter__frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  box-shadow: 0 14px 30px rgba(21, 23, 26, 0.14);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+.letter__img {
+  width: 100%;
+  height: auto;
+}
+/* лупа: круг с увеличенной частью скана */
+.letter__lens {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  box-shadow:
+    0 10px 24px rgba(21, 23, 26, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  background-color: var(--card);
+  background-repeat: no-repeat;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.letter__lens--on {
+  opacity: 1;
+}
+.letter__text {
+  margin: 0;
+  padding: 4px 0 4px 20px;
+  border-left: 3px solid var(--gold);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 18px;
+  line-height: 1.65;
+}
+/* старая орфография: чуть плотнее, как в журнале */
+.letter__text--old {
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.letter__rules {
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+.letter__rules-title {
+  min-height: 48px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  font: 600 16px/1.3 var(--body);
+  color: var(--lapis);
+  cursor: pointer;
+}
+.letter__rules .caption {
+  padding: 0 16px 14px;
+}
+.letter__rule-list {
+  padding: 0 16px 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 18px;
+  list-style: none;
+}
+.letter__rule {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 2px 12px;
+}
+.letter__glyph {
+  grid-row: span 2;
+  min-width: 52px;
+  font: 400 34px/1 var(--disp);
+  color: var(--cinnabar);
+}
+.letter__now {
+  font-weight: 600;
+}
+.letter__example {
+  font: 400 13.5px/1.4 var(--mono);
+  color: var(--ink-2);
+}
+.letter__subtitle {
+  margin: clamp(24px, 3vw, 34px) 0 12px;
+  font: 400 clamp(24px, 2.4vw, 30px) / 1.15 var(--disp);
+}
+.letter__facts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.letter__fact {
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--lapis);
+}
+.letter__fact dd {
+  margin: 6px 0 0;
+}
+.letter__ask {
+  padding-left: 24px;
+  list-style: decimal;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.letter__ask li::marker {
+  font-weight: 600;
+  color: var(--gold-d);
+}
+/* страница письма в окне: во всю высоту, без обрезки */
+.modal__img--page {
+  max-height: 86svh;
+}
+
 /* Словарь «Слова тех лет»: раскрывающиеся карточки */
 .glossary {
   margin-top: clamp(36px, 5vw, 56px);
@@ -2938,6 +3093,12 @@ a {
   }
 }
 @media (max-width: 900px) {
+  .letter__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .letter__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .family__layout {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -3105,6 +3266,13 @@ a {
   }
 }
 @media (max-width: 560px) {
+  .letter__facts,
+  .letter__rule-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .letter__text {
+    font-size: 17px;
+  }
   .family__pair {
     grid-template-columns: minmax(0, 1fr);
   }
