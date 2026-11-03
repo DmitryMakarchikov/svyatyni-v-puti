@@ -1,6 +1,6 @@
 'use strict';
 
-/* Главная: первый экран-история на «ночном небе», икона с клеймами (разделы сайта),
+/* Главная: первый экран-история на «ночном небе», плитки разделов,
    путь святынь, голос 1915 года, вопрос дня, свеча памяти и «Было — стало» */
 
 /* рисует главную страницу */
@@ -14,16 +14,16 @@ function renderHome() {
     (key, i) => `<span class="seals__dot${progress.stamps[key] ? ' seals__dot--on' : ''}">${i + 1}</span>`
   ).join('');
 
-  /* клейма: разделы сайта по сторонам иконы, как сцены жития вокруг образа */
-  const kleyma = p.kleyma
+  /* плитки разделов: фото, затемнение и подпись поверх; у пройденных — отметка печати */
+  const tiles = p.kleyma
     .map(
-      ([route, img, title, text], i) => `
-        <a class="kleymo kleymo--${i + 1}" href="#${route}">
-          <img class="kleymo__img" src="${thumb(img)}" alt="" loading="lazy">
-          <span class="kleymo__body">
-            <span class="kleymo__num" aria-hidden="true">${i + 1}</span>
-            <span class="kleymo__title">${esc(title)}</span>
-            <span class="kleymo__text">${esc(text)}</span>
+      ([route, img, title, text]) => `
+        <a class="bento__tile bento__tile--${route}" href="#${route}">
+          <img class="bento__img" src="${thumb(img)}" alt="" loading="lazy">
+          <span class="bento__body">
+            ${progress.stamps[route] ? `<span class="bento__stamp">${esc(ui().stampsShort)} ✓</span>` : ''}
+            <span class="bento__title">${esc(title)}</span>
+            <span class="bento__text">${esc(text)}</span>
           </span>
         </a>`
     )
@@ -77,13 +77,7 @@ function renderHome() {
           <h2 class="home-section__title" id="h-kleyma">${esc(p.kleymaH)}</h2>
           <p class="caption">${esc(p.kleymaCap)}</p>
         </div>
-        <nav class="icon-board" aria-label="${esc(p.kleymaLabel)}">
-          <figure class="icon-board__center">
-            <img class="icon-board__img" src="img/icon-augustow.jpg" alt="${esc(tr(DOCS['d-icon'].t))}" width="800" height="1006" loading="lazy">
-          </figure>
-          ${kleyma}
-        </nav>
-        <p class="caption icon-board__caption">${esc(p.heroCap)}</p>
+        <nav class="bento" aria-label="${esc(p.kleymaLabel)}">${tiles}</nav>
       </section>
 
       <section class="home-section" aria-labelledby="h-path">
@@ -152,10 +146,7 @@ function renderHome() {
   $('#hero-seals').addEventListener('click', () => $('#pass-btn').click());
 
   /* цитата ведёт к разбору документа в архиве */
-  $('#quote-doc').addEventListener('click', () => {
-    archiveFocus = 'letter';
-    location.hash = '#archive';
-  });
+  $('#quote-doc').addEventListener('click', () => goTo('archive', 'letter'));
 
   /* вопрос дня: один ответ, затем пояснение */
   const dayBox = $('#dayq');

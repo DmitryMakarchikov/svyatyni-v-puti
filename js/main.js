@@ -6,6 +6,7 @@ const ROUTES = {
   home: renderHome,
   chronicle: renderChronicle,
   map: renderMap,
+  fates: renderFates,
   shrines: renderShrines,
   comic: renderComic,
   game: renderGame,
@@ -32,6 +33,7 @@ function showRoute() {
   markNav();
   toggleMenu(false);
   window.scrollTo(0, 0);
+  focusBlock();
 }
 
 /* заголовок раздела на текущем языке */
@@ -41,6 +43,7 @@ function sectionTitle(name) {
     home: ui().nav.home,
     chronicle: p.chrH,
     map: p.mapH,
+    fates: p.fH,
     shrines: p.shH,
     comic: p.coH,
     game: gameTexts().title,

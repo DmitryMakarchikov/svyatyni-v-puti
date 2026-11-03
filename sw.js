@@ -4,7 +4,7 @@
    Стратегия «сначала сеть»: при интернете всегда загружается свежая версия,
    без сети — сохранённая копия. Картинки попадают в кэш по мере просмотра. */
 
-const CACHE = 'svyatyni-v-puti-v3';
+const CACHE = 'svyatyni-v-puti-v4';
 
 /* всё, что нужно, чтобы главная открылась офлайн */
 const CORE = [
@@ -17,6 +17,7 @@ const CORE = [
   'js/pages/home.js',
   'js/pages/chronicle.js',
   'js/pages/map.js',
+  'js/pages/fates.js',
   'js/pages/shrines.js',
   'js/pages/comic.js',
   'js/pages/game.js',

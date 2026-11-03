@@ -5,8 +5,6 @@
 /* выбранный тип документов и текст поиска */
 let archiveType = 'all';
 let archiveQuery = '';
-/* блок, к которому прокрутить после перехода в архив (например, 'letter') */
-let archiveFocus = '';
 
 /* рисует раздел: фильтры, поиск и список */
 function renderArchive() {
@@ -63,13 +61,6 @@ function renderArchive() {
   paintDocs();
   bindLetter();
   renderFamily($('#family'));
-
-  /* переход с главной к «Документу под лупой»: прокрутка после того, как раздел открылся сверху */
-  if (archiveFocus) {
-    const target = $('#' + archiveFocus);
-    archiveFocus = '';
-    requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
-  }
 }
 
 /* перерисовывает список документов по фильтру и поиску */

@@ -30,8 +30,15 @@ function paintTimeline() {
   const list = $('#tl');
   list.innerHTML = '';
 
+  let lastYear = '';
   CHRON.forEach((event, i) => {
     if (chronYear !== 'all' && event.y !== chronYear) return;
+    /* крупный год перед первой карточкой каждой группы */
+    if (event.y !== lastYear) {
+      lastYear = event.y;
+      const label = YEARS.find(([key]) => key === event.y);
+      list.append(createEl('li', 'timeline__year', label ? tr(label[1]) : event.y));
+    }
     const doc = event.doc ? DOCS[event.doc] : null;
     const picture = doc
       ? `<img class="event__img" src="${thumb(doc.img)}" alt="" loading="lazy">`
@@ -40,8 +47,7 @@ function paintTimeline() {
     const button = createEl('button', 'event' + (progress.events.includes(i) ? ' event--seen' : ''));
     button.type = 'button';
     button.innerHTML = `
-      <span class="event__date">${esc(tr(event.d))}</span>
-      <span class="event__dot" aria-hidden="true"></span>
+      <span class="event__date"><span class="event__dot" aria-hidden="true"></span>${esc(tr(event.d))}</span>
       <span class="event__body">
         <span class="event__title">${esc(tr(event.t))}</span>
         <span class="event__text">${esc(tr(event.x))}</span>

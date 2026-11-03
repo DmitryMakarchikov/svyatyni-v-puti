@@ -233,8 +233,23 @@ function openDoc(id) {
   `);
 }
 
+/* Переход в раздел с прокруткой к блоку: блок запоминается, раздел открывается сверху,
+   а прокрутка — в следующем кадре, после отрисовки */
+let routeFocus = '';
+function goTo(name, block = '') {
+  routeFocus = block;
+  if (location.hash === '#' + name) showRoute();
+  else location.hash = '#' + name;
+}
+function focusBlock() {
+  if (!routeFocus) return;
+  const target = $('#' + routeFocus);
+  routeFocus = '';
+  if (target) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
+}
+
 /* порядок разделов 1–7: по нему строятся «станции» в шапке и кнопки «Назад / Дальше» */
-const SECTION_ORDER = ['chronicle', 'map', 'shrines', 'comic', 'game', 'archive', 'quiz'];
+const SECTION_ORDER = ['chronicle', 'map', 'fates', 'shrines', 'comic', 'game', 'archive', 'quiz'];
 
 /* Маршрут из 7 станций: где посетитель сейчас и где уже получена печать */
 function routeHtml(current) {
