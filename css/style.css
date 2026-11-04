@@ -644,18 +644,8 @@ a {
   border-bottom-color: transparent;
 }
 .site-header--clear .logo,
-.site-header--clear .lang-switch__btn[aria-pressed='true'],
 .site-header--clear .menu-btn {
   color: #fff;
-}
-.site-header--clear .lang-switch__btn {
-  color: #e3eaea;
-}
-.site-header--clear .lang-switch__btn + .lang-switch__btn::before {
-  border-color: rgba(255, 255, 255, 0.4);
-}
-.site-header--clear .lang-switch__btn[aria-pressed='true']::after {
-  background: var(--gold-l);
 }
 .site-header--clear .menu-btn {
   border-color: rgba(255, 255, 255, 0.85);
@@ -759,43 +749,45 @@ a {
   }
 }
 
-/* язык: РУС | БЕЛ, выбранный подчёркнут */
+/* язык: два флага, выбранный подчёркнут, другой — приглушён */
 .lang-switch {
   display: flex;
+  gap: 2px;
 }
 .lang-switch__btn {
   position: relative;
-  min-width: 48px;
+  min-width: 44px;
   min-height: 44px;
-  padding: 0 8px;
+  padding: 0 7px;
   border: 0;
   background: none;
-  font: 600 14.5px var(--label);
-  letter-spacing: 0.1em;
-  color: var(--ink-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-.lang-switch__btn + .lang-switch__btn::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 14px;
-  bottom: 14px;
-  border-left: 1px solid var(--line);
+.lang-switch__flag {
+  width: 28px;
+  height: 19px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  opacity: 0.6;
+  transition: opacity 0.15s;
 }
-.lang-switch__btn:hover {
-  color: var(--accent);
-}
-.lang-switch__btn[aria-pressed='true'] {
-  color: var(--ink);
+.lang-switch__btn:hover .lang-switch__flag,
+.lang-switch__btn[aria-pressed='true'] .lang-switch__flag {
+  opacity: 1;
 }
 .lang-switch__btn[aria-pressed='true']::after {
   content: '';
   position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 9px;
+  left: 8px;
+  right: 8px;
+  bottom: 6px;
   height: 2px;
   background: var(--accent);
+}
+.site-header--clear .lang-switch__btn[aria-pressed='true']::after {
+  background: var(--gold-l);
 }
 
 /* кнопка «Разделы»: подпись и три черты, при открытом меню — крестик */
@@ -945,10 +937,6 @@ a {
     font-size: 18px;
     letter-spacing: 0.04em;
   }
-  .lang-switch__btn {
-    min-width: 42px;
-    padding: 0 4px;
-  }
   .menu__list {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -970,9 +958,6 @@ a {
 @media (max-width: 400px) {
   /* на самых узких экранах — одна кнопка: переход на другой язык */
   .lang-switch__btn[aria-pressed='true'] {
-    display: none;
-  }
-  .lang-switch__btn + .lang-switch__btn::before {
     display: none;
   }
 }
