@@ -128,8 +128,8 @@ function renderMap() {
 /* выбор точки на карте */
 function selectPlace(i) {
   mapSelected = i;
-  /* печать за 4 открытых места */
-  if (remember('places', i) && progress.places.length >= 4) addStamp('map');
+  /* открытое место запоминается: его точка перестаёт мигать */
+  remember('places', i);
 
   $$('.map__pin').forEach((pin, j) => {
     pin.setAttribute('aria-pressed', String(j === i));

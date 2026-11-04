@@ -452,7 +452,6 @@ function finishGame() {
   game.ending = ENDINGS.findIndex((ending) => game.mercy >= ending.min);
   game.phase = 'end';
   remember('endings', game.ending);
-  addStamp('game');
   playBell(392, 0.06);
   setTimeout(() => playBell(523.25, 0.05), 220);
   renderGameEnd();

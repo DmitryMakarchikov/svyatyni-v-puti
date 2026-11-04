@@ -65,11 +65,8 @@ function paintTimeline() {
 
 /* открывает событие в окне вместе с документом */
 function openEvent(event, i, button) {
-  /* печать за 5 прочитанных событий */
-  if (remember('events', i)) {
-    button.classList.add('event--seen');
-    if (progress.events.length >= 5) addStamp('chronicle');
-  }
+  /* прочитанное событие отмечается ромбиком */
+  if (remember('events', i)) button.classList.add('event--seen');
 
   const doc = event.doc ? DOCS[event.doc] : null;
   const text = `

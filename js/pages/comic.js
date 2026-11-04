@@ -58,20 +58,6 @@ function renderComic() {
   });
 
   $('#co-read').addEventListener('click', () => openViewer(0));
-
-  /* печать, когда читатель долистал до последнего кадра */
-  const last = grid.lastElementChild;
-  if ('IntersectionObserver' in window && last) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries[0].isIntersecting) return;
-        addStamp('comic');
-        observer.disconnect();
-      },
-      { threshold: 0.6 }
-    );
-    observer.observe(last);
-  }
 }
 
 /* открывает просмотр с кадра i */
@@ -105,7 +91,6 @@ function paintViewer() {
   $('#v-n').textContent = `${frameIndex + 1} / ${COMIC.length}`;
   $('#v-prev').disabled = frameIndex === 0;
   $('#v-next').disabled = isLast;
-  if (isLast) addStamp('comic');
 
   if (!reducedMotion) {
     stage.animate(

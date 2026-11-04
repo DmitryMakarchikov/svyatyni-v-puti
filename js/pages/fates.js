@@ -127,9 +127,9 @@ function renderFates() {
       </section>
     </div>
 
-    <div class="band band--night">
+    <div class="band band--soft">
       <div class="container">
-        <section class="chapter chapter--dark" id="f-valor" aria-labelledby="h-f-valor">
+        <section class="chapter" id="f-valor" aria-labelledby="h-f-valor">
           ${chapterHead(2, p.fValorH)}
           <ul class="tiles">${valor}</ul>
         </section>

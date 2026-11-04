@@ -37,7 +37,6 @@ function paintQuiz() {
 
   if (quiz.done) {
     const passed = quiz.score >= 7;
-    if (passed) addStamp('quiz');
     box.innerHTML = `
       <div class="card quiz-result">
         <p class="eyebrow">${esc(p.qzDone)}</p>

@@ -66,7 +66,6 @@ function createEl(tag, className, text) {
 
 /* Прогресс посетителя: что уже открыто и какие печати собраны */
 const progress = {
-  stamps: store.get('stamps', {}),
   events: store.get('events', []),
   places: store.get('places', []),
   shrines: store.get('shrines', []),
@@ -77,7 +76,6 @@ const progress = {
 ['events', 'places', 'shrines', 'found', 'endings'].forEach((key) => {
   if (!Array.isArray(progress[key])) progress[key] = [];
 });
-if (!progress.stamps || typeof progress.stamps !== 'object') progress.stamps = {};
 
 /* Добавляет значение в список прогресса; true — если оно новое */
 function remember(listName, value) {
@@ -173,27 +171,6 @@ function showToast(message) {
   toastTimer = setTimeout(() => toast.classList.remove('toast--show'), 2800);
 }
 
-/* Печати «Путевого листа»: по одной за каждый пройденный раздел */
-const STAMP_KEYS = ['chronicle', 'map', 'shrines', 'comic', 'game', 'quiz'];
-const countStamps = () => STAMP_KEYS.filter((key) => progress.stamps[key]).length;
-
-/* счётчик печатей в шапке */
-function paintPassport() {
-  $('#pass-n').textContent = `${countStamps()}/6`;
-}
-
-/* ставит печать раздела (один раз) */
-function addStamp(key) {
-  if (progress.stamps[key]) return;
-  progress.stamps[key] = 1;
-  store.set('stamps', progress.stamps);
-  paintPassport();
-  /* станция на маршруте в шапке сразу становится золотой */
-  $$(`.route__link[href="#${key}"]`).forEach((link) => link.parentNode.classList.add('route__stop--stamped'));
-  showToast(ui().toast(countStamps()));
-  playBell(659.25, 0.05);
-}
-
 /* Окна на нативном <dialog>: фокус внутри окна и закрытие по Esc браузер даёт сам */
 const modal = $('#modal');
 const modalBody = $('#modal-body');
@@ -262,44 +239,64 @@ function focusBlock() {
   if (target) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
 }
 
-/* порядок разделов 1–7: по нему строятся «станции» в шапке и кнопки «Назад / Дальше» */
+/* порядок разделов: по нему — номер раздела в шапке и кнопки «Назад / Дальше» */
 const SECTION_ORDER = ['chronicle', 'map', 'fates', 'shrines', 'comic', 'game', 'archive', 'quiz'];
+/* снимок в шапке раздела — во всю ширину контейнера */
+const PAGE_SIZES = '100vw';
 
-/* Маршрут из 7 станций: где посетитель сейчас и где уже получена печать */
-function routeHtml(current) {
-  const stops = SECTION_ORDER.map((name, i) => {
-    const isCurrent = name === current;
-    let mods = '';
-    if (isCurrent) mods += ' route__stop--current';
-    if (progress.stamps[name]) mods += ' route__stop--stamped';
-    return `
-      <li class="route__stop${mods}">
-        <a class="route__link" href="#${name}" ${isCurrent ? 'aria-current="step"' : ''}>
-          <span class="route__num">${i + 1}</span>
-          <span class="route__name">${esc(ui().nav[name])}</span>
-          ${progress.stamps[name] ? `<span class="visually-hidden">${esc(ui().stampDone)}</span>` : ''}
-        </a>
-      </li>`;
-  }).join('');
-  return `<nav class="route" aria-label="${esc(ui().routeLabel)}"><ol class="route__list">${stops}</ol></nav>`;
-}
+/* документ архива, к которому относится снимок (для подписи на снимке) */
+const docByImg = (img) => Object.keys(DOCS).find((id) => DOCS[id].img === img);
 
-/* Шапка раздела: маршрут, заголовок, орнамент, вводный текст и кнопки (если нужны) */
+/* Шапка зала: снимок эпохи во всю ширину, «крошки», номер раздела, заголовок, вводный текст и кнопки */
 function pageHead(id, title, lead = '', extra = '') {
+  const n = SECTION_ORDER.indexOf(id);
+  const [img, pos] = PAGE_IMG[id] || [];
+  const doc = img && docByImg(img);
   return `
-    <div class="page-band">
-      <div class="container">
-        <header class="page-head">
-          ${SECTION_ORDER.includes(id) ? routeHtml(id) : ''}
+    <header class="page-head">
+      ${img ? `<img class="page-head__img" ${imgAttrs(img, PAGE_SIZES)} alt="" fetchpriority="high" style="object-position: ${pos}">` : ''}
+      <div class="container page-head__inner">
+        <nav class="crumbs" aria-label="${esc(ui().crumbs)}">
+          <a class="crumbs__link" href="#home">${esc(ui().nav.home)}</a>
+          <span class="crumbs__sep" aria-hidden="true">/</span>
+          <span class="crumbs__here" aria-current="page">${esc(ui().nav[id] || title)}</span>
+        </nav>
+        <div class="page-head__body">
+          ${n >= 0 ? `<p class="page-head__kicker">${esc(ui().sectionOf(n + 1, SECTION_ORDER.length))}</p>` : ''}
           <h2 class="page-head__title" id="t-${id}">${esc(title)}</h2>
-          <span class="ornament ornament--dark" aria-hidden="true"></span>
-          ${lead ? `<p class="lead page-head__lead">${esc(lead)}</p>` : ''}
+          ${lead ? `<p class="page-head__lead">${esc(lead)}</p>` : ''}
           ${extra}
-        </header>
+        </div>
       </div>
-    </div>
+      ${doc ? `<button class="page-head__credit" type="button" data-doc="${doc}">${esc(tr(DOCS[doc].t))} · ${esc(tr(DOCS[doc].cap))}</button>` : ''}
+    </header>
   `;
 }
+
+/* Плавное появление блоков при прокрутке: только transform и opacity, без анимаций — если они отключены */
+const revealer =
+  'IntersectionObserver' in window && !reducedMotion
+    ? new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-in');
+            revealer.unobserve(entry.target);
+          }),
+        { rootMargin: '0px 0px -8% 0px' }
+      )
+    : null;
+function reveal(root) {
+  $$('[data-reveal]', root).forEach((node) =>
+    revealer ? revealer.observe(node) : node.classList.add('is-in')
+  );
+}
+
+/* подпись на снимке в шапке открывает карточку документа (один обработчик на весь сайт) */
+document.addEventListener('click', (e) => {
+  const credit = e.target.closest('.page-head__credit');
+  if (credit) openDoc(credit.dataset.doc);
+});
 
 /* Кнопки-фильтры: подсвечивают выбранную и сообщают о выборе */
 function renderFilters(box, items, current, onPick) {

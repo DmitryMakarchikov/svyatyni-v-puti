@@ -4,7 +4,7 @@
    Стратегия «сначала сеть»: при интернете всегда загружается свежая версия,
    без сети — сохранённая копия. Картинки попадают в кэш по мере просмотра. */
 
-const CACHE = 'svyatyni-v-puti-v7';
+const CACHE = 'svyatyni-v-puti-v10';
 
 /* всё, что нужно, чтобы главная открылась офлайн */
 const CORE = [
@@ -25,16 +25,17 @@ const CORE = [
   'js/pages/letter.js',
   'js/pages/family.js',
   'js/pages/quiz.js',
-  'js/pages/about.js',
   'js/main.js',
-  'fonts/forum-400-cyrillic.woff2',
-  'fonts/forum-400-latin.woff2',
+  'fonts/fira-xcond-500-cyrillic.woff2',
+  'fonts/fira-xcond-500-latin.woff2',
+  'fonts/fira-xcond-600-cyrillic.woff2',
+  'fonts/fira-xcond-600-latin.woff2',
+  'fonts/old-standard-400-cyrillic.woff2',
+  'fonts/old-standard-400-latin.woff2',
+  'fonts/old-standard-400-italic-cyrillic.woff2',
+  'fonts/old-standard-400-italic-latin.woff2',
   'fonts/literata-400-700-cyrillic.woff2',
   'fonts/literata-400-700-latin.woff2',
-  'fonts/plex-mono-400-cyrillic.woff2',
-  'fonts/plex-mono-400-latin.woff2',
-  'fonts/plex-mono-600-cyrillic.woff2',
-  'fonts/plex-mono-600-latin.woff2',
   'img/favicon.svg',
   'img/icon-augustow.jpg'
 ];

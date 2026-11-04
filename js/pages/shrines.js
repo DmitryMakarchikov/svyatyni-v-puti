@@ -52,8 +52,8 @@ function renderShrines() {
 
 /* открывает досье иконы */
 function openShrine(shrine, i) {
-  /* печать, когда прочитаны все досье */
-  if (remember('shrines', i) && progress.shrines.length >= SHRINES.length) addStamp('shrines');
+  /* прочитанное досье запоминается */
+  remember('shrines', i);
 
   const dossier = ['before', 'war', 'now']
     .map(

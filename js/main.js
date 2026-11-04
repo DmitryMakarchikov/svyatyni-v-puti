@@ -11,8 +11,7 @@ const ROUTES = {
   comic: renderComic,
   game: renderGame,
   archive: renderArchive,
-  quiz: renderQuiz,
-  about: renderAbout
+  quiz: renderQuiz
 };
 const ROUTE_NAMES = Object.keys(ROUTES);
 /* текущий раздел */
@@ -33,8 +32,10 @@ function showRoute() {
   ROUTES[route]();
   paintPager();
   markNav();
-  toggleMenu(false);
+  toggleMenu(false, $('#main'));
   window.scrollTo(0, 0);
+  paintHeader();
+  reveal($('#v-' + route));
   focusBlock();
 }
 
@@ -50,8 +51,7 @@ function sectionTitle(name) {
     comic: p.coH,
     game: gameTexts().title,
     archive: p.arH,
-    quiz: p.qzH,
-    about: ui().nav.about
+    quiz: p.qzH
   };
   return titles[name];
 }
@@ -63,78 +63,87 @@ function paintPager() {
   pager.hidden = index < 0;
   if (index < 0) return;
 
-  /* перед первым разделом — главная, после последнего — «О проекте» */
+  /* перед первым и после последнего раздела — главная */
   const prev = index === 0 ? 'home' : SECTION_ORDER[index - 1];
-  const next = index === SECTION_ORDER.length - 1 ? 'about' : SECTION_ORDER[index + 1];
+  const next = index === SECTION_ORDER.length - 1 ? 'home' : SECTION_ORDER[index + 1];
   const step = (name) => {
     const n = SECTION_ORDER.indexOf(name);
     return n < 0 ? '' : `<span class="pager__num"> · ${esc(ui().pagerStep(n + 1))}</span>`;
   };
 
+  /* слева — «Назад», справа — «Дальше»; у каждой половины снимок своего зала */
+  const half = (name, dir, side) => {
+    const [img, pos] = PAGE_IMG[name] || ['img/kolozha-1915.jpg', '50% 45%'];
+    return `
+      <a class="pager__link pager__link--${side}" href="#${name}">
+        <img class="pager__img" src="${thumb(img)}" alt="" loading="lazy" decoding="async" style="object-position: ${pos}">
+        <span class="pager__dir">${dir}</span>
+        <span class="pager__title">${esc(sectionTitle(name))}</span>
+      </a>`;
+  };
   pager.innerHTML = `
-    <div class="container pager__inner">
-      <a class="pager__link" href="#${prev}">
-        <span class="pager__dir">← ${esc(ui().prev)}${step(prev)}</span>
-        <span class="pager__title">${esc(sectionTitle(prev))}</span>
-      </a>
-      <a class="pager__link pager__link--next" href="#${next}">
-        <span class="pager__dir">${esc(ui().next)}${step(next)} →</span>
-        <span class="pager__title">${esc(sectionTitle(next))}</span>
-      </a>
+    <div class="pager__inner">
+      ${half(prev, `← ${esc(ui().prev)}${step(prev)}`, 'prev')}
+      ${half(next, `${esc(ui().next)}${step(next)} →`, 'next')}
     </div>
   `;
 }
 
 /* подсвечивает текущий раздел в меню */
 function markNav() {
-  $$('.main-nav__link, .mobile-nav__link').forEach((link) => {
+  $$('.main-nav__link, .menu__link').forEach((link) => {
     if (link.getAttribute('href') === '#' + route) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
   });
 }
 
-/* Мобильное меню */
+/* Меню-оглавление залов на весь экран */
 const menu = $('#drawer');
 const menuButton = $('#burger');
 
-/* открывает или закрывает мобильное меню */
-function toggleMenu(open) {
-  menu.classList.toggle('mobile-nav--open', open);
-  menuButton.setAttribute('aria-expanded', String(open));
+/* рисует оглавление: главная и восемь залов с номером и коротким описанием */
+function paintMenu() {
+  const halls = Object.fromEntries(texts().kleyma.map((hall) => [hall[0], hall]));
+  const item = (name, num, title, text) => `
+    <li class="menu__item">
+      <a class="menu__link" href="#${name}">
+        <span class="menu__num">${num}</span>
+        <span class="menu__name">${esc(title)}</span>
+        ${text ? `<span class="menu__text">${esc(text)}</span>` : ''}
+      </a>
+    </li>`;
+  $('#menu-list').innerHTML = `
+    <p class="menu__kicker">${esc(texts().hallsKicker)} · ${esc(ui().brand)}</p>
+    <ol class="menu__list">
+      ${item('home', '00', ui().nav.home, '')}
+      ${SECTION_ORDER.map((name, i) => item(name, String(i + 1).padStart(2, '0'), halls[name][2], halls[name][3])).join('')}
+    </ol>
+    <p class="menu__foot">${esc(ui().foot1)}</p>`;
 }
 
-menuButton.addEventListener('click', () => toggleMenu(!menu.classList.contains('mobile-nav--open')));
+/* открывает или закрывает меню; фокус — на первый пункт, при закрытии — на кнопку
+   или, после перехода в другой зал, на его содержимое */
+function toggleMenu(open, focusAfter = menuButton) {
+  const wasOpen = menu.classList.contains('menu--open');
+  menu.classList.toggle('menu--open', open);
+  document.documentElement.classList.toggle('is-locked', open);
+  menuButton.setAttribute('aria-expanded', String(open));
+  paintHeader();
+  if (open && !wasOpen) $('.menu__link', menu).focus();
+  if (!open && wasOpen && menu.contains(document.activeElement)) focusAfter.focus({ preventScroll: true });
+}
+
+menuButton.addEventListener('click', () => toggleMenu(!menu.classList.contains('menu--open')));
+
+/* шапка прозрачная, пока виден снимок в начале страницы; при открытом меню — всегда светлая */
+const header = $('.site-header');
+function paintHeader() {
+  header.classList.toggle('site-header--clear', scrollY < 24 && !menu.classList.contains('menu--open'));
+}
+addEventListener('scroll', paintHeader, { passive: true });
 /* ссылка на уже открытый раздел не меняет адрес — закрываем меню вручную */
 menu.addEventListener('click', (e) => {
-  if (e.target.closest('a')) toggleMenu(false);
-});
-
-/* «Путевой лист» со всеми печатями */
-$('#pass-btn').addEventListener('click', () => {
-  const names = ui().stamps;
-  const items = STAMP_KEYS.map(
-    (key, i) => `
-      <li class="stamps__item">
-        <a class="stamp${progress.stamps[key] ? ' stamp--on' : ''}" href="#${key}">
-          <span class="stamp__seal" aria-hidden="true">${i + 1}</span>
-          <span class="stamp__title">${esc(names[key][0])}</span>
-          <span class="stamp__text">${esc(names[key][1])}</span>
-        </a>
-      </li>`
-  ).join('');
-
-  openModal(
-    `
-    <div>
-      <p class="eyebrow">${countStamps()}/6</p>
-      <h3 class="modal__title" id="m-title">${esc(ui().passTitle)}</h3>
-      <p>${esc(ui().passLead)}</p>
-      <ul class="stamps">${items}</ul>
-    </div>
-  `,
-    true
-  );
-  $$('.stamp', modal).forEach((link) => link.addEventListener('click', closeModal));
+  if (e.target.closest('a')) toggleMenu(false, $('#main'));
 });
 
 /* «К содержанию»: адрес занят разделами, поэтому просто переводим фокус на main */
@@ -173,8 +182,8 @@ function translateStatic() {
   $$('.lang-switch__btn').forEach((button) =>
     button.setAttribute('aria-pressed', String(button.dataset.lang === lang))
   );
-  $('#pass-btn').title = ui().passport;
-  paintPassport();
+  paintMenu();
+  markNav();
 }
 
 $$('.lang-switch__btn').forEach((button) =>
@@ -185,9 +194,7 @@ $$('.lang-switch__btn').forEach((button) =>
     translateStatic();
     ROUTES[route]();
     paintPager();
-    /* на телефоне видна только кнопка другого языка — возвращаем на неё фокус */
-    const visible = $$('.lang-switch__btn').find((b) => b.offsetParent !== null);
-    if (visible && !button.offsetParent) visible.focus();
+    reveal($('#v-' + route));
   })
 );
 
