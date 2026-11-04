@@ -1052,15 +1052,6 @@ a {
 .opening__inner .actions {
   margin-top: 8px;
 }
-/* автор и руководитель — на первом экране, как на титульном листе работы */
-.opening__author {
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(244, 239, 228, 0.3);
-  font: 600 16px/1.4 var(--label);
-  letter-spacing: 0.05em;
-  color: var(--sand);
-}
 .opening__credit {
   position: absolute;
   right: var(--gr);

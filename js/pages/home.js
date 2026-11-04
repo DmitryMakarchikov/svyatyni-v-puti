@@ -84,7 +84,6 @@ function renderHome() {
           </a>
           <a class="button button--ghost" href="#game">${esc(p.homePlay)}</a>
         </div>
-        <p class="opening__author">${esc(ui().author)}</p>
       </div>
       <button class="opening__credit" type="button" id="open-credit">${esc(tr(kolozha.t))} · ${esc(tr(kolozha.cap))}</button>
     </header>
