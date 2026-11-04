@@ -138,7 +138,14 @@ menuButton.addEventListener('click', () => toggleMenu(!menu.classList.contains('
 /* шапка прозрачная, пока виден снимок в начале страницы; при открытом меню — всегда светлая */
 const header = $('.site-header');
 function paintHeader() {
-  header.classList.toggle('site-header--clear', scrollY < 24 && !menu.classList.contains('menu--open'));
+  /* у игры после начала снимка сверху нет — там шапка всегда светлая */
+  const page = $('.page--active');
+  const first = page && page.firstElementChild;
+  const overPhoto = Boolean(first && first.matches('.opening, .page-head'));
+  header.classList.toggle(
+    'site-header--clear',
+    overPhoto && scrollY < 24 && !menu.classList.contains('menu--open')
+  );
 }
 addEventListener('scroll', paintHeader, { passive: true });
 /* ссылка на уже открытый раздел не меняет адрес — закрываем меню вручную */
@@ -186,15 +193,33 @@ function translateStatic() {
   markNav();
 }
 
+/* глава, которую сейчас читают: последняя, чьё начало уже ушло под шапку */
+function readingAnchor() {
+  const line = header.getBoundingClientRect().bottom + 40;
+  const marks = $$('section[id], h2[id], h3[id]', $('#v-' + route)).filter((el) => el.offsetParent);
+  const passed = marks.filter((el) => el.getBoundingClientRect().top <= line);
+  const mark = passed[passed.length - 1];
+  return mark ? { id: mark.id, top: mark.getBoundingClientRect().top } : null;
+}
+
 $$('.lang-switch__btn').forEach((button) =>
   button.addEventListener('click', () => {
     if (button.dataset.lang === lang) return;
+    /* раздел перерисуется, а новые главы выше экрана браузер считает примерной высоты —
+       поэтому на время перерисовки главы раскладываются целиком, а место чтения привязано к главе */
+    const anchor = readingAnchor();
+    const root = document.documentElement;
+    root.classList.add('is-relayout');
     lang = button.dataset.lang;
     store.set('lang', lang);
     translateStatic();
     ROUTES[route]();
     paintPager();
     reveal($('#v-' + route));
+    const mark = anchor && document.getElementById(anchor.id);
+    if (mark) window.scrollTo(0, mark.getBoundingClientRect().top + scrollY - anchor.top);
+    /* через кадр браузер запомнит настоящие высоты глав — лёгкую отрисовку можно вернуть */
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('is-relayout')));
   })
 );
 

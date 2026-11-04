@@ -98,5 +98,6 @@ function paintQuiz() {
     if (isLast) quiz.done = true;
     else quiz.index++;
     paintQuiz();
+    keepInView($('#quiz-box'));
   });
 }

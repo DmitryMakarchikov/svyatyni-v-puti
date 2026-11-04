@@ -48,7 +48,7 @@ function renderGame() {
       <div class="meter meter--${key}" data-k="${key}" role="meter" aria-valuemin="0" aria-valuemax="${METER_MAX}" aria-valuenow="${game[key]}" aria-label="${esc(g.meters[key])}">
         <span class="meter__dot"></span>
         ${METER_ICONS[key]}
-        <span>${esc(g.meters[key])}</span>
+        <span class="meter__label">${esc(g.meters[key])}</span>
         <span class="meter__bar">
           <span class="meter__fill" style="width: ${(game[key] / METER_MAX) * 100}%"></span>
         </span>
@@ -149,6 +149,10 @@ function renderGameIntro() {
       lastResult: null
     });
     renderGame();
+    /* игра короче вступления — без прокрутки наверх страница осталась бы внизу, у подвала */
+    window.scrollTo(0, 0);
+    paintHeader();
+    $('#g-nx').focus({ preventScroll: true });
   });
 }
 
@@ -226,6 +230,7 @@ function drawCard() {
 
   showDots(null);
   if (!reducedMotion) box.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: 'ease-out' });
+  keepInView(box, $('.game'));
 }
 
 /* выбор игрока: 'L' — влево, 'R' — вправо */
@@ -331,6 +336,7 @@ function drawResult(result, quiet = false) {
   $('#g-tip').style.visibility = 'hidden';
   $('#g-nx').hidden = false;
   if (!quiet) $('#g-nx').focus({ preventScroll: true });
+  if (!quiet) keepInView(box, $('.game'));
 }
 
 /* кнопка «Дальше»: следующий ход, помощь или финал */
@@ -390,6 +396,7 @@ function drawRescue(key) {
   $('#choices').hidden = true;
   $('#g-tip').style.visibility = 'hidden';
   $('#g-nx').hidden = false;
+  keepInView(box, $('.game'));
 }
 
 /* Свайп: карточку тянут пальцем или мышью, после 90px выбор засчитывается */
@@ -456,6 +463,7 @@ function finishGame() {
   setTimeout(() => playBell(523.25, 0.05), 220);
   renderGameEnd();
   window.scrollTo(0, 0);
+  paintHeader();
 }
 
 /* экран итога: концовка и статистика */
@@ -501,5 +509,7 @@ function renderGameEnd() {
   $('#g-again').addEventListener('click', () => {
     game.phase = 'intro';
     renderGame();
+    window.scrollTo(0, 0);
+    paintHeader();
   });
 }

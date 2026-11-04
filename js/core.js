@@ -248,6 +248,14 @@ function focusBlock() {
   if (target) requestAnimationFrame(() => target.scrollIntoView({ block: 'start' }));
 }
 
+/* содержимое блока сменилось, а его начало ушло под шапку — возвращаем начало на экран */
+function keepInView(el, anchor = el) {
+  const hdr = $('.site-header').getBoundingClientRect().bottom;
+  if (!el || el.getBoundingClientRect().top >= hdr) return;
+  const top = anchor.getBoundingClientRect().top + scrollY - hdr - 8;
+  window.scrollTo({ top: Math.max(0, top), behavior: reducedMotion ? 'auto' : 'smooth' });
+}
+
 /* порядок разделов: по нему — номер раздела в шапке и кнопки «Назад / Дальше» */
 const SECTION_ORDER = ['chronicle', 'map', 'fates', 'shrines', 'comic', 'game', 'archive', 'quiz'];
 /* снимок в шапке раздела — во всю ширину контейнера */
