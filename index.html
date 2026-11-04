@@ -55,7 +55,7 @@
         shrines: sizes3('pokrov-grodno', 960),
         comic: banner('img/thumbs/icon-augustow.jpg 560w, img/icon-augustow.jpg 800w'),
         game: sizes3('bridge-1915', 1280),
-        archive: banner('img/thumbs/poster-1915.jpg 560w, img/poster-1915.jpg 900w'),
+        archive: sizes3('poster-1915', 900),
         quiz: sizes3('kolozha-today', 1280)
       }[location.hash.slice(1).split('/')[0] || 'home'];
       if (firstImage)

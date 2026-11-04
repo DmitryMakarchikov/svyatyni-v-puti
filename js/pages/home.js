@@ -63,7 +63,7 @@ function renderHome() {
     return `
       <li class="halls__item" data-reveal>
         <a class="hall" href="#${name}">
-          <span class="hall__frame"><img class="hall__img" src="${thumb(img)}" alt="" loading="lazy" decoding="async"></span>
+          <span class="hall__frame"><img class="hall__img" ${thumbAttrs(img, '(max-width: 560px) calc(100vw - 40px), (max-width: 1100px) 45vw, 290px')} alt="" loading="lazy" decoding="async"></span>
           <span class="hall__num">${String(i + 1).padStart(2, '0')}</span>
           <span class="hall__title">${esc(title)}</span>
           <span class="hall__text">${esc(text)}</span>

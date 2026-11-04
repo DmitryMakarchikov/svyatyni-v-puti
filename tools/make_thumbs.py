@@ -1,9 +1,11 @@
-"""Уменьшенные копии картинок для списков и карточек (папка img/thumbs).
+"""Уменьшенные копии картинок: превью для карточек, мини-превью для сеток и средние версии для телефонов.
 
-В архиве, хронике и на главной картинки показываются маленькими,
-поэтому грузить оригиналы по 300–600 КБ незачем: на слабом телефоне
-это тормозит. Скрипт делает копии шириной 560 px (хватает и для экранов
-с высокой плотностью пикселей) и сжимает их в прогрессивный JPEG.
+В архиве, хронике и на главной картинки показываются маленькими, поэтому грузить
+оригиналы по 300–600 КБ незачем: на слабом телефоне это тормозит. Скрипт делает:
+- img/thumbs/ — превью шириной до 560 px (карточки, окна на телефоне);
+- img/mini/ — мини-превью шириной до 360 px (сетки архива, хроники и залов);
+- img/<имя>-720.jpg — средняя версия для снимков шире 900 px (шапки разделов на телефоне).
+Готовые файлы не перезаписываются. Ширину каждой версии сайт берёт из IMG_W в js/data.js.
 
 Запуск: python tools/make_thumbs.py  (нужна библиотека Pillow: pip install pillow)
 """
@@ -17,19 +19,28 @@ sys.stdout.reconfigure(encoding='utf-8')  # кириллица в консоли
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / 'img'
-DST = SRC / 'thumbs'
-WIDTH = 560
+SIZES = [(SRC / 'thumbs', 560, 80), (SRC / 'mini', 360, 76)]
+MID = 720
 
-DST.mkdir(exist_ok=True)
-before = after = 0
-for path in sorted(SRC.glob('*.jpg')):
-    image = Image.open(path).convert('RGB')
-    width = min(WIDTH, image.width)
+
+def save(image, width, out, quality):
+    """уменьшает до ширины width и сохраняет прогрессивным JPEG"""
     height = round(image.height * width / image.width)
-    out = DST / path.name
-    image.resize((width, height), Image.LANCZOS).save(out, 'JPEG', quality=80, progressive=True, optimize=True)
-    before += path.stat().st_size
-    after += out.stat().st_size
-    print(f'{path.name:24} {path.stat().st_size // 1024:4} КБ -> {out.stat().st_size // 1024:3} КБ')
+    image.resize((width, height), Image.LANCZOS).save(out, 'JPEG', quality=quality, progressive=True, optimize=True)
+    print(f'{out.relative_to(ROOT)}  {out.stat().st_size // 1024} КБ')
 
-print(f'Итого: {before // 1024} КБ -> {after // 1024} КБ')
+
+for folder, _, _ in SIZES:
+    folder.mkdir(exist_ok=True)
+
+for path in sorted(SRC.glob('*.jpg')):
+    if path.stem.endswith(('-720', '-1000')) or path.stem.startswith('gev-1915-p'):
+        continue  # уже уменьшенные версии и сканы письма (их смотрят целиком, под лупой)
+    image = Image.open(path).convert('RGB')
+    for folder, width, quality in SIZES:
+        out = folder / path.name
+        if not out.exists():
+            save(image, min(width, image.width), out, quality)
+    mid = SRC / f'{path.stem}-{MID}.jpg'
+    if image.width >= 900 and not mid.exists():
+        save(image, MID, mid, 76)

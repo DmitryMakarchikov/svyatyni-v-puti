@@ -45,9 +45,18 @@ const thumb = (src) => src.replace('img/', 'img/thumbs/');
 /* srcset снимка: лёгкая, средняя (если есть) и полная версии; пусто, если лёгкой нет */
 function srcsetOf(img) {
   const w = IMG_W[img.slice(4, -4)];
-  if (!w) return '';
+  if (!w || w[0] >= w[w.length - 1]) return '';
   const mid = w.length > 2 ? `, ${img.replace('.jpg', '-720.jpg')} 720w` : '';
   return `${thumb(img)} ${w[0]}w${mid}, ${img} ${w[w.length - 1]}w`;
+}
+
+/* превью в сетке: мини (360 px) или обычное — браузер возьмёт по ширине карточки */
+function thumbAttrs(img, sizes) {
+  const w = IMG_W[img.slice(4, -4)];
+  const thumbW = w ? w[0] : 560;
+  if (thumbW <= 360) return `src="${thumb(img)}"`;
+  const mini = img.replace('img/', 'img/mini/');
+  return `src="${mini}" srcset="${mini} 360w, ${thumb(img)} ${thumbW}w" sizes="${sizes}"`;
 }
 
 /* src, srcset и sizes для <img>: браузер возьмёт версию по ширине экрана */

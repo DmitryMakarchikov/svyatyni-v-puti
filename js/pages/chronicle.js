@@ -41,7 +41,7 @@ function paintTimeline() {
     }
     const doc = event.doc ? DOCS[event.doc] : null;
     const picture = doc
-      ? `<img class="event__img" src="${thumb(doc.img)}" alt="" loading="lazy" decoding="async">`
+      ? `<img class="event__img" ${thumbAttrs(doc.img, '(max-width: 500px) 84vw, (max-width: 900px) 420px, 190px')} alt="" loading="lazy" decoding="async">`
       : `<span class="event__noimg" aria-hidden="true">${event.y === 'after' ? '2008' : event.y}</span>`;
 
     const button = createEl('button', 'event' + (progress.events.includes(i) ? ' event--seen' : ''));
