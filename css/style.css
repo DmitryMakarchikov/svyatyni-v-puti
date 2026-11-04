@@ -1068,6 +1068,13 @@ a {
 .opening__credit:hover {
   background: rgba(21, 57, 59, 0.97);
 }
+/* на телефоне подпись к снимку — вверху, под шапкой, чтобы не закрывать кнопки */
+@media (max-width: 700px) {
+  .opening__credit {
+    top: calc(var(--hdr) + 12px);
+    bottom: auto;
+  }
+}
 
 /* вступление: строка-эпиграф и цифры проекта */
 .intro {
@@ -1112,6 +1119,47 @@ a {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ink-2);
+}
+
+/* на планшете — по три цифры в ряд, на телефоне — по две */
+@media (max-width: 900px) {
+  .figures {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .figures .figures__item {
+    grid-column: span 2;
+  }
+  .figures .figures__item:nth-child(n + 4) {
+    grid-column: span 3;
+    border-top: 1px solid var(--line);
+  }
+  .figures .figures__item:nth-child(4) {
+    border-left: 0;
+  }
+}
+@media (max-width: 560px) {
+  .figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .figures .figures__item,
+  .figures .figures__item:nth-child(n + 4) {
+    grid-column: auto;
+    padding: 18px 10px;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .figures .figures__item:nth-child(-n + 2) {
+    border-top: 0;
+  }
+  .figures .figures__item:nth-child(even) {
+    border-left: 1px solid var(--line);
+  }
+  .figures .figures__item:last-child {
+    grid-column: 1 / -1;
+  }
+  .figures__num {
+    font-size: 44px;
+  }
 }
 
 /* заголовок блока на главной: рубрика, крупное название, курсивная строка */
@@ -1849,6 +1897,8 @@ a {
 }
 .shrine__title {
   font: 600 20px/1.25 var(--body);
+  overflow-wrap: break-word;
+  hyphens: auto;
   transition: color 0.15s;
 }
 .shrine:hover .shrine__title {
@@ -2494,6 +2544,14 @@ a {
   font-size: 15px;
   line-height: 1.4;
   color: var(--ink-2);
+  /* длинные слова («председательница») переносятся, а не вылезают из карточки */
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+@media (max-width: 380px) {
+  .shrine__title {
+    font-size: 17px;
+  }
 }
 .modal__img--portrait {
   max-height: 70vh;
