@@ -4,7 +4,7 @@
    Стратегия «сначала сеть»: при интернете всегда загружается свежая версия,
    без сети — сохранённая копия. Картинки попадают в кэш по мере просмотра. */
 
-const CACHE = 'svyatyni-v-puti-v10';
+const CACHE = 'svyatyni-v-puti-v11';
 
 /* всё, что нужно, чтобы главная открылась офлайн */
 const CORE = [
@@ -26,8 +26,6 @@ const CORE = [
   'js/pages/family.js',
   'js/pages/quiz.js',
   'js/main.js',
-  'fonts/fira-xcond-500-cyrillic.woff2',
-  'fonts/fira-xcond-500-latin.woff2',
   'fonts/fira-xcond-600-cyrillic.woff2',
   'fonts/fira-xcond-600-latin.woff2',
   'fonts/old-standard-400-cyrillic.woff2',

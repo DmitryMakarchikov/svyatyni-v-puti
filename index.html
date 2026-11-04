@@ -44,7 +44,7 @@
 
       /* главный снимок открытого раздела грузим заранее, ещё до скриптов.
          srcset и sizes — те же, что у самой картинки (IMG_W в data.js), иначе браузер скачает её дважды */
-      const banner = (set) => ({ imageSrcset: set, imageSizes: '100vw' });
+      const banner = (set) => ({ imageSrcset: set, imageSizes: '(max-width: 700px) 90vw, 100vw' });
       const sizes3 = (name, full) =>
         banner(`img/thumbs/${name}.jpg 560w, img/${name}-720.jpg 720w, img/${name}.jpg ${full}w`);
       const firstImage = {
@@ -121,7 +121,14 @@
               БЕЛ
             </button>
           </div>
-          <button class="menu-btn" id="burger" type="button" aria-expanded="false" aria-controls="drawer">
+          <button
+            class="menu-btn"
+            id="burger"
+            type="button"
+            aria-label="Разделы"
+            data-i-label="menu"
+            aria-expanded="false"
+            aria-controls="drawer">
             <span class="menu-btn__label" data-i="menu">Разделы</span>
             <span class="menu-btn__icon" aria-hidden="true"></span>
           </button>

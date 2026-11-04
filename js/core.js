@@ -242,7 +242,8 @@ function focusBlock() {
 /* порядок разделов: по нему — номер раздела в шапке и кнопки «Назад / Дальше» */
 const SECTION_ORDER = ['chronicle', 'map', 'fates', 'shrines', 'comic', 'game', 'archive', 'quiz'];
 /* снимок в шапке раздела — во всю ширину контейнера */
-const PAGE_SIZES = '100vw';
+/* снимок шапки под затемнением: на телефоне достаточно средней версии */
+const PAGE_SIZES = '(max-width: 700px) 90vw, 100vw';
 
 /* документ архива, к которому относится снимок (для подписи на снимке) */
 const docByImg = (img) => Object.keys(DOCS).find((id) => DOCS[id].img === img);

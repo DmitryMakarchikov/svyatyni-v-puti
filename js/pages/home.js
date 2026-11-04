@@ -14,7 +14,7 @@ const CHAPTER_IMG = [
   ['img/icon-augustow.jpg', '50% 20%', '1915–2026']
 ];
 /* ширина снимков на экране — по ней браузер выбирает размер файла */
-const OPEN_SIZES = '100vw';
+const OPEN_SIZES = '(max-width: 700px) 90vw, 100vw';
 const CHAPTER_SIZES = '(max-width: 900px) calc(100vw - 40px), 560px';
 const CMP_SIZES = '(max-width: 1220px) calc(100vw - 40px), 1180px';
 
