@@ -46,14 +46,14 @@
          srcset и sizes — те же, что у самой картинки (IMG_W в data.js), иначе браузер скачает её дважды */
       const banner = (set) => ({ imageSrcset: set, imageSizes: '(max-width: 700px) 90vw, 100vw' });
       const sizes3 = (name, full) =>
-        banner(`img/thumbs/${name}.jpg 560w, img/${name}-720.jpg 720w, img/${name}.jpg ${full}w`);
+        banner(`img/thumbs/${name}.webp 560w, img/${name}-720.webp 720w, img/${name}.webp ${full}w`);
       const firstImage = {
         home: sizes3('kolozha-1915', 1300),
         chronicle: sizes3('neman-1915', 1280),
         map: sizes3('road-1915', 1200),
         fates: sizes3('church-refugees', 1200),
         shrines: sizes3('pokrov-grodno', 960),
-        comic: banner('img/thumbs/icon-augustow.jpg 560w, img/icon-augustow.jpg 800w'),
+        comic: banner('img/thumbs/icon-augustow.webp 560w, img/icon-augustow.webp 800w'),
         game: sizes3('bridge-1915', 1280),
         archive: sizes3('poster-1915', 900),
         quiz: sizes3('kolozha-today', 1280)

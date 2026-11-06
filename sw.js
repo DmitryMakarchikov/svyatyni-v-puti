@@ -4,7 +4,7 @@
    Стратегия «сначала сеть»: при интернете всегда загружается свежая версия,
    без сети — сохранённая копия. Картинки попадают в кэш по мере просмотра. */
 
-const CACHE = 'svyatyni-v-puti-v17';
+const CACHE = 'svyatyni-v-puti-v18';
 
 /* всё, что нужно, чтобы главная открылась офлайн */
 const CORE = [
@@ -35,7 +35,7 @@ const CORE = [
   'fonts/literata-400-700-cyrillic.woff2',
   'fonts/literata-400-700-latin.woff2',
   'img/favicon.svg',
-  'img/icon-augustow.jpg'
+  'img/icon-augustow.webp'
 ];
 
 /* при установке сохраняем основу сайта */

@@ -130,7 +130,7 @@ function renderGameIntro() {
             <a class="button" href="#archive">${esc(g.toArchive)}</a>
           </div>
         </div>
-        <img class="game-intro__img" ${imgAttrs('img/kolozha-1915.jpg', '(max-width: 900px) calc(100vw - 40px), 574px')} alt="" fetchpriority="high">
+        <img class="game-intro__img" ${imgAttrs('img/kolozha-1915.webp', '(max-width: 900px) calc(100vw - 40px), 574px')} alt="" fetchpriority="high">
       </div>
     </div>
   `;

@@ -65,7 +65,7 @@ const thumb = (src) => src.replace('img/', 'img/thumbs/');
 function srcsetOf(img) {
   const w = IMG_W[img.slice(4, -4)];
   if (!w || w[0] >= w[w.length - 1]) return '';
-  const mid = w.length > 2 ? `, ${img.replace('.jpg', '-720.jpg')} 720w` : '';
+  const mid = w.length > 2 ? `, ${img.replace('.webp', '-720.webp')} 720w` : '';
   return `${thumb(img)} ${w[0]}w${mid}, ${img} ${w[w.length - 1]}w`;
 }
 

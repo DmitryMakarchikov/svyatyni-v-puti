@@ -5,7 +5,7 @@
 /* Пара переводов: T('по-русски', 'па-беларуску') */
 const T = (ru, be) => ({ ru, be });
 
-/* Ширина снимков в пикселях: [превью из img/thumbs, (средняя -720.jpg,) полная]; мини-превью в img/mini — 360 px.
+/* Ширина снимков в пикселях: [превью из img/thumbs, (средняя -720.webp,) полная]; мини-превью в img/mini — 360 px.
    По ней браузер сам выбирает, что грузить: телефону — лёгкую или среднюю, большому экрану — полную */
 const IMG_W = {
   'augustow-1914': [560, 800],
@@ -38,14 +38,14 @@ const IMG_W = {
 
 /* Снимок эпохи в шапке каждого раздела: [картинка, положение кадра] */
 const PAGE_IMG = {
-  chronicle: ['img/neman-1915.jpg', '50% 55%'],
-  map: ['img/road-1915.jpg', '50% 50%'],
-  fates: ['img/church-refugees.jpg', '50% 35%'],
-  shrines: ['img/pokrov-grodno.jpg', '50% 30%'],
-  comic: ['img/icon-augustow.jpg', '50% 14%'],
-  game: ['img/bridge-1915.jpg', '50% 50%'],
-  archive: ['img/poster-1915.jpg', '50% 20%'],
-  quiz: ['img/kolozha-today.jpg', '50% 40%']
+  chronicle: ['img/neman-1915.webp', '50% 55%'],
+  map: ['img/road-1915.webp', '50% 50%'],
+  fates: ['img/church-refugees.webp', '50% 35%'],
+  shrines: ['img/pokrov-grodno.webp', '50% 30%'],
+  comic: ['img/icon-augustow.webp', '50% 14%'],
+  game: ['img/bridge-1915.webp', '50% 50%'],
+  archive: ['img/poster-1915.webp', '50% 20%'],
+  quiz: ['img/kolozha-today.webp', '50% 40%']
 };
 
 /* Интерфейс */
@@ -160,7 +160,7 @@ const AUDIO = {
 /* Архив: подлинные документы эпохи */
 const DOCS = {
   'd-icon': {
-    img: 'img/icon-augustow.jpg',
+    img: 'img/icon-augustow.webp',
     type: 'icon',
     cap: T('Икона, около 1915', 'Ікона, каля 1915'),
     t: T('Августовская икона Божией Матери', 'Аўгустоўская ікона Божай Маці'),
@@ -174,7 +174,7 @@ const DOCS = {
     )
   },
   'd-scheme': {
-    img: 'img/scheme-1914.jpg',
+    img: 'img/scheme-1914.webp',
     type: 'map',
     cap: T('Схема, сентябрь 1914', 'Схема, верасень 1914'),
     t: T('Операции армий Северо-Западного фронта', 'Аперацыі армій Паўночна-Заходняга фронту'),
@@ -185,7 +185,7 @@ const DOCS = {
     src: T('Wikimedia Commons, общественное достояние.', 'Wikimedia Commons, грамадскі набытак.')
   },
   'd-map': {
-    img: 'img/map-1913.jpg',
+    img: 'img/map-1913.webp',
     type: 'map',
     cap: T('Карта, 1913', 'Карта, 1913'),
     t: T('Гродненская губерния накануне войны', 'Гродзенская губерня напярэдадні вайны'),
@@ -199,7 +199,7 @@ const DOCS = {
     )
   },
   'd-kolozha': {
-    img: 'img/kolozha-1915.jpg',
+    img: 'img/kolozha-1915.webp',
     type: 'photo',
     cap: T('Открытка, 1915–1918', 'Паштоўка, 1915–1918'),
     t: T('Коложа над Неманом', 'Каложа над Нёманам'),
@@ -213,7 +213,7 @@ const DOCS = {
     )
   },
   'd-kolozha-today': {
-    img: 'img/kolozha-today.jpg',
+    img: 'img/kolozha-today.webp',
     type: 'photo',
     cap: T('Фото, 2023', 'Фота, 2023'),
     t: T('Коложская церковь сегодня', 'Каложская царква сёння'),
@@ -227,7 +227,7 @@ const DOCS = {
     )
   },
   'd-neman': {
-    img: 'img/neman-1915.jpg',
+    img: 'img/neman-1915.webp',
     type: 'photo',
     cap: T('Открытка, 1915', 'Паштоўка, 1915'),
     t: T('Гродно, вид на Неман', 'Гродна, від на Нёман'),
@@ -238,7 +238,7 @@ const DOCS = {
     src: T('Wikimedia Commons, общественное достояние.', 'Wikimedia Commons, грамадскі набытак.')
   },
   'd-bridge': {
-    img: 'img/bridge-1915.jpg',
+    img: 'img/bridge-1915.webp',
     type: 'photo',
     cap: T('Открытка, 1915', 'Паштоўка, 1915'),
     t: T('Взорванный мост через Неман', 'Узарваны мост праз Нёман'),
@@ -252,7 +252,7 @@ const DOCS = {
     )
   },
   'd-grodno': {
-    img: 'img/grodno-1915.jpg',
+    img: 'img/grodno-1915.webp',
     type: 'photo',
     cap: T('Полевая открытка, 1915', 'Палявая паштоўка, 1915'),
     t: T('«Привет из Гродно»', '«Прывітанне з Гродна»'),
@@ -263,7 +263,7 @@ const DOCS = {
     src: T('Wikimedia Commons, общественное достояние.', 'Wikimedia Commons, грамадскі набытак.')
   },
   'd-poster1': {
-    img: 'img/poster-1915.jpg',
+    img: 'img/poster-1915.webp',
     type: 'poster',
     cap: T('Плакат, август 1915', 'Плакат, жнівень 1915'),
     t: T('«Помогите беженцам»', '«Дапамажыце бежанцам»'),
@@ -274,7 +274,7 @@ const DOCS = {
     src: T('Wikimedia Commons, общественное достояние.', 'Wikimedia Commons, грамадскі набытак.')
   },
   'd-poster2': {
-    img: 'img/poster-oak.jpg',
+    img: 'img/poster-oak.webp',
     type: 'poster',
     cap: T('Плакат, август 1915', 'Плакат, жнівень 1915'),
     t: T('«День дубового листка»', '«Дзень дубовага лістка»'),
@@ -288,7 +288,7 @@ const DOCS = {
     )
   },
   'd-road': {
-    img: 'img/road-1915.jpg',
+    img: 'img/road-1915.webp',
     type: 'photo',
     cap: T('Фото, сентябрь 1915', 'Фота, верасень 1915'),
     t: T('Беженцы в пути', 'Бежанцы ў дарозе'),
@@ -302,7 +302,7 @@ const DOCS = {
     )
   },
   'd-prisoners': {
-    img: 'img/prisoners-1915.jpg',
+    img: 'img/prisoners-1915.webp',
     type: 'photo',
     cap: T('Фото, февраль 1915', 'Фота, люты 1915'),
     t: T('Августов после боёв', 'Аўгустоў пасля баёў'),
@@ -316,7 +316,7 @@ const DOCS = {
     )
   },
   'd-suprasl': {
-    img: 'img/suprasl-1915.jpg',
+    img: 'img/suprasl-1915.webp',
     type: 'photo',
     cap: T('Фото, 5 сентября 1915', 'Фота, 5 верасня 1915'),
     t: T('Супрасльский монастырь', 'Супрасльскі манастыр'),
@@ -327,7 +327,7 @@ const DOCS = {
     src: T('Wikimedia Commons, общественное достояние.', 'Wikimedia Commons, грамадскі набытак.')
   },
   'd-church': {
-    img: 'img/church-refugees.jpg',
+    img: 'img/church-refugees.webp',
     type: 'photo',
     cap: T('Фото, 1915–1919', 'Фота, 1915–1919'),
     t: T('Беженцы в храме', 'Бежанцы ў храме'),
@@ -341,7 +341,7 @@ const DOCS = {
     )
   },
   'd-station': {
-    img: 'img/station-refugees.jpg',
+    img: 'img/station-refugees.webp',
     type: 'photo',
     cap: T('Фото, 1915–1919', 'Фота, 1915–1919'),
     t: T('Беженцы на вокзале', 'Бежанцы на вакзале'),
@@ -355,7 +355,7 @@ const DOCS = {
     )
   },
   'd-niva': {
-    img: 'img/niva-1914.jpg',
+    img: 'img/niva-1914.webp',
     type: 'press',
     cap: T('Журнал, ноябрь 1914', 'Часопіс, лістапад 1914'),
     t: T('«Знамение Августовской победы»', '«Знаменне Аўгустоўскай перамогі»'),
@@ -369,7 +369,7 @@ const DOCS = {
     )
   },
   'd-lubok': {
-    img: 'img/lubok-1916.jpg',
+    img: 'img/lubok-1916.webp',
     type: 'press',
     cap: T('Печатная картинка, около 1916', 'Друкаваная карцінка, каля 1916'),
     t: T('«Явление Богоматери русскому отряду»', '«З’ява Багамаці рускаму атраду»'),
@@ -380,7 +380,7 @@ const DOCS = {
     src: T('Wikimedia Commons, общественное достояние.', 'Wikimedia Commons, грамадскі набытак.')
   },
   'd-gev': {
-    img: 'img/gev-1915.jpg',
+    img: 'img/gev-1915.webp',
     type: 'press',
     cap: T('Журнал, 15 мая 1915', 'Часопіс, 15 мая 1915'),
     t: T('Воззвание к учащейся молодёжи', 'Зварот да навучэнскай моладзі'),
@@ -394,7 +394,7 @@ const DOCS = {
     )
   },
   'd-augustow-church': {
-    img: 'img/augustow-church.jpg',
+    img: 'img/augustow-church.webp',
     type: 'photo',
     cap: T('Открытка, начало XX века', 'Паштоўка, пачатак XX стагоддзя'),
     t: T('Православная церковь в Августове', 'Праваслаўная царква ў Аўгустове'),
@@ -408,7 +408,7 @@ const DOCS = {
     )
   },
   'd-rozanystok': {
-    img: 'img/rozanystok-2009.jpg',
+    img: 'img/rozanystok-2009.webp',
     type: 'photo',
     cap: T('Фото, 2009', 'Фота, 2009'),
     t: T('Ружаносток (Красносток) сегодня', 'Ружаносток (Красасток) сёння'),
@@ -422,7 +422,7 @@ const DOCS = {
     )
   },
   'd-osowiec': {
-    img: 'img/osowiec-bomb.jpg',
+    img: 'img/osowiec-bomb.webp',
     type: 'press',
     cap: T('Рисунок, февраль 1915', 'Малюнак, люты 1915'),
     t: T('Обстрел крепости Осовец', 'Абстрэл крэпасці Асавец'),
@@ -436,7 +436,7 @@ const DOCS = {
     )
   },
   'd-sobor': {
-    img: 'img/sobor-1917.jpg',
+    img: 'img/sobor-1917.webp',
     type: 'photo',
     cap: T('Фото, 1917', 'Фота, 1917'),
     t: T('Члены Поместного собора', 'Члены Памеснага сабора'),
@@ -447,7 +447,7 @@ const DOCS = {
     src: T('Wikimedia Commons, общественное достояние.', 'Wikimedia Commons, грамадскі набытак.')
   },
   'd-zhirovichi': {
-    img: 'img/zhirovichi.jpg',
+    img: 'img/zhirovichi.webp',
     type: 'icon',
     cap: T('Гравюра, 1682', 'Гравюра, 1682'),
     t: T('Жировичская икона Божией Матери', 'Жыровіцкая ікона Божай Маці'),
@@ -574,7 +574,7 @@ const CONFESSIONS = {
 /* Мужество воинов на Гродненщине */
 const VALOR = [
   {
-    img: 'img/scheme-1914.jpg',
+    img: 'img/scheme-1914.webp',
     doc: 'd-scheme',
     d: T('сентябрь 1914', 'верасень 1914'),
     t: T('Августовское сражение', 'Аўгустоўская бітва'),
@@ -584,7 +584,7 @@ const VALOR = [
     )
   },
   {
-    img: 'img/prisoners-1915.jpg',
+    img: 'img/prisoners-1915.webp',
     doc: 'd-prisoners',
     d: T('февраль 1915', 'люты 1915'),
     t: T('20-й корпус в Августовских лесах', '20-ы корпус у Аўгустоўскіх лясах'),
@@ -594,7 +594,7 @@ const VALOR = [
     )
   },
   {
-    img: 'img/osowiec-bomb.jpg',
+    img: 'img/osowiec-bomb.webp',
     doc: 'd-osowiec',
     person: 'kotlinsky',
     d: T('сентябрь 1914 — август 1915', 'верасень 1914 — жнівень 1915'),
@@ -675,7 +675,7 @@ const EVAC = {
 
 /* Поместный собор 1917–1918 годов */
 const SOBOR = {
-  img: 'img/sobor-1917.jpg',
+  img: 'img/sobor-1917.webp',
   cap: T(
     'Духовенство и миряне — члены Поместного собора, 1917 год. Общественное достояние.',
     'Духавенства і свецкія — члены Памеснага сабора, 1917 год. Грамадскі набытак.'
@@ -711,7 +711,7 @@ const PEOPLE = [
   {
     id: 'mikhail',
     g: 'clergy',
-    img: 'img/people/mikhail-ermakov.jpg',
+    img: 'img/people/mikhail-ermakov.webp',
     y: '1862–1929',
     n: T('Архиепископ Михаил (Ермаков)', 'Архіепіскап Міхаіл (Ермакоў)'),
     r: T('Архиепископ Гродненский и Брестский', 'Архіепіскап Гродзенскі і Брэсцкі'),
@@ -728,7 +728,7 @@ const PEOPLE = [
   {
     id: 'vladimir',
     g: 'clergy',
-    img: 'img/people/vladimir-tikhonitsky.jpg',
+    img: 'img/people/vladimir-tikhonitsky.webp',
     y: '1873–1959',
     n: T('Епископ Владимир (Тихоницкий)', 'Епіскап Уладзімір (Ціханіцкі)'),
     r: T(
@@ -745,7 +745,7 @@ const PEOPLE = [
   {
     id: 'tikhon',
     g: 'clergy',
-    img: 'img/people/tikhon-sharapov.jpg',
+    img: 'img/people/tikhon-sharapov.webp',
     y: '1886–1937',
     n: T('Архимандрит Тихон (Шарапов)', 'Архімандрыт Ціхан (Шарапаў)'),
     r: T('Архимандрит Жировичского монастыря', 'Архімандрыт Жыровіцкага манастыра'),
@@ -773,7 +773,7 @@ const PEOPLE = [
   {
     id: 'kotlinsky',
     g: 'army',
-    img: 'img/people/kotlinsky.jpg',
+    img: 'img/people/kotlinsky.webp',
     y: '1894–1915',
     n: T('Владимир Котлинский', 'Уладзімір Катлінскі'),
     r: T('Подпоручик, командир «атаки мертвецов»', 'Падпаручнік, камандзір «атакі мерцвякоў»'),
@@ -787,7 +787,7 @@ const PEOPLE = [
   {
     id: 'brzhozovsky',
     g: 'army',
-    img: 'img/people/brzhozovsky.jpg',
+    img: 'img/people/brzhozovsky.webp',
     y: '1857–1945',
     n: T('Николай Бржозовский', 'Мікалай Бржазоўскі'),
     r: T('Генерал-майор, комендант крепости Осовец', 'Генерал-маёр, камендант крэпасці Асавец'),
@@ -801,7 +801,7 @@ const PEOPLE = [
   {
     id: 'tatiana',
     g: 'society',
-    img: 'img/people/tatiana.jpg',
+    img: 'img/people/tatiana.webp',
     y: '1897–1918',
     n: T('Великая княжна Татьяна Николаевна', 'Вялікая княжна Таццяна Мікалаеўна'),
     r: T(
@@ -821,7 +821,7 @@ const PEOPLE = [
   {
     id: 'neidhardt',
     g: 'society',
-    img: 'img/people/neidhardt.jpg',
+    img: 'img/people/neidhardt.webp',
     y: '',
     n: T('Алексей Нейдгарт', 'Аляксей Нейдгарт'),
     r: T(
@@ -841,7 +841,7 @@ const PEOPLE = [
   {
     id: 'izhakevich',
     g: 'society',
-    img: 'img/people/izhakevich.jpg',
+    img: 'img/people/izhakevich.webp',
     y: '1864–1962',
     n: T('Иван Ижакевич', 'Іван Іжакевіч'),
     r: T('Художник, автор рисунка в «Ниве» 1914 года', 'Мастак, аўтар малюнка ў «Ниве» 1914 года'),
@@ -1766,7 +1766,7 @@ const SOURCES = [
 /* Досье святынь (st: ok — сохранилась, lost — утрачена, unknown — судьба неясна) */
 const SHRINES = [
   {
-    img: 'img/icon-augustow.jpg',
+    img: 'img/icon-augustow.webp',
     pos: '50% 20%',
     st: 'ok',
     s: T('Признана в 1916', 'Прызнаная ў 1916'),
@@ -1790,7 +1790,7 @@ const SHRINES = [
     )
   },
   {
-    img: 'img/kolozha-1915.jpg',
+    img: 'img/kolozha-1915.webp',
     pos: '50% 40%',
     st: 'unknown',
     s: T('Судьба неизвестна', 'Лёс невядомы'),
@@ -1814,7 +1814,7 @@ const SHRINES = [
     )
   },
   {
-    img: 'img/suprasl-1915.jpg',
+    img: 'img/suprasl-1915.webp',
     pos: '50% 35%',
     st: 'lost',
     s: T('Утрачена', 'Страчана'),
@@ -1838,7 +1838,7 @@ const SHRINES = [
     )
   },
   {
-    img: 'img/rozanystok-2009.jpg',
+    img: 'img/rozanystok-2009.webp',
     pos: '50% 30%',
     /* на снимке не сама икона, а место, где она хранилась до 1915 года */
     alt: T(
@@ -1870,7 +1870,7 @@ const SHRINES = [
     )
   },
   {
-    img: 'img/pokrov-grodno.jpg',
+    img: 'img/pokrov-grodno.webp',
     pos: '50% 50%',
     st: 'ok',
     alt: T(
@@ -1898,7 +1898,7 @@ const SHRINES = [
     )
   },
   {
-    img: 'img/zhirovichi.jpg',
+    img: 'img/zhirovichi.webp',
     pos: '50% 35%',
     st: 'ok',
     alt: T(
@@ -1926,7 +1926,7 @@ const SHRINES = [
     )
   },
   {
-    img: 'img/murovanka.jpg',
+    img: 'img/murovanka.webp',
     pos: '50% 40%',
     st: 'lost',
     alt: T('Церковь Рождества Богородицы в Мурованке', 'Царква Раства Багародзіцы ў Мураванцы'),
@@ -1970,7 +1970,7 @@ const SH_LABELS = {
 const COMIC = [
   {
     w: 4,
-    img: 'img/scheme-1914.jpg',
+    img: 'img/scheme-1914.webp',
     pos: '50% 50%',
     cap: T(
       'Сентябрь 1914 года. Армии Северо-Западного фронта ведут бои у Августова и Гродно.',
@@ -1979,7 +1979,7 @@ const COMIC = [
   },
   {
     w: 2,
-    img: 'img/augustow-1914.jpg',
+    img: 'img/augustow-1914.webp',
     pos: '50% 50%',
     cap: T(
       'Августов — уездный город Сувалкской губернии среди лесов.',
@@ -1989,7 +1989,7 @@ const COMIC = [
   },
   {
     w: 3,
-    img: 'img/icon-augustow.jpg',
+    img: 'img/icon-augustow.webp',
     pos: '50% 96%',
     cap: T(
       'Ночь на 1 (14) сентября. Русские воины в лесу под Августовом…',
@@ -1999,7 +1999,7 @@ const COMIC = [
   },
   {
     w: 3,
-    img: 'img/icon-augustow.jpg',
+    img: 'img/icon-augustow.webp',
     pos: '50% 6%',
     cap: T('…видят в небе Богородицу с Младенцем.', '…бачаць у небе Багародзіцу з Немаўлём.'),
     bot: true
@@ -2014,7 +2014,7 @@ const COMIC = [
   },
   {
     w: 2,
-    img: 'img/niva-1914.jpg',
+    img: 'img/niva-1914.webp',
     pos: '50% 25%',
     cap: T(
       'Ноябрь 1914 года. Журнал «Нива» печатает рисунок Ивана Ижакевича — о чуде узнаёт вся страна.',
@@ -2024,7 +2024,7 @@ const COMIC = [
   },
   {
     w: 2,
-    img: 'img/lubok-1916.jpg',
+    img: 'img/lubok-1916.webp',
     pos: '50% 35%',
     cap: T(
       '31 марта 1916 года Синод признаёт явление. Картинки и иконы с этим сюжетом расходятся по всей России.',
@@ -2318,7 +2318,7 @@ const QUIZ = [
    Шкалы: s — силы, b — хлеб, n — надежда; m — скрытое милосердие (от него зависит концовка).
    L/R — левый и правый выбор, fx — как меняются шкалы. */
 const PRO = {
-  img: 'img/neman-1915.jpg',
+  img: 'img/neman-1915.webp',
   pos: '60% 40%',
   date: T('Август 1915', 'Жнівень 1915'),
   who: T('Пролог', 'Пралог'),
@@ -2330,7 +2330,7 @@ const PRO = {
 /* ходы игры */
 const CARDS = [
   {
-    img: 'img/kolozha-1915.jpg',
+    img: 'img/kolozha-1915.webp',
     pos: '45% 40%',
     date: T('Август 1915', 'Жнівень 1915'),
     who: T('Настоятель Коложской церкви', 'Настаяцель Каложскай царквы'),
@@ -2357,7 +2357,7 @@ const CARDS = [
     }
   },
   {
-    img: 'img/poster-1915.jpg',
+    img: 'img/poster-1915.webp',
     pos: '50% 22%',
     date: T('Август 1915', 'Жнівень 1915'),
     who: T('Плакат на стене', 'Плакат на сцяне'),
@@ -2381,7 +2381,7 @@ const CARDS = [
     }
   },
   {
-    img: 'img/bridge-1915.jpg',
+    img: 'img/bridge-1915.webp',
     pos: '50% 50%',
     date: T('Сентябрь 1915', 'Верасень 1915'),
     who: T('Солдат-сапёр', 'Салдат-сапёр'),
@@ -2408,7 +2408,7 @@ const CARDS = [
     }
   },
   {
-    img: 'img/road-1915.jpg',
+    img: 'img/road-1915.webp',
     pos: '50% 50%',
     date: T('Сентябрь 1915', 'Верасень 1915'),
     who: T('Дорога на восток', 'Дарога на ўсход'),
@@ -2435,7 +2435,7 @@ const CARDS = [
     }
   },
   {
-    img: 'img/icon-augustow.jpg',
+    img: 'img/icon-augustow.webp',
     pos: '50% 18%',
     date: T('Сентябрь 1915', 'Верасень 1915'),
     who: T('Раненый солдат у костра', 'Паранены салдат ля вогнішча'),
@@ -2462,7 +2462,7 @@ const CARDS = [
     }
   },
   {
-    img: 'img/prisoners-1915.jpg',
+    img: 'img/prisoners-1915.webp',
     pos: '50% 50%',
     date: T('Октябрь 1915', 'Кастрычнік 1915'),
     who: T('Весть о брате', 'Вестка пра брата'),
@@ -2489,7 +2489,7 @@ const CARDS = [
     }
   },
   {
-    img: 'img/suprasl-1915.jpg',
+    img: 'img/suprasl-1915.webp',
     pos: '50% 35%',
     date: T('Октябрь 1915', 'Кастрычнік 1915'),
     who: T('Монах из Супрасля', 'Манах з Супрасля'),
@@ -2516,7 +2516,7 @@ const CARDS = [
     }
   },
   {
-    img: 'img/church-refugees.jpg',
+    img: 'img/church-refugees.webp',
     pos: '50% 50%',
     date: T('Ноябрь 1915', 'Лістапад 1915'),
     who: T('Храм у станции', 'Храм каля станцыі'),
@@ -2540,7 +2540,7 @@ const CARDS = [
     }
   },
   {
-    img: 'img/station-refugees.jpg',
+    img: 'img/station-refugees.webp',
     pos: '50% 45%',
     date: T('Ноябрь 1915', 'Лістапад 1915'),
     who: T('Чиновник на вокзале', 'Чыноўнік на вакзале'),
@@ -2567,7 +2567,7 @@ const CARDS = [
     }
   },
   {
-    img: 'img/icon-augustow.jpg',
+    img: 'img/icon-augustow.webp',
     pos: '50% 70%',
     date: T('Весна 1916', 'Вясна 1916'),
     who: T('Пермский собор', 'Пермскі сабор'),
@@ -2594,7 +2594,7 @@ const CARDS = [
     }
   },
   {
-    img: 'img/grodno-1915.jpg',
+    img: 'img/grodno-1915.webp',
     pos: '50% 50%',
     date: T('1916', '1916'),
     who: T('Письмо из Гродно', 'Ліст з Гродна'),
@@ -2727,27 +2727,27 @@ const P = {
     kleyma: [
       [
         'fates',
-        'img/sobor-1917.jpg',
+        'img/sobor-1917.webp',
         'Судьбы христиан',
         'Перепись 1897 года, мужество воинов, эвакуация 1915 года, Поместный собор и 9 судеб'
       ],
       [
         'shrines',
-        'img/icon-augustow.jpg',
+        'img/icon-augustow.webp',
         'Святыни',
         '7 чудотворных икон Понеманья: что вывезли и что вернулось'
       ],
-      ['chronicle', 'img/niva-1914.jpg', 'Хроника', '21 событие 1914–2008 годов'],
+      ['chronicle', 'img/niva-1914.webp', 'Хроника', '21 событие 1914–2008 годов'],
       [
         'map',
-        'img/map-1913.jpg',
+        'img/map-1913.webp',
         'Карта 1913',
         '8 мест по реальным координатам: от Гродно до Осовца и Жировичей'
       ],
-      ['comic', 'img/lubok-1916.jpg', 'Сказание', 'Чудо под Августовом в 8 картинах'],
-      ['game', 'img/road-1915.jpg', 'Игра', '«Дорога 1915»: 11 ходов, 3 концовки'],
-      ['archive', 'img/poster-1915.jpg', 'Архив', '23 документа, письмо 1915 года под лупой и 18 слов эпохи'],
-      ['quiz', 'img/kolozha-1915.jpg', 'Викторина', '20 вопросов, каждый раз 10 случайных']
+      ['comic', 'img/lubok-1916.webp', 'Сказание', 'Чудо под Августовом в 8 картинах'],
+      ['game', 'img/road-1915.webp', 'Игра', '«Дорога 1915»: 11 ходов, 3 концовки'],
+      ['archive', 'img/poster-1915.webp', 'Архив', '23 документа, письмо 1915 года под лупой и 18 слов эпохи'],
+      ['quiz', 'img/kolozha-1915.webp', 'Викторина', '20 вопросов, каждый раз 10 случайных']
     ],
     quoteH: 'Голос 1915 года',
     quote: 'Бегут они тысячами, без памяти и оглядки, лишённые кормильцев, крова, одежды и хлеба.',
@@ -3001,27 +3001,27 @@ const P = {
     kleyma: [
       [
         'fates',
-        'img/sobor-1917.jpg',
+        'img/sobor-1917.webp',
         'Лёсы хрысціян',
         'Перапіс 1897 года, мужнасць воінаў, эвакуацыя 1915 года, Памесны сабор і 9 лёсаў'
       ],
       [
         'shrines',
-        'img/icon-augustow.jpg',
+        'img/icon-augustow.webp',
         'Святыні',
         '7 цудатворных ікон Панямоння: што вывезлі і што вярнулася'
       ],
-      ['chronicle', 'img/niva-1914.jpg', 'Хроніка', '21 падзея 1914–2008 гадоў'],
+      ['chronicle', 'img/niva-1914.webp', 'Хроніка', '21 падзея 1914–2008 гадоў'],
       [
         'map',
-        'img/map-1913.jpg',
+        'img/map-1913.webp',
         'Карта 1913',
         '8 месцаў па рэальных каардынатах: ад Гродна да Асаўца і Жыровічаў'
       ],
-      ['comic', 'img/lubok-1916.jpg', 'Сказанне', 'Цуд пад Аўгустовам у 8 карцінах'],
-      ['game', 'img/road-1915.jpg', 'Гульня', '«Дарога 1915»: 11 хадоў, 3 канцоўкі'],
-      ['archive', 'img/poster-1915.jpg', 'Архіў', '23 дакументы, ліст 1915 года пад лупай і 18 слоў эпохі'],
-      ['quiz', 'img/kolozha-1915.jpg', 'Віктарына', '20 пытанняў, кожны раз 10 выпадковых']
+      ['comic', 'img/lubok-1916.webp', 'Сказанне', 'Цуд пад Аўгустовам у 8 карцінах'],
+      ['game', 'img/road-1915.webp', 'Гульня', '«Дарога 1915»: 11 хадоў, 3 канцоўкі'],
+      ['archive', 'img/poster-1915.webp', 'Архіў', '23 дакументы, ліст 1915 года пад лупай і 18 слоў эпохі'],
+      ['quiz', 'img/kolozha-1915.webp', 'Віктарына', '20 пытанняў, кожны раз 10 выпадковых']
     ],
     quoteH: 'Голас 1915 года',
     quote: 'Бегут они тысячами, без памяти и оглядки, лишённые кормильцев, крова, одежды и хлеба.',

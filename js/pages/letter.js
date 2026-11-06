@@ -7,7 +7,7 @@
 let letterPage = '73';
 let letterMode = 'old';
 
-const letterImg = (page) => `img/gev-1915-p${page}.jpg`;
+const letterImg = (page) => `img/gev-1915-p${page}.webp`;
 
 /* разметка блока */
 function letterHtml() {

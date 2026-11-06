@@ -7,11 +7,11 @@
 /* номера глав и снимок к каждой: [картинка, кадр, годы] */
 const ROMAN = ['I', 'II', 'III', 'IV', 'V'];
 const CHAPTER_IMG = [
-  ['img/pokrov-grodno.jpg', '50% 30%', '1897–1914'],
-  ['img/osowiec-bomb.jpg', '50% 50%', '1914–1915'],
-  ['img/station-refugees.jpg', '50% 45%', '1915'],
-  ['img/sobor-1917.jpg', '50% 45%', '1917–1918'],
-  ['img/icon-augustow.jpg', '50% 20%', '1915–2026']
+  ['img/pokrov-grodno.webp', '50% 30%', '1897–1914'],
+  ['img/osowiec-bomb.webp', '50% 50%', '1914–1915'],
+  ['img/station-refugees.webp', '50% 45%', '1915'],
+  ['img/sobor-1917.webp', '50% 45%', '1917–1918'],
+  ['img/icon-augustow.webp', '50% 20%', '1915–2026']
 ];
 /* ширина снимков на экране — по ней браузер выбирает размер файла */
 const OPEN_SIZES = '(max-width: 700px) 90vw, 100vw';
@@ -138,8 +138,8 @@ function renderHome() {
           <p class="section-head__lead">${esc(p.cmpCap)}</p>
         </header>
         <div class="compare" id="cmp" style="--p: 50%">
-          <img class="compare__img" ${imgAttrs('img/kolozha-today.jpg', CMP_SIZES)} alt="${esc(tr(DOCS['d-kolozha-today'].t))}" loading="lazy" decoding="async">
-          <img class="compare__img compare__img--top" ${imgAttrs('img/kolozha-1915.jpg', CMP_SIZES)} alt="${esc(tr(DOCS['d-kolozha'].t))}" loading="lazy" decoding="async">
+          <img class="compare__img" ${imgAttrs('img/kolozha-today.webp', CMP_SIZES)} alt="${esc(tr(DOCS['d-kolozha-today'].t))}" loading="lazy" decoding="async">
+          <img class="compare__img compare__img--top" ${imgAttrs('img/kolozha-1915.webp', CMP_SIZES)} alt="${esc(tr(DOCS['d-kolozha'].t))}" loading="lazy" decoding="async">
           <span class="compare__tag compare__tag--left">${esc(p.cmpL)}</span>
           <span class="compare__tag compare__tag--right">${esc(p.cmpR)}</span>
           <span class="compare__line" aria-hidden="true"></span>

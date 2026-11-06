@@ -74,7 +74,7 @@ function paintPager() {
 
   /* слева — «Назад», справа — «Дальше»; у каждой половины снимок своего зала */
   const half = (name, dir, side) => {
-    const [img, pos] = PAGE_IMG[name] || ['img/kolozha-1915.jpg', '50% 45%'];
+    const [img, pos] = PAGE_IMG[name] || ['img/kolozha-1915.webp', '50% 45%'];
     return `
       <a class="pager__link pager__link--${side}" href="#${name}">
         <img class="pager__img" src="${thumb(img)}" alt="" loading="lazy" decoding="async" style="object-position: ${pos}">
