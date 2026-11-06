@@ -47,6 +47,7 @@ function letterHtml() {
         <div class="letter__body">
           <div class="filters" id="l-modes" role="group" aria-label="${esc(p.lupaModes)}"></div>
           <blockquote class="letter__text" id="l-text"></blockquote>
+          ${listenHtml('letter-1915')}
           ${p.lupaNote ? `<p class="caption">${esc(p.lupaNote)}</p>` : ''}
           <details class="letter__rules">
             <summary class="letter__rules-title">${esc(p.lupaRulesH)}</summary>

@@ -100,6 +100,7 @@ function renderFamily(box) {
     <section class="family" aria-labelledby="h-family">
       <h3 class="family__title" id="h-family">${esc(p.famH)}</h3>
       <p class="family__lead">${esc(p.famLead)}</p>
+      <p class="family__private">${esc(p.famPrivate)}</p>
       <div class="family__layout">
         <form class="card family__form" id="f-form">
           <label class="field">

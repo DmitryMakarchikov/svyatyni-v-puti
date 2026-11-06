@@ -72,6 +72,7 @@ function openShrine(shrine, i) {
       <span class="status status--${shrine.st}">${esc(tr(shrine.s))}</span>
       <h3 class="modal__title" id="m-title">${esc(tr(shrine.t))}</h3>
       <dl class="dossier">${dossier}</dl>
+      ${listenHtml('shrine-' + (i + 1))}
       <p class="modal__source">${esc(tr(SH_LABELS.src))}: ${esc(tr(shrine.src))}</p>
     </div>
   `,

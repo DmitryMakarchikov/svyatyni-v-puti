@@ -27,6 +27,7 @@ function readRoute() {
 
 /* Показывает нужный раздел и прячет остальные */
 function showRoute() {
+  stopListen();
   route = readRoute();
   $$('.page').forEach((page) => page.classList.toggle('page--active', page.id === 'v-' + route));
   ROUTES[route]();
@@ -180,7 +181,7 @@ function translateStatic() {
   document.title = ui().brand;
   $$('[data-i]').forEach((node) => {
     const text = pickText(node.dataset.i);
-    if (typeof text === 'string') node.textContent = text;
+    if (typeof text === 'string') node.textContent = typo(text);
   });
   $$('[data-i-label]').forEach((node) => {
     const text = pickText(node.dataset.iLabel);
@@ -208,6 +209,7 @@ $$('.lang-switch__btn').forEach((button) =>
     /* раздел перерисуется, а новые главы выше экрана браузер считает примерной высоты —
        поэтому на время перерисовки главы раскладываются целиком, а место чтения привязано к главе */
     const anchor = readingAnchor();
+    stopListen();
     const root = document.documentElement;
     root.classList.add('is-relayout');
     lang = button.dataset.lang;

@@ -6,6 +6,79 @@
 let archiveType = 'all';
 let archiveQuery = '';
 
+/* ссылка на публикацию: на экране — только имя сайта */
+function siteLink(url, cls) {
+  if (!url) return '';
+  const site = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/.*$/, '');
+  return `<a class="${cls}" href="${url}" target="_blank" rel="noopener">${esc(site)}</a>`;
+}
+
+/* дела НИАБ в г. Гродно: дата, шифр, что в деле и где опубликовано */
+function niabHtml() {
+  const p = texts();
+  const cases = NIAB_CASES.map(
+    (item) => `
+      <li class="case">
+        <p class="case__date">${esc(tr(item.d))}</p>
+        <h4 class="case__title">${esc(tr(item.t))}</h4>
+        <p class="case__code">${esc(tr(item.code))}</p>
+        <p class="case__text">${esc(tr(item.x))}</p>
+        <p class="case__src">${esc(p.niabSrc)}: ${esc(item.src)}. ${siteLink(item.url, 'case__link')}</p>
+      </li>`
+  ).join('');
+  return `
+    <section class="niab" id="niab" aria-labelledby="h-niab">
+      <h3 class="niab__title" id="h-niab">${esc(p.niabH)}</h3>
+      <p class="niab__lead">${esc(p.niabLead)}</p>
+      <ol class="niab__list">${cases}</ol>
+    </section>`;
+}
+
+/* истории беженцев: кто, откуда и куда, рассказ и источник */
+function storiesHtml() {
+  const p = texts();
+  const items = STORIES.map(
+    (story) => `
+      <li class="story">
+        <p class="story__route">${esc(tr(story.route))}</p>
+        <h4 class="story__who">${esc(tr(story.who))}</h4>
+        <p class="story__text">${esc(tr(story.x))}</p>
+        <p class="story__src">${esc(ui().source)}: ${esc(story.src)}. ${siteLink(story.url, 'story__link')}</p>
+      </li>`
+  ).join('');
+  return `
+    <section class="stories" id="stories" aria-labelledby="h-stories">
+      <h3 class="stories__title" id="h-stories">${esc(p.storiesH)}</h3>
+      <p class="stories__lead">${esc(p.storiesLead)}</p>
+      <ul class="stories__list">${items}</ul>
+    </section>`;
+}
+
+/* полный список источников по группам; ссылка — на сайт источника */
+function sourcesHtml() {
+  const p = texts();
+  const count = SOURCES.reduce((n, group) => n + group.items.length, 0);
+  const groups = SOURCES.map(
+    (group) => `
+      <div class="sources__group">
+        <h4 class="sources__group-title">${esc(tr(group.t))}</h4>
+        <ul class="sources__list">${group.items
+          .map(([text, url]) => {
+            const link = url ? ' — ' + siteLink(url, 'sources__link') : '';
+            return `<li class="sources__item">${esc(tr(text))}${link}</li>`;
+          })
+          .join('')}</ul>
+      </div>`
+  ).join('');
+  return `
+    <section class="sources" id="sources" aria-labelledby="h-sources">
+      <h3 class="sources__title" id="h-sources">${esc(p.srcH)}</h3>
+      <p class="sources__lead">${esc(p.srcLead)} ${esc(p.srcCount(count))}.</p>
+      <p class="sources__data">${esc(p.srcData)}</p>
+      <div class="sources__groups">${groups}</div>
+    </section>`;
+}
+
 /* рисует раздел: фильтры, поиск и список */
 function renderArchive() {
   const p = texts();
@@ -17,7 +90,7 @@ function renderArchive() {
         ${p.arNav
           .map(
             (name, i) =>
-              `<button class="chapters__link" type="button" data-go="${['a-docs', 'letter', 'glossary', 'family'][i]}"><span class="chapters__num">0${i + 1}</span>${esc(name)}</button>`
+              `<button class="chapters__link" type="button" data-go="${['a-docs', 'letter', 'niab', 'glossary', 'stories', 'family', 'sources'][i]}"><span class="chapters__num">0${i + 1}</span>${esc(name)}</button>`
           )
           .join('')}
       </nav>
@@ -35,6 +108,8 @@ function renderArchive() {
 
       ${letterHtml()}
 
+      ${niabHtml()}
+
       <section class="glossary" id="glossary" aria-labelledby="h-gloss">
         <h3 class="glossary__title" id="h-gloss">${esc(p.glossH)}</h3>
         <p class="glossary__lead">${esc(p.glossLead)}</p>
@@ -49,7 +124,11 @@ function renderArchive() {
         </div>
       </section>
 
+      ${storiesHtml()}
+
       <div id="family"></div>
+
+      ${sourcesHtml()}
     </div>
   `;
 

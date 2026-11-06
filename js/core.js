@@ -35,9 +35,28 @@ const ui = () => UI[lang];
 const texts = () => P[lang];
 const gameTexts = () => GTXT[lang];
 
-/* Экранирование текста перед вставкой в HTML */
+/* Типографика: неразрывный пробел держит число со словом, предлог — со следующим словом,
+   инициалы — с фамилией, тире — с предыдущим словом (без lookbehind: его не знают старые Safari) */
+const NB = '\u00a0';
+/* хвост — только обычный пробел: второй проход подхватывает соседнее слово («и в Москву») */
+const SHORT_WORD =
+  /(^|[\s(«„"])(в|во|к|ко|с|со|у|ў|о|об|и|і|а|но|на|по|па|до|да|за|от|ад|из|з|не|ни|ні|без|для|при|пры|про|пра|под|пад|над)[ \t\n]+/giu;
+const INITIAL = /(^|[\s(«])([А-ЯЁІЎ]\.)[ \t\n]+(?=[А-ЯЁІЎ])/gu;
+function typo(text) {
+  return text
+    .replace(/(\d)[ \t\n]+(?=\d{3}(?!\d))/g, '$1' + NB)
+    .replace(/(\d)[ \t\n]+(?=[^\s\d–—-])/g, '$1' + NB)
+    .replace(/(^|[\s(])([А-Яа-яЁёІіЎў]{1,3}\.|№)[ \t\n]+(?=\d)/gu, '$1$2' + NB)
+    .replace(INITIAL, '$1$2' + NB)
+    .replace(INITIAL, '$1$2' + NB)
+    .replace(SHORT_WORD, '$1$2' + NB)
+    .replace(SHORT_WORD, '$1$2' + NB)
+    .replace(/[ \t\n]+—/g, NB + '—');
+}
+
+/* Экранирование текста перед вставкой в HTML (заодно — типографика) */
 const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' };
-const esc = (value) => String(value).replace(/[&<>"]/g, (c) => ESC[c]);
+const esc = (value) => typo(String(value)).replace(/[&<>"]/g, (c) => ESC[c]);
 
 /* уменьшенная копия картинки для списков и карточек (папка img/thumbs) */
 const thumb = (src) => src.replace('img/', 'img/thumbs/');
@@ -69,7 +88,7 @@ function imgAttrs(img, sizes) {
 function createEl(tag, className, text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
-  if (text != null) node.textContent = text;
+  if (text != null) node.textContent = typo(String(text));
   return node;
 }
 
@@ -212,7 +231,11 @@ function closeModal() {
   modal.close();
 }
 
-modal.addEventListener('close', restoreFocus);
+/* закрыли окно — молчит и запись внутри него */
+modal.addEventListener('close', () => {
+  stopListen(modalBody);
+  restoreFocus();
+});
 $('.modal__close', modal).addEventListener('click', closeModal);
 /* клик по затемнению вокруг окна тоже закрывает его */
 modal.addEventListener('click', (e) => {
@@ -232,6 +255,76 @@ function openDoc(id) {
     </div>
   `);
 }
+
+/* Аудиорассказы: файл audio/<имя>.mp3, длительность в секундах — в AUDIO (js/data.js).
+   Один плеер на весь сайт: новая запись останавливает прежнюю */
+const player = new Audio();
+player.preload = 'none';
+/* блок «Послушать», который сейчас играет */
+let listening = null;
+
+const clock = (sec) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
+
+/* разметка блока «Послушать» под текстом; без записи — пусто */
+function listenHtml(name) {
+  const total = AUDIO[name];
+  if (!total) return '';
+  return `
+    <div class="listen" data-audio="${name}">
+      <button class="listen__btn" type="button" aria-pressed="false">
+        <span class="listen__icon" aria-hidden="true"></span>
+        <span class="listen__label">${esc(ui().listen)}</span>
+      </button>
+      <span class="listen__bar" aria-hidden="true"><span class="listen__fill"></span></span>
+      <span class="listen__time">${clock(total)}</span>
+      <p class="listen__note">${esc(ui().listenNote)}</p>
+    </div>`;
+}
+
+/* вид блока: играет или стоит, сколько прошло */
+function paintListen(box, on) {
+  if (!box) return;
+  const button = $('.listen__btn', box);
+  button.setAttribute('aria-pressed', String(on));
+  $('.listen__label', box).textContent = on ? ui().listenPause : ui().listen;
+  box.classList.toggle('listen--on', on);
+}
+
+/* останавливает запись; root — только если блок внутри root (например, в закрытом окне) */
+function stopListen(root) {
+  if (!listening || (root && !root.contains(listening))) return;
+  player.pause();
+  paintListen(listening, false);
+  $('.listen__fill', listening).style.width = '0';
+  $('.listen__time', listening).textContent = clock(AUDIO[listening.dataset.audio]);
+  listening = null;
+}
+
+document.addEventListener('click', (e) => {
+  const button = e.target.closest('.listen__btn');
+  if (!button) return;
+  const box = button.closest('.listen');
+  if (listening === box) {
+    if (player.paused) player.play().catch(() => showToast(ui().listenFail));
+    else player.pause();
+    return;
+  }
+  stopListen();
+  listening = box;
+  player.src = `audio/${box.dataset.audio}.mp3`;
+  player.play().catch(() => {
+    showToast(ui().listenFail);
+    stopListen();
+  });
+});
+player.addEventListener('play', () => paintListen(listening, true));
+player.addEventListener('pause', () => paintListen(listening, false));
+player.addEventListener('ended', () => stopListen());
+player.addEventListener('timeupdate', () => {
+  if (!listening || !player.duration) return;
+  $('.listen__fill', listening).style.width = (player.currentTime / player.duration) * 100 + '%';
+  $('.listen__time', listening).textContent = `${clock(player.currentTime)} / ${clock(player.duration)}`;
+});
 
 /* Переход в раздел с прокруткой к блоку: блок запоминается, раздел открывается сверху,
    а прокрутка — в следующем кадре, после отрисовки */

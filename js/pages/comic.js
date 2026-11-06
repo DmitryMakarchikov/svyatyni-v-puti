@@ -27,6 +27,7 @@ function renderComic() {
     pageHead('comic', p.coH, p.coLead, readButton) +
     `
     <div class="container">
+      ${listenHtml('legend-augustow')}
       <ol class="comic" id="comic-grid"></ol>
     </div>
   `;

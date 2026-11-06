@@ -267,6 +267,7 @@ function openPerson(id) {
       <h3 class="modal__title" id="m-title">${esc(tr(person.n))}</h3>
       <p class="modal__role">${esc(tr(person.r))}</p>
       <p>${esc(tr(person.bio))}</p>
+      ${listenHtml('person-' + person.id)}
       ${docs}
       <p class="modal__source">${esc(ui().source)}: ${esc(tr(person.src))}</p>
     </div>
