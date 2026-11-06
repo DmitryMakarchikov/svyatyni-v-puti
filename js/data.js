@@ -150,7 +150,7 @@ const AUDIO = {
   'person-vladimir': 40,
   'person-tikhon': 26,
   'person-savitsky': 24,
-  'person-kotlinsky': 29,
+  'person-kotlinsky': 30,
   'person-brzhozovsky': 17,
   'person-tatiana': 24,
   'person-neidhardt': 22,
