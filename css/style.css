@@ -2069,7 +2069,6 @@ a {
 .family,
 .niab,
 .stories,
-.sources,
 .map-quiz {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
@@ -2082,7 +2081,6 @@ a {
 .is-relayout .family,
 .is-relayout .niab,
 .is-relayout .stories,
-.is-relayout .sources,
 .is-relayout .map-quiz {
   content-visibility: visible;
 }

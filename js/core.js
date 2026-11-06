@@ -62,8 +62,11 @@ const esc = (value) => typo(String(value)).replace(/[&<>"]/g, (c) => ESC[c]);
 const thumb = (src) => src.replace('img/', 'img/thumbs/');
 
 /* srcset снимка: лёгкая, средняя (если есть) и полная версии; пусто, если лёгкой нет */
+/* ключ картинки в IMG_W: имя без папки img/ и без расширения */
+const imgKey = (img) => img.slice(4).replace(/\.[a-z]+$/, '');
+
 function srcsetOf(img) {
-  const w = IMG_W[img.slice(4, -4)];
+  const w = IMG_W[imgKey(img)];
   if (!w || w[0] >= w[w.length - 1]) return '';
   const mid = w.length > 2 ? `, ${img.replace('.webp', '-720.webp')} 720w` : '';
   return `${thumb(img)} ${w[0]}w${mid}, ${img} ${w[w.length - 1]}w`;
@@ -71,7 +74,7 @@ function srcsetOf(img) {
 
 /* превью в сетке: мини (360 px) или обычное — браузер возьмёт по ширине карточки */
 function thumbAttrs(img, sizes) {
-  const w = IMG_W[img.slice(4, -4)];
+  const w = IMG_W[imgKey(img)];
   const thumbW = w ? w[0] : 560;
   if (thumbW <= 360) return `src="${thumb(img)}"`;
   const mini = img.replace('img/', 'img/mini/');
